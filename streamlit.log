@@ -1,4 +1,30 @@
-Usage: streamlit run [OPTIONS] TARGET [ARGS]...
-Try 'streamlit run --help' for help.
 
-Error: Invalid value: File does not exist: app.py
+Collecting usage statistics. To deactivate, set browser.gatherUsageStats to false.
+
+
+  You can now view your Streamlit app in your browser.
+
+  Local URL: http://localhost:8502
+  Network URL: http://192.0.0.2:8502
+  External URL: http://146.179.86.188:8502
+
+/Users/jaymoore/Desktop/brain-atlas/app.py:309: FutureWarning:
+
+The default of observed=False is deprecated and will be changed to True in a future version of pandas. Pass observed=False to retain current behavior or observed=True to adopt the future default and silence this warning.
+
+/Users/jaymoore/Desktop/brain-atlas/app.py:309: FutureWarning:
+
+The default of observed=False is deprecated and will be changed to True in a future version of pandas. Pass observed=False to retain current behavior or observed=True to adopt the future default and silence this warning.
+
+/Users/jaymoore/Desktop/brain-atlas/app.py:309: FutureWarning:
+
+The default of observed=False is deprecated and will be changed to True in a future version of pandas. Pass observed=False to retain current behavior or observed=True to adopt the future default and silence this warning.
+
+/Users/jaymoore/Desktop/brain-atlas/app.py:309: FutureWarning:
+
+The default of observed=False is deprecated and will be changed to True in a future version of pandas. Pass observed=False to retain current behavior or observed=True to adopt the future default and silence this warning.
+
+/Users/jaymoore/Desktop/brain-atlas/app.py:309: FutureWarning:
+
+The default of observed=False is deprecated and will be changed to True in a future version of pandas. Pass observed=False to retain current behavior or observed=True to adopt the future default and silence this warning.
+
