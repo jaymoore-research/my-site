@@ -5,7 +5,7 @@ Interactive single-cell RNA-seq data exploration dashboard.
 ## Data
 - **Cells:** 59,505
 - **Genes:** 58,232
-- **Source:** `/Users/jaymoore/Desktop/brain-atlas/5cfe2ee0-d62a-487c-b0fe-124f39f4df21.h5ad`
+- **Source:** [Allen Institute - SEA-AD: Seattle Alzheimer's Disease Brain Cell Atlas](https://cellxgene.cziscience.com/collections/283d65eb-dd53-496d-adb7-7570c7caa443)
 
 ## Features
 
