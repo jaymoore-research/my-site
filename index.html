@@ -146,6 +146,31 @@
       .links-top {
         margin: 10px 0 0 0;
       }
+
+      .scrollbox {
+        margin-top: 10px;
+        max-height: 320px;
+        overflow: auto;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 12px 14px;
+        background: rgba(255, 255, 255, 0.02);
+      }
+
+      .scrollbox h3 {
+        margin: 0 0 8px 0;
+        font-size: 13px;
+        color: var(--text);
+        letter-spacing: -0.01em;
+      }
+
+      .scrollbox ul {
+        margin: 0 0 14px 0;
+      }
+
+      .scrollbox ul:last-child {
+        margin-bottom: 0;
+      }
     </style>
   </head>
   <body>
@@ -225,16 +250,65 @@
         </section>
 
         <section>
-          <h2>Patents</h2>
-          <ul>
-            <li>
-              (2024) Methods and systems for identifying copy number signatures (PCT/US2023/075910).
-            </li>
-            <li>
-              (2023) Systems and methods for classifying and treating homologous repair deficiency cancers
-              (US20230140123A1).
-            </li>
-          </ul>
+          <h2>Publications &amp; Patents</h2>
+          <div class="scrollbox" role="region" aria-label="Publications and patents">
+            <h3>Selected publications</h3>
+            <ul>
+              <li>
+                <a href="https://doi.org/10.1200/PO.23.00093"
+                  >Pan-cancer analysis of copy-number features identifies recurrent signatures and a homologous
+                  recombination deficiency biomarker to predict poly (ADP-ribose) polymerase inhibitor
+                  response.</a
+                >
+              </li>
+              <li>
+                <a href="https://doi.org/10.1093/oncolo/oyad046"
+                  >A novel HRD signature is predictive of FOLFIRINOX benefit in metastatic pancreatic cancer.</a
+                >
+              </li>
+              <li>
+                <a href="https://doi.org/10.1016/S2589-7500(23)00096-2"
+                  >Comprehensive genomic profiling and treatment patterns across ancestries in advanced prostate
+                  cancer: A large-scale retrospective analysis.</a
+                >
+              </li>
+              <li>
+                <a href="https://doi.org/10.1158/2159-8290.CD-22-0620"
+                  >Integrative analysis of a large real-world cohort of small cell lung cancer identifies distinct
+                  genetic subtypes and insights into histologic transformation.</a
+                >
+              </li>
+              <li>
+                <a href="https://doi.org/10.1093/jnci/djac075"
+                  >The molecular landscape of pancreatobiliary cancers for novel targeted therapies from
+                  real-world genomic profiling.</a
+                >
+              </li>
+              <li>
+                <a href="https://doi.org/10.1158/2159-8290.CD-20-0948"
+                  >Somatic HLA class I loss is a widespread mechanism of immune evasion which refines the use of
+                  tumor mutational burden as a biomarker of checkpoint inhibitor response.</a
+                >
+              </li>
+              <li>
+                <a href="https://doi.org/10.2217/fon-2021-0547"
+                  >Prediction and characterization of diffuse large B-cell lymphoma cell-of-origin subtypes using
+                  targeted sequencing.</a
+                >
+              </li>
+            </ul>
+
+            <h3>Patents</h3>
+            <ul>
+              <li>
+                (2024) Methods and systems for identifying copy number signatures (PCT/US2023/075910).
+              </li>
+              <li>
+                (2023) Systems and methods for classifying and treating homologous repair deficiency cancers
+                (US20230140123A1).
+              </li>
+            </ul>
+          </div>
         </section>
 
         <footer>
