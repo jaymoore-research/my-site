@@ -75,6 +75,19 @@
     font-size: 12px; padding: 6px 0; max-width: 100%;
   }
   .msg.error { color: #f87171; }
+  .msg .msg-images {
+    display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px;
+  }
+  .msg .msg-images img {
+    max-width: 200px; max-height: 160px; border-radius: 8px;
+    object-fit: cover; cursor: pointer;
+  }
+  .msg .msg-images img:hover { opacity: 0.85; }
+  .msg .msg-file {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(255,255,255,0.06); padding: 6px 10px;
+    border-radius: 8px; margin-top: 6px; font-size: 12px; color: var(--muted);
+  }
   .typing {
     align-self: flex-start; color: var(--muted); font-size: 13px;
     padding: 6px 14px; animation: fadeIn 0.2s ease;
@@ -107,10 +120,44 @@
     border-color: var(--accent); color: var(--accent);
   }
 
+  /* Attachments preview strip */
+  .attachments-preview {
+    display: flex; gap: 8px; padding: 8px 16px 0; background: var(--surface);
+    flex-wrap: wrap; flex-shrink: 0;
+  }
+  .attachment-thumb {
+    position: relative; width: 64px; height: 64px; border-radius: 8px;
+    overflow: hidden; border: 1px solid var(--border);
+    animation: fadeIn 0.15s ease;
+  }
+  .attachment-thumb img {
+    width: 100%; height: 100%; object-fit: cover;
+  }
+  .attachment-thumb .file-icon {
+    width: 100%; height: 100%; display: flex; align-items: center;
+    justify-content: center; background: var(--bg); flex-direction: column;
+    gap: 2px;
+  }
+  .attachment-thumb .file-icon svg { width: 24px; height: 24px; color: var(--muted); }
+  .attachment-thumb .file-icon span {
+    font-size: 9px; color: var(--muted); max-width: 56px;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    text-align: center;
+  }
+  .attachment-thumb .remove-btn {
+    position: absolute; top: 2px; right: 2px; width: 18px; height: 18px;
+    border-radius: 50%; background: rgba(0,0,0,0.7); border: none;
+    color: #fff; font-size: 12px; cursor: pointer; display: flex;
+    align-items: center; justify-content: center; line-height: 1;
+    padding: 0;
+  }
+  .attachment-thumb .remove-btn:hover { background: #ef4444; }
+
   /* Input */
   .input-area {
     background: var(--surface); border-top: 1px solid var(--border);
     padding: 12px 16px; display: flex; gap: 8px; flex-shrink: 0;
+    align-items: flex-end;
   }
   .input-area textarea {
     flex: 1; background: var(--bg); border: 1px solid var(--border);
@@ -120,16 +167,40 @@
   }
   .input-area textarea:focus { border-color: var(--accent); }
   .input-area textarea::placeholder { color: #4b5563; }
-  .input-area button {
+  .icon-btn {
+    background: none; border: 1px solid var(--border); color: var(--muted);
+    width: 42px; height: 42px; border-radius: 12px;
+    cursor: pointer; transition: all 0.15s;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .icon-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .icon-btn:active { background: rgba(59,130,246,0.1); }
+  .icon-btn svg { width: 20px; height: 20px; }
+  .send-btn {
     background: var(--accent); border: none; color: #fff;
     width: 42px; height: 42px; border-radius: 12px;
     font-size: 18px; cursor: pointer; transition: background 0.15s;
     display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0; align-self: flex-end;
+    flex-shrink: 0;
   }
-  .input-area button:hover { background: var(--accent-hover); }
-  .input-area button:disabled { opacity: 0.3; cursor: default; }
-  .input-area button svg { width: 20px; height: 20px; }
+  .send-btn:hover { background: var(--accent-hover); }
+  .send-btn:disabled { opacity: 0.3; cursor: default; }
+  .send-btn svg { width: 20px; height: 20px; }
+
+  /* Hidden file inputs */
+  .hidden-input { display: none; }
+
+  /* Image lightbox */
+  .lightbox {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.85);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 100; cursor: pointer; animation: fadeIn 0.15s ease;
+  }
+  .lightbox img {
+    max-width: 90vw; max-height: 90vh; border-radius: 8px;
+    object-fit: contain;
+  }
 
   /* Footer */
   .footer {
@@ -143,6 +214,7 @@
     .header { padding: 12px 14px; }
     .messages { padding: 14px 10px; }
     .powered-by { display: none; }
+    .attachment-thumb { width: 52px; height: 52px; }
   }
 </style>
 </head>
@@ -161,7 +233,7 @@
 <div class="messages" id="messages">
   <div class="welcome" id="welcome">
     <h2>Ask RoboTerri anything</h2>
-    <p>Pharmacogenomics, ancestry, nutrigenomics, variant lookup, polygenic risk scores, and more.</p>
+    <p>Pharmacogenomics, ancestry, nutrigenomics, variant lookup, polygenic risk scores, and more. Upload genetic data files or snap a photo of a lab result.</p>
     <div class="suggestions">
       <button onclick="useSuggestion(this)">What drugs interact with CYP2D6?</button>
       <button onclick="useSuggestion(this)">Run a pharmgx demo</button>
@@ -171,12 +243,24 @@
   </div>
 </div>
 
+<div class="attachments-preview" id="attachments-preview" style="display:none"></div>
+
 <div class="input-area">
+  <button class="icon-btn" onclick="fileInput.click()" title="Upload file">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg>
+  </button>
+  <button class="icon-btn" onclick="openCamera()" title="Take photo">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
+  </button>
   <textarea id="input" placeholder="Ask a bioinformatics question..." rows="1"></textarea>
-  <button id="send" onclick="sendMessage()" title="Send">
+  <button class="send-btn" id="send" onclick="sendMessage()" title="Send">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
   </button>
 </div>
+
+<input type="file" id="fileInput" class="hidden-input" multiple
+  accept="image/*,.txt,.csv,.vcf,.tsv,.json,.bed,.fasta,.fa,.fq,.fastq,.gz,.h5ad,.bam,.sam,.pdf">
+<input type="file" id="cameraInput" class="hidden-input" accept="image/*" capture="environment">
 
 <div class="footer">
   ClawBio is a research tool, not a medical device. Consult a healthcare professional before making medical decisions.
@@ -185,18 +269,24 @@
 <script>
 const GATEWAY_URL = 'wss://macbook-pro-7.tail8eccc9.ts.net';
 const AUTH_PASSWORD = new URLSearchParams(window.location.search).get('p') || '';
+const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50 MB
 
 let ws = null;
 let sessionId = null;
 let reconnectTimer = null;
 let hasMessages = false;
+let attachments = []; // { id, dataUrl, mimeType, name, isImage }
 
 const messagesEl = document.getElementById('messages');
 const inputEl = document.getElementById('input');
 const sendBtn = document.getElementById('send');
 const statusEl = document.getElementById('status');
 const welcomeEl = document.getElementById('welcome');
+const previewEl = document.getElementById('attachments-preview');
+const fileInput = document.getElementById('fileInput');
+const cameraInput = document.getElementById('cameraInput');
 
+// --- Connection ---
 function connect() {
   if (ws && ws.readyState <= 1) return;
   ws = new WebSocket(GATEWAY_URL);
@@ -213,11 +303,8 @@ function connect() {
   };
 
   ws.onmessage = (event) => {
-    try {
-      handleMessage(JSON.parse(event.data));
-    } catch (e) {
-      console.error('Parse error:', e);
-    }
+    try { handleMessage(JSON.parse(event.data)); }
+    catch (e) { console.error('Parse error:', e); }
   };
 
   ws.onclose = () => {
@@ -234,10 +321,7 @@ function connect() {
 }
 
 function handleMessage(data) {
-  if (data.type === 'connected') {
-    sessionId = data.sessionId;
-    return;
-  }
+  if (data.type === 'connected') { sessionId = data.sessionId; return; }
 
   if (data.type === 'chat' || data.type === 'chat.stream') {
     const text = data.text || data.content || '';
@@ -271,36 +355,79 @@ function removeTyping() {
   if (t) t.remove();
 }
 
-function addMessage(text, className) {
-  if (!hasMessages) {
-    welcomeEl.style.display = 'none';
-    hasMessages = true;
-  }
+// --- Messages ---
+function addMessage(text, className, msgAttachments) {
+  if (!hasMessages) { welcomeEl.style.display = 'none'; hasMessages = true; }
   const el = document.createElement('div');
   el.className = `msg ${className}`;
-  el.textContent = text;
+
+  if (text) {
+    const textNode = document.createElement('span');
+    textNode.textContent = text;
+    el.appendChild(textNode);
+  }
+
+  if (msgAttachments && msgAttachments.length > 0) {
+    const images = msgAttachments.filter(a => a.isImage);
+    const files = msgAttachments.filter(a => !a.isImage);
+
+    if (images.length > 0) {
+      const imgWrap = document.createElement('div');
+      imgWrap.className = 'msg-images';
+      images.forEach(a => {
+        const img = document.createElement('img');
+        img.src = a.dataUrl;
+        img.alt = a.name || 'Image';
+        img.onclick = () => showLightbox(a.dataUrl);
+        imgWrap.appendChild(img);
+      });
+      el.appendChild(imgWrap);
+    }
+
+    files.forEach(a => {
+      const fileEl = document.createElement('div');
+      fileEl.className = 'msg-file';
+      fileEl.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>`;
+      const nameSpan = document.createElement('span');
+      nameSpan.textContent = a.name || 'file';
+      fileEl.appendChild(nameSpan);
+      el.appendChild(fileEl);
+    });
+  }
+
   messagesEl.appendChild(el);
   scrollToBottom();
 }
 
 function scrollToBottom() {
-  requestAnimationFrame(() => {
-    messagesEl.scrollTop = messagesEl.scrollHeight;
-  });
+  requestAnimationFrame(() => { messagesEl.scrollTop = messagesEl.scrollHeight; });
 }
 
+// --- Send ---
 function sendMessage() {
   const text = inputEl.value.trim();
-  if (!text || !ws || ws.readyState !== 1) return;
+  if ((!text && attachments.length === 0) || !ws || ws.readyState !== 1) return;
 
-  addMessage(text, 'user');
-  ws.send(JSON.stringify({
+  addMessage(text, 'user', attachments.length > 0 ? [...attachments] : null);
+
+  const payload = {
     type: 'chat.send',
-    text: text,
+    text: text || (attachments.length === 1 ? 'Describe this file.' : `I'm sending ${attachments.length} files.`),
     sessionId: sessionId,
-  }));
+  };
+
+  if (attachments.length > 0) {
+    payload.attachments = attachments.map(a => ({
+      id: a.id,
+      dataUrl: a.dataUrl,
+      mimeType: a.mimeType,
+    }));
+  }
+
+  ws.send(JSON.stringify(payload));
   inputEl.value = '';
   inputEl.style.height = 'auto';
+  clearAttachments();
 }
 
 function useSuggestion(btn) {
@@ -308,13 +435,131 @@ function useSuggestion(btn) {
   sendMessage();
 }
 
-// Auto-resize textarea
+// --- File handling ---
+function genId() {
+  return 'att-' + Date.now() + '-' + Math.random().toString(36).slice(2, 9);
+}
+
+function processFiles(files) {
+  for (const file of files) {
+    if (file.size > MAX_FILE_SIZE) {
+      addMessage(`File "${file.name}" exceeds 50 MB limit.`, 'system error');
+      continue;
+    }
+    const reader = new FileReader();
+    const isImage = file.type.startsWith('image/');
+    reader.onload = () => {
+      attachments.push({
+        id: genId(),
+        dataUrl: reader.result,
+        mimeType: file.type || 'application/octet-stream',
+        name: file.name,
+        isImage: isImage,
+      });
+      renderAttachmentPreviews();
+    };
+    reader.readAsDataURL(file);
+  }
+}
+
+fileInput.addEventListener('change', (e) => {
+  if (e.target.files.length > 0) processFiles(e.target.files);
+  e.target.value = '';
+});
+
+cameraInput.addEventListener('change', (e) => {
+  if (e.target.files.length > 0) processFiles(e.target.files);
+  e.target.value = '';
+});
+
+function openCamera() {
+  cameraInput.click();
+}
+
+// --- Attachment previews ---
+function renderAttachmentPreviews() {
+  if (attachments.length === 0) {
+    previewEl.style.display = 'none';
+    previewEl.innerHTML = '';
+    return;
+  }
+  previewEl.style.display = 'flex';
+  previewEl.innerHTML = '';
+
+  attachments.forEach((a, idx) => {
+    const thumb = document.createElement('div');
+    thumb.className = 'attachment-thumb';
+
+    if (a.isImage) {
+      const img = document.createElement('img');
+      img.src = a.dataUrl;
+      img.alt = a.name;
+      thumb.appendChild(img);
+    } else {
+      const fileIcon = document.createElement('div');
+      fileIcon.className = 'file-icon';
+      fileIcon.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>`;
+      const nameSpan = document.createElement('span');
+      nameSpan.textContent = a.name.split('.').pop() || 'file';
+      fileIcon.appendChild(nameSpan);
+      thumb.appendChild(fileIcon);
+    }
+
+    const removeBtn = document.createElement('button');
+    removeBtn.className = 'remove-btn';
+    removeBtn.innerHTML = '&times;';
+    removeBtn.onclick = () => {
+      attachments.splice(idx, 1);
+      renderAttachmentPreviews();
+    };
+    thumb.appendChild(removeBtn);
+    previewEl.appendChild(thumb);
+  });
+}
+
+function clearAttachments() {
+  attachments = [];
+  renderAttachmentPreviews();
+}
+
+// --- Paste images ---
+document.addEventListener('paste', (e) => {
+  const items = e.clipboardData?.items;
+  if (!items) return;
+  const imageItems = [];
+  for (let i = 0; i < items.length; i++) {
+    if (items[i].type.startsWith('image/')) imageItems.push(items[i]);
+  }
+  if (imageItems.length === 0) return;
+  e.preventDefault();
+  const files = imageItems.map(i => i.getAsFile()).filter(Boolean);
+  processFiles(files);
+});
+
+// --- Drag and drop ---
+document.addEventListener('dragover', (e) => { e.preventDefault(); });
+document.addEventListener('drop', (e) => {
+  e.preventDefault();
+  if (e.dataTransfer?.files?.length > 0) processFiles(e.dataTransfer.files);
+});
+
+// --- Lightbox ---
+function showLightbox(src) {
+  const lb = document.createElement('div');
+  lb.className = 'lightbox';
+  lb.onclick = () => lb.remove();
+  const img = document.createElement('img');
+  img.src = src;
+  lb.appendChild(img);
+  document.body.appendChild(lb);
+}
+
+// --- Textarea auto-resize ---
 inputEl.addEventListener('input', () => {
   inputEl.style.height = 'auto';
   inputEl.style.height = Math.min(inputEl.scrollHeight, 140) + 'px';
 });
 
-// Enter to send, Shift+Enter for newline
 inputEl.addEventListener('keydown', (e) => {
   if (e.key === 'Enter' && !e.shiftKey) {
     e.preventDefault();
