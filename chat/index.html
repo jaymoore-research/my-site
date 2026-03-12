@@ -20,7 +20,6 @@
     display: flex; flex-direction: column;
   }
 
-  /* Header */
   .header {
     background: var(--surface); border-bottom: 1px solid var(--border);
     padding: 14px 20px; display: flex; align-items: center; gap: 14px;
@@ -46,7 +45,6 @@
   }
   .powered-by:hover { opacity: 1; }
 
-  /* Messages */
   .messages {
     flex: 1; overflow-y: auto; padding: 20px 16px;
     display: flex; flex-direction: column; gap: 10px;
@@ -100,7 +98,6 @@
     0% { content: ''; } 25% { content: '.'; } 50% { content: '..'; } 75% { content: '...'; }
   }
 
-  /* Welcome */
   .welcome {
     text-align: center; padding: 40px 20px; max-width: 480px;
     margin: auto; animation: fadeIn 0.4s ease;
@@ -120,7 +117,6 @@
     border-color: var(--accent); color: var(--accent);
   }
 
-  /* Attachments preview strip */
   .attachments-preview {
     display: flex; gap: 8px; padding: 8px 16px 0; background: var(--surface);
     flex-wrap: wrap; flex-shrink: 0;
@@ -130,30 +126,24 @@
     overflow: hidden; border: 1px solid var(--border);
     animation: fadeIn 0.15s ease;
   }
-  .attachment-thumb img {
-    width: 100%; height: 100%; object-fit: cover;
-  }
+  .attachment-thumb img { width: 100%; height: 100%; object-fit: cover; }
   .attachment-thumb .file-icon {
     width: 100%; height: 100%; display: flex; align-items: center;
-    justify-content: center; background: var(--bg); flex-direction: column;
-    gap: 2px;
+    justify-content: center; background: var(--bg); flex-direction: column; gap: 2px;
   }
   .attachment-thumb .file-icon svg { width: 24px; height: 24px; color: var(--muted); }
   .attachment-thumb .file-icon span {
     font-size: 9px; color: var(--muted); max-width: 56px;
-    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-    text-align: center;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: center;
   }
   .attachment-thumb .remove-btn {
     position: absolute; top: 2px; right: 2px; width: 18px; height: 18px;
     border-radius: 50%; background: rgba(0,0,0,0.7); border: none;
     color: #fff; font-size: 12px; cursor: pointer; display: flex;
-    align-items: center; justify-content: center; line-height: 1;
-    padding: 0;
+    align-items: center; justify-content: center; line-height: 1; padding: 0;
   }
   .attachment-thumb .remove-btn:hover { background: #ef4444; }
 
-  /* Input */
   .input-area {
     background: var(--surface); border-top: 1px solid var(--border);
     padding: 12px 16px; display: flex; gap: 8px; flex-shrink: 0;
@@ -171,8 +161,7 @@
     background: none; border: 1px solid var(--border); color: var(--muted);
     width: 42px; height: 42px; border-radius: 12px;
     cursor: pointer; transition: all 0.15s;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
   }
   .icon-btn:hover { border-color: var(--accent); color: var(--accent); }
   .icon-btn:active { background: rgba(59,130,246,0.1); }
@@ -180,35 +169,26 @@
   .send-btn {
     background: var(--accent); border: none; color: #fff;
     width: 42px; height: 42px; border-radius: 12px;
-    font-size: 18px; cursor: pointer; transition: background 0.15s;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
+    cursor: pointer; transition: background 0.15s;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
   }
   .send-btn:hover { background: var(--accent-hover); }
   .send-btn:disabled { opacity: 0.3; cursor: default; }
   .send-btn svg { width: 20px; height: 20px; }
-
-  /* Hidden file inputs */
   .hidden-input { display: none; }
 
-  /* Image lightbox */
   .lightbox {
     position: fixed; inset: 0; background: rgba(0,0,0,0.85);
     display: flex; align-items: center; justify-content: center;
     z-index: 100; cursor: pointer; animation: fadeIn 0.15s ease;
   }
-  .lightbox img {
-    max-width: 90vw; max-height: 90vh; border-radius: 8px;
-    object-fit: contain;
-  }
+  .lightbox img { max-width: 90vw; max-height: 90vh; border-radius: 8px; object-fit: contain; }
 
-  /* Footer */
   .footer {
     text-align: center; padding: 8px 16px; font-size: 11px;
     color: #374151; background: var(--bg); flex-shrink: 0;
   }
 
-  /* Mobile */
   @media (max-width: 600px) {
     .msg { max-width: 92%; }
     .header { padding: 12px 14px; }
@@ -269,13 +249,19 @@
 <script>
 const GATEWAY_URL = 'wss://macbook-pro-7.tail8eccc9.ts.net';
 const AUTH_PASSWORD = new URLSearchParams(window.location.search).get('p') || '';
-const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50 MB
+const MAX_FILE_SIZE = 50 * 1024 * 1024;
 
 let ws = null;
-let sessionId = null;
+let sessionKey = 'main';
 let reconnectTimer = null;
 let hasMessages = false;
-let attachments = []; // { id, dataUrl, mimeType, name, isImage }
+let attachments = [];
+let pending = new Map();
+let gatewayConnected = false;
+let connectNonce = null;
+let connectSent = false;
+let currentRunId = null;
+let streamText = '';
 
 const messagesEl = document.getElementById('messages');
 const inputEl = document.getElementById('input');
@@ -286,30 +272,53 @@ const previewEl = document.getElementById('attachments-preview');
 const fileInput = document.getElementById('fileInput');
 const cameraInput = document.getElementById('cameraInput');
 
-// --- Connection ---
+// --- UUID ---
+function uuid() {
+  if (crypto && crypto.randomUUID) return crypto.randomUUID();
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+    const r = Math.random() * 16 | 0;
+    return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+  });
+}
+
+// --- Gateway RPC ---
+function gatewayRequest(method, params) {
+  if (!ws || ws.readyState !== 1) return Promise.reject(new Error('not connected'));
+  const id = uuid();
+  const frame = { type: 'req', id, method, params };
+  return new Promise((resolve, reject) => {
+    pending.set(id, { resolve, reject });
+    ws.send(JSON.stringify(frame));
+  });
+}
+
+// --- Connect ---
 function connect() {
   if (ws && ws.readyState <= 1) return;
+  connectSent = false;
+  connectNonce = null;
   ws = new WebSocket(GATEWAY_URL);
 
   ws.onopen = () => {
-    statusEl.classList.add('connected');
-    statusEl.title = 'Connected';
-    const auth = {};
-    if (AUTH_PASSWORD) auth.password = AUTH_PASSWORD;
-    ws.send(JSON.stringify({
-      type: 'connect',
-      params: { auth, clientName: 'roboterri-webchat' }
-    }));
+    // Wait for connect.challenge event before sending connect request
+    // OpenClaw sends a challenge nonce after WebSocket opens
+    // Set a timeout in case no challenge arrives (send connect anyway)
+    setTimeout(() => { if (!connectSent) sendConnect(); }, 1500);
   };
 
   ws.onmessage = (event) => {
-    try { handleMessage(JSON.parse(event.data)); }
-    catch (e) { console.error('Parse error:', e); }
+    let data;
+    try { data = JSON.parse(event.data); } catch { return; }
+    handleFrame(data);
   };
 
   ws.onclose = () => {
     statusEl.classList.remove('connected');
     statusEl.title = 'Disconnected';
+    gatewayConnected = false;
+    connectSent = false;
+    pending.forEach(p => p.reject(new Error('disconnected')));
+    pending.clear();
     clearTimeout(reconnectTimer);
     reconnectTimer = setTimeout(connect, 3000);
   };
@@ -320,42 +329,127 @@ function connect() {
   };
 }
 
-function handleMessage(data) {
-  if (data.type === 'connected') { sessionId = data.sessionId; return; }
+function sendConnect() {
+  if (connectSent || !ws || ws.readyState !== 1) return;
+  connectSent = true;
 
-  if (data.type === 'chat' || data.type === 'chat.stream') {
-    const text = data.text || data.content || '';
-    if (text && data.role === 'assistant') {
-      removeTyping();
-      addMessage(text, 'assistant');
+  const auth = {};
+  if (AUTH_PASSWORD) auth.password = AUTH_PASSWORD;
+
+  const params = {
+    minProtocol: 3,
+    maxProtocol: 3,
+    client: {
+      id: 'roboterri-webchat',
+      version: '1.0.0',
+      platform: navigator.platform || 'web',
+      mode: 'webchat',
+      instanceId: uuid()
+    },
+    role: 'operator',
+    scopes: ['operator.admin'],
+    auth: Object.keys(auth).length > 0 ? auth : undefined,
+    userAgent: navigator.userAgent,
+    locale: navigator.language
+  };
+
+  gatewayRequest('connect', params).then(hello => {
+    gatewayConnected = true;
+    statusEl.classList.add('connected');
+    statusEl.title = 'Connected';
+
+    // Use session key from hello if available
+    const sk = hello?.snapshot?.sessionDefaults?.mainSessionKey;
+    if (sk) sessionKey = sk;
+  }).catch(err => {
+    console.error('Connect failed:', err);
+    addMessage('Connection failed: ' + (err.message || err), 'system error');
+    ws?.close();
+  });
+}
+
+function handleFrame(data) {
+  // Response to a request
+  if (data.type === 'res') {
+    const p = pending.get(data.id);
+    if (!p) return;
+    pending.delete(data.id);
+    if (data.ok) p.resolve(data.payload);
+    else p.reject(new Error(data.error?.message || 'request failed'));
+    return;
+  }
+
+  // Event
+  if (data.type === 'event') {
+    const event = data.event;
+    const payload = data.payload;
+
+    // Connect challenge — send connect with nonce
+    if (event === 'connect.challenge') {
+      connectNonce = payload?.nonce || null;
+      sendConnect();
+      return;
+    }
+
+    // Chat event
+    if (event === 'chat') {
+      handleChatEvent(payload);
+      return;
+    }
+  }
+}
+
+function handleChatEvent(payload) {
+  if (!payload) return;
+
+  if (payload.state === 'delta') {
+    // Streaming text
+    const text = extractText(payload.message);
+    if (text) {
+      streamText = text;
+      updateStreamingMessage(text);
     }
     return;
   }
 
-  if (data.type === 'chat.typing') {
-    if (!document.querySelector('.typing')) {
-      const el = document.createElement('div');
-      el.className = 'typing';
-      el.textContent = 'RoboTerri is thinking';
-      messagesEl.appendChild(el);
-      scrollToBottom();
-    }
-    return;
-  }
-
-  if (data.type === 'error') {
+  if (payload.state === 'final') {
     removeTyping();
-    addMessage('Connection error. Please try again.', 'system error');
+    removeStreamMsg();
+    const text = extractText(payload.message);
+    if (text) addMessage(text, 'assistant');
+    else if (streamText) addMessage(streamText, 'assistant');
+    currentRunId = null;
+    streamText = '';
+    return;
+  }
+
+  if (payload.state === 'aborted' || payload.state === 'error') {
+    removeTyping();
+    removeStreamMsg();
+    if (streamText) addMessage(streamText, 'assistant');
+    if (payload.state === 'error') {
+      addMessage('Error: ' + (payload.errorMessage || 'unknown error'), 'system error');
+    }
+    currentRunId = null;
+    streamText = '';
     return;
   }
 }
 
-function removeTyping() {
-  const t = document.querySelector('.typing');
-  if (t) t.remove();
+function extractText(msg) {
+  if (!msg) return '';
+  if (typeof msg.text === 'string') return msg.text;
+  if (Array.isArray(msg.content)) {
+    return msg.content
+      .filter(c => c.type === 'text')
+      .map(c => c.text)
+      .join('');
+  }
+  if (typeof msg.content === 'string') return msg.content;
+  return '';
 }
 
-// --- Messages ---
+// --- Messages UI ---
 function addMessage(text, className, msgAttachments) {
   if (!hasMessages) { welcomeEl.style.display = 'none'; hasMessages = true; }
   const el = document.createElement('div');
@@ -370,7 +464,6 @@ function addMessage(text, className, msgAttachments) {
   if (msgAttachments && msgAttachments.length > 0) {
     const images = msgAttachments.filter(a => a.isImage);
     const files = msgAttachments.filter(a => !a.isImage);
-
     if (images.length > 0) {
       const imgWrap = document.createElement('div');
       imgWrap.className = 'msg-images';
@@ -383,11 +476,10 @@ function addMessage(text, className, msgAttachments) {
       });
       el.appendChild(imgWrap);
     }
-
     files.forEach(a => {
       const fileEl = document.createElement('div');
       fileEl.className = 'msg-file';
-      fileEl.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>`;
+      fileEl.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>';
       const nameSpan = document.createElement('span');
       nameSpan.textContent = a.name || 'file';
       fileEl.appendChild(nameSpan);
@@ -399,6 +491,39 @@ function addMessage(text, className, msgAttachments) {
   scrollToBottom();
 }
 
+function updateStreamingMessage(text) {
+  if (!hasMessages) { welcomeEl.style.display = 'none'; hasMessages = true; }
+  removeTyping();
+  let el = document.getElementById('stream-msg');
+  if (!el) {
+    el = document.createElement('div');
+    el.className = 'msg assistant';
+    el.id = 'stream-msg';
+    messagesEl.appendChild(el);
+  }
+  el.textContent = text;
+  scrollToBottom();
+}
+
+function removeStreamMsg() {
+  const el = document.getElementById('stream-msg');
+  if (el) el.remove();
+}
+
+function removeTyping() {
+  const t = document.querySelector('.typing');
+  if (t) t.remove();
+}
+
+function showTyping() {
+  if (document.querySelector('.typing') || document.getElementById('stream-msg')) return;
+  const el = document.createElement('div');
+  el.className = 'typing';
+  el.textContent = 'RoboTerri is thinking';
+  messagesEl.appendChild(el);
+  scrollToBottom();
+}
+
 function scrollToBottom() {
   requestAnimationFrame(() => { messagesEl.scrollTop = messagesEl.scrollHeight; });
 }
@@ -406,25 +531,38 @@ function scrollToBottom() {
 // --- Send ---
 function sendMessage() {
   const text = inputEl.value.trim();
-  if ((!text && attachments.length === 0) || !ws || ws.readyState !== 1) return;
+  if ((!text && attachments.length === 0) || !gatewayConnected) return;
 
+  const msgText = text || (attachments.length === 1 ? 'Describe this file.' : 'I\'m sending ' + attachments.length + ' files.');
   addMessage(text, 'user', attachments.length > 0 ? [...attachments] : null);
 
-  const payload = {
-    type: 'chat.send',
-    text: text || (attachments.length === 1 ? 'Describe this file.' : `I'm sending ${attachments.length} files.`),
-    sessionId: sessionId,
+  const idempotencyKey = uuid();
+  currentRunId = idempotencyKey;
+  streamText = '';
+
+  const params = {
+    sessionKey: sessionKey,
+    message: msgText,
+    deliver: false,
+    idempotencyKey: idempotencyKey
   };
 
   if (attachments.length > 0) {
-    payload.attachments = attachments.map(a => ({
-      id: a.id,
-      dataUrl: a.dataUrl,
-      mimeType: a.mimeType,
-    }));
+    params.attachments = attachments.map(a => {
+      const match = /^data:([^;]+);base64,(.+)$/.exec(a.dataUrl);
+      if (match) return { type: 'image', mimeType: match[1], content: match[2] };
+      return null;
+    }).filter(Boolean);
   }
 
-  ws.send(JSON.stringify(payload));
+  showTyping();
+
+  gatewayRequest('chat.send', params).catch(err => {
+    removeTyping();
+    addMessage('Send failed: ' + (err.message || err), 'system error');
+    currentRunId = null;
+  });
+
   inputEl.value = '';
   inputEl.style.height = 'auto';
   clearAttachments();
@@ -443,18 +581,16 @@ function genId() {
 function processFiles(files) {
   for (const file of files) {
     if (file.size > MAX_FILE_SIZE) {
-      addMessage(`File "${file.name}" exceeds 50 MB limit.`, 'system error');
+      addMessage('File "' + file.name + '" exceeds 50 MB limit.', 'system error');
       continue;
     }
     const reader = new FileReader();
     const isImage = file.type.startsWith('image/');
     reader.onload = () => {
       attachments.push({
-        id: genId(),
-        dataUrl: reader.result,
+        id: genId(), dataUrl: reader.result,
         mimeType: file.type || 'application/octet-stream',
-        name: file.name,
-        isImage: isImage,
+        name: file.name, isImage: isImage,
       });
       renderAttachmentPreviews();
     };
@@ -466,105 +602,76 @@ fileInput.addEventListener('change', (e) => {
   if (e.target.files.length > 0) processFiles(e.target.files);
   e.target.value = '';
 });
-
 cameraInput.addEventListener('change', (e) => {
   if (e.target.files.length > 0) processFiles(e.target.files);
   e.target.value = '';
 });
+function openCamera() { cameraInput.click(); }
 
-function openCamera() {
-  cameraInput.click();
-}
-
-// --- Attachment previews ---
 function renderAttachmentPreviews() {
   if (attachments.length === 0) {
-    previewEl.style.display = 'none';
-    previewEl.innerHTML = '';
-    return;
+    previewEl.style.display = 'none'; previewEl.innerHTML = ''; return;
   }
-  previewEl.style.display = 'flex';
-  previewEl.innerHTML = '';
-
+  previewEl.style.display = 'flex'; previewEl.innerHTML = '';
   attachments.forEach((a, idx) => {
     const thumb = document.createElement('div');
     thumb.className = 'attachment-thumb';
-
     if (a.isImage) {
       const img = document.createElement('img');
-      img.src = a.dataUrl;
-      img.alt = a.name;
-      thumb.appendChild(img);
+      img.src = a.dataUrl; img.alt = a.name; thumb.appendChild(img);
     } else {
-      const fileIcon = document.createElement('div');
-      fileIcon.className = 'file-icon';
-      fileIcon.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>`;
-      const nameSpan = document.createElement('span');
-      nameSpan.textContent = a.name.split('.').pop() || 'file';
-      fileIcon.appendChild(nameSpan);
-      thumb.appendChild(fileIcon);
+      const fi = document.createElement('div');
+      fi.className = 'file-icon';
+      fi.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>';
+      const s = document.createElement('span');
+      s.textContent = a.name.split('.').pop() || 'file';
+      fi.appendChild(s); thumb.appendChild(fi);
     }
-
-    const removeBtn = document.createElement('button');
-    removeBtn.className = 'remove-btn';
-    removeBtn.innerHTML = '&times;';
-    removeBtn.onclick = () => {
-      attachments.splice(idx, 1);
-      renderAttachmentPreviews();
-    };
-    thumb.appendChild(removeBtn);
-    previewEl.appendChild(thumb);
+    const rb = document.createElement('button');
+    rb.className = 'remove-btn'; rb.innerHTML = '&times;';
+    rb.onclick = () => { attachments.splice(idx, 1); renderAttachmentPreviews(); };
+    thumb.appendChild(rb); previewEl.appendChild(thumb);
   });
 }
 
-function clearAttachments() {
-  attachments = [];
-  renderAttachmentPreviews();
-}
+function clearAttachments() { attachments = []; renderAttachmentPreviews(); }
 
-// --- Paste images ---
+// Paste images
 document.addEventListener('paste', (e) => {
   const items = e.clipboardData?.items;
   if (!items) return;
-  const imageItems = [];
+  const imgs = [];
   for (let i = 0; i < items.length; i++) {
-    if (items[i].type.startsWith('image/')) imageItems.push(items[i]);
+    if (items[i].type.startsWith('image/')) imgs.push(items[i]);
   }
-  if (imageItems.length === 0) return;
+  if (imgs.length === 0) return;
   e.preventDefault();
-  const files = imageItems.map(i => i.getAsFile()).filter(Boolean);
-  processFiles(files);
+  processFiles(imgs.map(i => i.getAsFile()).filter(Boolean));
 });
 
-// --- Drag and drop ---
+// Drag and drop
 document.addEventListener('dragover', (e) => { e.preventDefault(); });
 document.addEventListener('drop', (e) => {
   e.preventDefault();
   if (e.dataTransfer?.files?.length > 0) processFiles(e.dataTransfer.files);
 });
 
-// --- Lightbox ---
+// Lightbox
 function showLightbox(src) {
   const lb = document.createElement('div');
-  lb.className = 'lightbox';
-  lb.onclick = () => lb.remove();
+  lb.className = 'lightbox'; lb.onclick = () => lb.remove();
   const img = document.createElement('img');
-  img.src = src;
-  lb.appendChild(img);
+  img.src = src; lb.appendChild(img);
   document.body.appendChild(lb);
 }
 
-// --- Textarea auto-resize ---
+// Textarea auto-resize
 inputEl.addEventListener('input', () => {
   inputEl.style.height = 'auto';
   inputEl.style.height = Math.min(inputEl.scrollHeight, 140) + 'px';
 });
-
 inputEl.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter' && !e.shiftKey) {
-    e.preventDefault();
-    sendMessage();
-  }
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
 });
 
 connect();
