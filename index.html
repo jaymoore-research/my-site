@@ -249,6 +249,77 @@
       .notice strong {
         color: var(--text);
       }
+
+      .product-card {
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 14px;
+        margin-bottom: 10px;
+        background: rgba(255, 255, 255, 0.02);
+        transition: border-color 0.2s;
+      }
+
+      .product-card:last-child {
+        margin-bottom: 0;
+      }
+
+      .product-card:hover {
+        border-color: var(--link);
+      }
+
+      .product-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 6px;
+      }
+
+      .product-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        flex-shrink: 0;
+      }
+
+      .product-name {
+        font-weight: 600;
+        font-size: 15px;
+      }
+
+      .product-tagline {
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .product-desc {
+        font-size: 13px;
+        color: var(--muted);
+        margin-bottom: 8px;
+      }
+
+      .product-tags {
+        display: flex;
+        gap: 4px;
+        flex-wrap: wrap;
+        margin-bottom: 8px;
+      }
+
+      .product-tags span {
+        font-size: 10px;
+        padding: 2px 8px;
+        border-radius: 20px;
+        border: 1px solid var(--border);
+        color: var(--muted);
+      }
+
+      .product-link {
+        font-size: 12px;
+        font-weight: 500;
+      }
     </style>
   </head>
   <body>
@@ -480,9 +551,46 @@
           </ul>
         </section>
 
+        <section>
+          <h2>Products</h2>
+          <div class="product-card">
+            <div class="product-header">
+              <div class="product-icon" style="background: linear-gradient(135deg, #065f46, #10b981);">🧬</div>
+              <div>
+                <div class="product-name">Genora</div>
+                <div class="product-tagline">AI-powered genetic counselling</div>
+              </div>
+            </div>
+            <div class="product-desc">Upload your 23andMe or AncestryDNA data for carrier screening, pharmacogenomics, nutrition, and polygenic risk reports.</div>
+            <div class="product-tags">
+              <span>Carrier Screening</span>
+              <span>PharmGx</span>
+              <span>Nutrition</span>
+              <span>PRS</span>
+            </div>
+            <a class="product-link" href="https://genora.uk" target="_blank" rel="noopener noreferrer">genora.uk &rarr;</a>
+          </div>
+          <div class="product-card">
+            <div class="product-header">
+              <div class="product-icon" style="background: linear-gradient(135deg, #1e3a5f, #3b82f6);">🔬</div>
+              <div>
+                <div class="product-name">Fix My Lab Protocol</div>
+                <div class="product-tagline">AI protocol analyser</div>
+              </div>
+            </div>
+            <div class="product-desc">Upload a lab protocol and get AI-powered feedback — flagged issues, optimisation suggestions with literature references, and PubMed search.</div>
+            <div class="product-tags">
+              <span>Protocol QC</span>
+              <span>PubMed</span>
+              <span>Reagent Lookup</span>
+            </div>
+            <a class="product-link" href="https://fix-my-lab-protocol.jaydata.bio" target="_blank" rel="noopener noreferrer">fix-my-lab-protocol.jaydata.bio &rarr;</a>
+          </div>
+        </section>
+
         <footer>
           <span>Last updated: </span>
-          <time datetime="2026-03-01">March 1, 2026</time>
+          <time datetime="2026-03-18">March 18, 2026</time>
         </footer>
       </div>
     </main>
