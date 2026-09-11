@@ -1,0 +1,501 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>jaydata — a read-only MCP server over a synthetic cohort</title>
+    <meta
+      name="description"
+      content="A public, read-only MCP server over a synthetic oncology panel cohort of 200 samples. The data is invented and no sample corresponds to a person."
+    />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧬</text></svg>" />
+    <style>
+      :root {
+        color-scheme: light dark;
+        --bg: #0b0d12;
+        --card: #111827;
+        --text: #e5e7eb;
+        --muted: #9ca3af;
+        --link: #93c5fd;
+        --border: rgba(255, 255, 255, 0.08);
+        --shadow: rgba(0, 0, 0, 0.25);
+        --fill: rgba(255, 255, 255, 0.02);
+        --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+          "Liberation Mono", monospace;
+      }
+
+      @media (prefers-color-scheme: light) {
+        :root {
+          --bg: #f6f7fb;
+          --card: #ffffff;
+          --text: #0f172a;
+          --muted: #475569;
+          --link: #2563eb;
+          --border: rgba(15, 23, 42, 0.12);
+          --shadow: rgba(15, 23, 42, 0.08);
+          --fill: rgba(15, 23, 42, 0.02);
+        }
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
+          Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+        background: radial-gradient(
+            1200px 600px at 10% 10%,
+            rgba(59, 130, 246, 0.18),
+            transparent 55%
+          ),
+          radial-gradient(
+            900px 600px at 90% 10%,
+            rgba(16, 185, 129, 0.14),
+            transparent 45%
+          ),
+          var(--bg);
+        color: var(--text);
+        line-height: 1.5;
+      }
+
+      main {
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: 48px 18px;
+      }
+
+      .card {
+        width: min(820px, 100%);
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        box-shadow: 0 12px 40px var(--shadow);
+        padding: 28px;
+      }
+
+      header {
+        margin-bottom: 8px;
+      }
+
+      h1 {
+        font-size: 28px;
+        margin: 0;
+        letter-spacing: -0.02em;
+        font-family: var(--mono);
+      }
+
+      .tagline {
+        margin: 6px 0 0 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      section {
+        margin-top: 26px;
+      }
+
+      h2 {
+        font-size: 14px;
+        margin: 0 0 10px 0;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--muted);
+      }
+
+      p {
+        margin: 0 0 10px 0;
+      }
+
+      p:last-child {
+        margin-bottom: 0;
+      }
+
+      ul {
+        margin: 0;
+        padding-left: 18px;
+      }
+
+      a {
+        color: var(--link);
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      code {
+        font-family: var(--mono);
+        font-size: 0.9em;
+        padding: 1px 5px;
+        border: 1px solid var(--border);
+        border-radius: 5px;
+        background: var(--fill);
+        white-space: nowrap;
+      }
+
+      pre {
+        margin: 10px 0 0 0;
+        padding: 12px 14px;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        background: var(--fill);
+        overflow-x: auto;
+        font-family: var(--mono);
+        font-size: 12.5px;
+        line-height: 1.6;
+        color: var(--text);
+      }
+
+      pre code {
+        border: 0;
+        padding: 0;
+        background: none;
+        font-size: inherit;
+        white-space: pre;
+      }
+
+      .notice {
+        margin-top: 18px;
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 12px 14px;
+        background: rgba(147, 197, 253, 0.08);
+      }
+
+      .notice strong {
+        color: var(--text);
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+      }
+
+      th {
+        text-align: left;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--muted);
+        font-weight: 600;
+        padding: 0 10px 8px 0;
+        border-bottom: 1px solid var(--border);
+      }
+
+      td {
+        padding: 10px 10px 10px 0;
+        border-bottom: 1px solid var(--border);
+        vertical-align: top;
+      }
+
+      tr:last-child td {
+        border-bottom: 0;
+        padding-bottom: 0;
+      }
+
+      td:first-child {
+        white-space: nowrap;
+        width: 1%;
+      }
+
+      .tool {
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 14px;
+        margin-bottom: 10px;
+        background: var(--fill);
+      }
+
+      .tool:last-child {
+        margin-bottom: 0;
+      }
+
+      .tool-name {
+        font-family: var(--mono);
+        font-weight: 600;
+        font-size: 14px;
+      }
+
+      .tool-q {
+        font-size: 13px;
+        color: var(--muted);
+        margin: 4px 0 10px 0;
+      }
+
+      .tool p {
+        font-size: 13.5px;
+      }
+
+      .args {
+        list-style: none;
+        margin: 10px 0 0 0;
+        padding: 10px 0 0 0;
+        border-top: 1px solid var(--border);
+        font-size: 12.5px;
+        color: var(--muted);
+      }
+
+      .args li {
+        margin-bottom: 6px;
+      }
+
+      .args li:last-child {
+        margin-bottom: 0;
+      }
+
+      .tags {
+        display: flex;
+        gap: 4px;
+        flex-wrap: wrap;
+        margin-top: 12px;
+      }
+
+      .tags span {
+        font-size: 10px;
+        padding: 2px 8px;
+        border-radius: 20px;
+        border: 1px solid var(--border);
+        color: var(--muted);
+        font-family: var(--mono);
+      }
+
+      .prov {
+        margin: 10px 0 0 0;
+        padding: 12px 14px;
+        border-left: 2px solid var(--link);
+        border-radius: 0 10px 10px 0;
+        background: var(--fill);
+        font-family: var(--mono);
+        font-size: 12.5px;
+      }
+
+      footer {
+        margin-top: 26px;
+        padding-top: 14px;
+        border-top: 1px solid var(--border);
+        color: var(--muted);
+        font-size: 12px;
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="card">
+        <header>
+          <h1>jaydata</h1>
+          <p class="tagline">
+            A public, read-only MCP server over a synthetic oncology panel cohort.
+          </p>
+        </header>
+
+        <div class="notice">
+          <strong>The data is invented.</strong> No sample corresponds to a person, and nothing
+          here is derived from patient records. The cohort is generated from a fixed seed, and
+          every result the server returns carries a provenance line saying so.
+        </div>
+
+        <section>
+          <h2>What it is</h2>
+          <p>
+            Four tools over one table. A model connects, asks how large a biomarker-positive
+            subgroup is, and gets a numerator, a denominator and a caveat about the assay. That is
+            the whole surface.
+          </p>
+          <p>
+            It exists to be pointed at. Aggregate access to a cohort is the ordinary shape of a
+            genomics tool call, and it is easier to reason about what such a server should refuse
+            when the cohort behind it is invented and you can read every line of it.
+          </p>
+        </section>
+
+        <section>
+          <h2>The cohort</h2>
+          <table>
+            <tbody>
+              <tr>
+                <td>Samples</td>
+                <td>200</td>
+              </tr>
+              <tr>
+                <td>Tumour types</td>
+                <td>
+                  Colorectal, gastric, lung adenocarcinoma, melanoma, multiple myeloma — 40 samples
+                  each
+                </td>
+              </tr>
+              <tr>
+                <td>Panel</td>
+                <td>SYN-panel-v2, 1.94 Mb coding footprint</td>
+              </tr>
+              <tr>
+                <td>Measurements</td>
+                <td>
+                  <code>tmb_per_mb</code>, <code>variants_pass</code>, <code>purity</code>,
+                  <code>mean_depth</code>
+                </td>
+              </tr>
+              <tr>
+                <td>Identifiers</td>
+                <td>
+                  <code>SYN-1007</code> and the like. Every identifier must match
+                  <code>SYN-\d+</code> or the server refuses to start
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section>
+          <h2>The four tools</h2>
+          <p>
+            Four, because each one answers a question somebody actually asks, and because every
+            tool definition is re-sent to the model on every turn for the rest of the session. A
+            wide server is a standing tax on the context window.
+          </p>
+
+          <div class="tool">
+            <div class="tool-name">cohort_summary</div>
+            <div class="tool-q">How many samples are there, and how do they split by tumour type?</div>
+            <p>
+              The orientation question, and the only tool that returns anything without an
+              argument. It returns counts and nothing identifying, so it tells you the shape of the
+              cohort without naming anyone in it. Every count is published as it is, because the
+              fixture is invented and there is nobody in it to disclose.
+            </p>
+          </div>
+
+          <div class="tool">
+            <div class="tool-name">assay_results</div>
+            <div class="tool-q">What was recorded for one named sample?</div>
+            <p>
+              One sample at a time, on purpose, and the caller must already know the identifier. A
+              tool that took a list, or took no argument at all, would be an export tool, and an
+              export tool is a different risk class from a lookup. No tool on this server returns
+              the list of identifiers, so the individual-level route cannot be used to walk the
+              cohort.
+            </p>
+            <ul class="args">
+              <li><code>sample_id</code> — sample identifier, e.g. SYN-1007</li>
+            </ul>
+          </div>
+
+          <div class="tool">
+            <div class="tool-name">biomarker_prevalence</div>
+            <div class="tool-q">What fraction sits at or above a cut-off on one measurement?</div>
+            <p>
+              This is the question the surface exists for, because the routine ask is not "give me
+              the table" but "is the biomarker-positive subgroup large enough to be worth an
+              analysis". It answers with a numerator, a denominator and a proportion, and with
+              nothing else.
+            </p>
+            <p>
+              The marker is a closed vocabulary of four column names, so there is no free-text
+              filter and no column that is not a parameter can be reached through it.
+            </p>
+            <p>
+              A prevalence from this tool is a panel-derived count on a synthetic cohort. TMB in
+              particular is sensitive to panel footprint, tumour purity and sequencing depth, so
+              check <code>assay_qc</code> before reading a TMB-high fraction as anything but a
+              first pass.
+            </p>
+            <ul class="args">
+              <li><code>marker</code> — which measurement to threshold, one of the four</li>
+              <li>
+                <code>threshold</code> — a sample counts as positive at or above this value. For
+                <code>tmb_per_mb</code> the conventional TMB-high cut-off is 10
+              </li>
+              <li><code>tumour_type</code> — one tumour type, or omit for the whole cohort</li>
+            </ul>
+          </div>
+
+          <div class="tool">
+            <div class="tool-name">assay_qc</div>
+            <div class="tool-q">Is the assay data good enough to trust the answer to that?</div>
+            <p>
+              The caveat that has to travel with the number. A TMB-high fraction computed over
+              samples with low tumour purity or thin coverage is a statement about the assay and
+              not about the disease, so this returns median purity and median depth alongside the
+              count of samples falling below each floor. The floors are quoted in the result,
+              because a QC count is unreadable without them.
+            </p>
+            <p>
+              Counts only, and both floors are fixed in the server rather than passed in, so this
+              cannot be turned into a filter that selects samples one at a time. They are a minimum
+              purity of 0.30 and a minimum mean depth of 300.
+            </p>
+            <ul class="args">
+              <li><code>tumour_type</code> — one tumour type, or omit for the whole cohort</li>
+            </ul>
+          </div>
+
+          <div class="tags">
+            <span>readOnlyHint: true</span>
+            <span>destructiveHint: false</span>
+            <span>idempotentHint: true</span>
+            <span>openWorldHint: false</span>
+          </div>
+        </section>
+
+        <section>
+          <h2>Provenance</h2>
+          <p>
+            Appended to every result from every tool, so the caveat travels with the number instead
+            of sitting in a README nobody opens.
+          </p>
+          <div class="prov">
+            Synthetic fixture, 200 samples, SYN-panel-v2 (1.94&nbsp;Mb coding footprint). Not
+            patient data.
+          </div>
+          <p style="margin-top: 10px">
+            Quote it whenever you quote a number from this server.
+          </p>
+        </section>
+
+        <section>
+          <h2>What it will not do</h2>
+          <p>
+            There is no <code>run_sql</code>, no <code>query</code> parameter and no
+            <code>where</code> clause anywhere in the four schemas, so the set of questions this
+            server can be asked is finite and you can enumerate it. Anything outside the schema is
+            rejected by validation before a tool body runs:
+          </p>
+          <pre><code>Unknown tool: 'run_sql'
+1 validation error for call[cohort_summary]: where — Unexpected keyword argument
+1 validation error for call[biomarker_prevalence]: marker — Input should be
+  'tmb_per_mb', 'variants_pass', 'purity' or 'mean_depth'</code></pre>
+          <p style="margin-top: 10px">
+            The fixture is loaded once into immutable rows, no code path opens anything for
+            writing, and there is no disclosure floor: every count is given as it is, so a small
+            stratum returns its true number rather than a null. That last one is only defensible
+            because the cohort is invented. Point this pattern at real data and a cell-size floor is
+            the first control to put back.
+          </p>
+        </section>
+
+        <section>
+          <h2>Connect</h2>
+          <pre><code>claude mcp add --transport http jaydata https://&lt;deployment&gt;/mcp</code></pre>
+          <p style="margin-top: 10px">
+            One endpoint, <code>POST /mcp</code>, Streamable HTTP, stateless, answering with a
+            plain JSON body. No key and no OAuth. Any client that speaks Streamable HTTP takes the
+            same URL.
+          </p>
+        </section>
+
+        <footer>
+          <span><a href="/">jaydata.bio</a></span>
+          <span>Synthetic data only</span>
+        </footer>
+      </div>
+    </main>
+  </body>
+</html>
