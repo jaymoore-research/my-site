@@ -1,0 +1,14 @@
+Cell-type marker recovery above random expectation. The frozen MARKERS-CL v5 panel comprises 1,937 genes assigned to 204 Cell Ontology classes, assembled from PanglaoDB [1], CellMarker 2.0 [2], Human Protein Atlas single-cell expression [3] and pinned brain reference profiles. Source-specific evidence filters and ambiguity rules assign each gene to one class, with at most 20 markers per class. The original panel was restricted to an earlier CTD’s gene list.
+
+Within each CTD, population expression profiles are normalised over its native genes and averaged equally across populations with the same exact cell-type identity, combining organs for evaluation only. For each assessable marker, cell types are ranked by normalised expression. Top-3 recovery is the percentage whose expected cell type ranks among the three highest; ties use the worst rank and zero/flat signals count as misses.
+
+The y-axis shows observed top-3 recovery (%) minus the theoretical random expectation (100 × 3 / number of competing classes). Labels show positive marker tests / assessable marker tests: broad 119/133, medium 250/378, fine 480/935, HCL 331/545 and Descartes 185/365. These denominators count marker genes/tests, not cells.
+
+Each CTD uses its own classes, native genes and available markers. This is an exploratory marker-consistency benchmark, not a matched atlas ranking, permutation test, individual-cell accuracy estimate or validation of tissue assignment. Source independence has not been established.
+
+References
+[1] Franzén O, Gan LM, Björkegren JLM. PanglaoDB: a web server for exploration of mouse and human single-cell RNA sequencing data. Database. 2019;baz046. https://doi.org/10.1093/database/baz046
+[2] CellMarker 2.0: an updated database of manually curated cell markers in human/mouse and web tools based on scRNA-seq data. Nucleic Acids Research. 2023;51:D870–D876. https://doi.org/10.1093/nar/gkac947
+[3] Karlsson M et al. A single-cell type transcriptomics map of human tissues. Science Advances. 2021;7:eabh2169. https://doi.org/10.1126/sciadv.abh2169
+
+The references describe source resources; the combined panel and top-3 scoring procedure are custom CellWeaver analyses.
