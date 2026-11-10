@@ -9,352 +9,54 @@
       content="Jay Alexander Moore • computational biology, cancer genomics, and neurodegeneration."
     />
     <style>
-      :root {
-        color-scheme: light dark;
-        --bg: #0b0d12;
-        --card: #111827;
-        --text: #e5e7eb;
-        --muted: #9ca3af;
-        --link: #93c5fd;
-        --border: rgba(255, 255, 255, 0.08);
-        --shadow: rgba(0, 0, 0, 0.25);
-      }
-
-      @media (prefers-color-scheme: light) {
-        :root {
-          --bg: #f6f7fb;
-          --card: #ffffff;
-          --text: #0f172a;
-          --muted: #475569;
-          --link: #2563eb;
-          --border: rgba(15, 23, 42, 0.12);
-          --shadow: rgba(15, 23, 42, 0.08);
-        }
-      }
-
-      * {
-        box-sizing: border-box;
-      }
-
-      body {
-        margin: 0;
-        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
-          Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-        background: radial-gradient(
-            1200px 600px at 10% 10%,
-            rgba(59, 130, 246, 0.18),
-            transparent 55%
-          ),
-          radial-gradient(
-            900px 600px at 90% 10%,
-            rgba(16, 185, 129, 0.14),
-            transparent 45%
-          ),
-          var(--bg);
-        color: var(--text);
-        line-height: 1.5;
-      }
-
-      main {
-        min-height: 100vh;
-        display: grid;
-        place-items: center;
-        padding: 48px 18px;
-      }
-
-      .card {
-        width: min(820px, 100%);
-        background: var(--card);
-        border: 1px solid var(--border);
-        border-radius: 16px;
-        box-shadow: 0 12px 40px var(--shadow);
-        padding: 28px;
-      }
-
-      header {
-        display: flex;
-        gap: 16px;
-        align-items: baseline;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        margin-bottom: 8px;
-      }
-
-      h1 {
-        font-size: 28px;
-        margin: 0;
-        letter-spacing: -0.02em;
-      }
-
-      .tagline {
-        margin: 0;
-        color: var(--muted);
-        font-size: 14px;
-      }
-
-      section {
-        margin-top: 18px;
-      }
-
-      h2 {
-        font-size: 14px;
-        margin: 0 0 10px 0;
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-        color: var(--muted);
-      }
-
-      p {
-        margin: 0 0 10px 0;
-      }
-
-      ul {
-        margin: 0;
-        padding-left: 18px;
-      }
-
-      a {
-        color: var(--link);
-        text-decoration: none;
-      }
-      a:hover {
-        text-decoration: underline;
-      }
-
-      .links {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px 14px;
-        padding: 0;
-        list-style: none;
-      }
-
-      .links a {
-        display: inline-block;
-        padding: 6px 10px;
-        border: 1px solid var(--border);
-        border-radius: 999px;
-        background: rgba(255, 255, 255, 0.02);
-      }
-
-      footer {
-        margin-top: 18px;
-        color: var(--muted);
-        font-size: 12px;
-      }
-
-      .links-top {
-        margin: 10px 0 0 0;
-      }
-
-      .qr {
-        width: 140px;
-        height: 140px;
-        border-radius: 10px;
-        background: #fff;
-        padding: 6px;
-        border: 1px solid var(--border);
-      }
-
-      .scrollbox {
-        margin-top: 10px;
-        max-height: 320px;
-        overflow: auto;
-        border: 1px solid var(--border);
-        border-radius: 12px;
-        padding: 12px 14px;
-        background: rgba(255, 255, 255, 0.02);
-      }
-
-      .scrollbox h3 {
-        margin: 0 0 8px 0;
-        font-size: 13px;
-        color: var(--text);
-        letter-spacing: -0.01em;
-      }
-
-      .scrollbox ul {
-        margin: 0 0 14px 0;
-      }
-
-      .scrollbox ul:last-child {
-        margin-bottom: 0;
-      }
-
-      .pub {
-        margin: 0;
-        padding-left: 18px;
-      }
-
-      .pub li {
-        margin: 0 0 10px 0;
-      }
-
-      .pub-meta {
-        margin-top: 2px;
-        color: var(--muted);
-        font-size: 12px;
-      }
-
-      .timeline {
-        list-style: none;
-        margin: 0;
-        padding: 0 0 0 18px;
-        border-left: 1px solid var(--border);
-      }
-
-      .timeline li {
-        position: relative;
-        padding: 2px 0 12px 16px;
-      }
-
-      .timeline li::before {
-        content: "";
-        position: absolute;
-        left: -6px;
-        top: 6px;
-        width: 10px;
-        height: 10px;
-        border-radius: 999px;
-        background: var(--link);
-        box-shadow: 0 0 0 4px rgba(147, 197, 253, 0.15);
-      }
-
-      .timeline .when {
-        display: inline-block;
-        font-size: 12px;
-        color: var(--muted);
-        margin-right: 8px;
-      }
-
-      .timeline .what {
-        font-weight: 600;
-      }
-
-      .timeline .role {
-        display: block;
-        margin-top: 2px;
-        color: var(--muted);
-        font-size: 12px;
-      }
-
-      .notice {
-        margin-top: 18px;
-        border: 1px solid var(--border);
-        border-radius: 14px;
-        padding: 12px 14px;
-        background: rgba(147, 197, 253, 0.08);
-      }
-
-      .notice strong {
-        color: var(--text);
-      }
-
-      .product-card {
-        border: 1px solid var(--border);
-        border-radius: 10px;
-        padding: 14px;
-        margin-bottom: 10px;
-        background: rgba(255, 255, 255, 0.02);
-        transition: border-color 0.2s;
-      }
-
-      .product-card:last-child {
-        margin-bottom: 0;
-      }
-
-      .product-card:hover {
-        border-color: var(--link);
-      }
-
-      .product-header {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        margin-bottom: 6px;
-      }
-
-      .product-icon {
-        width: 36px;
-        height: 36px;
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 18px;
-        flex-shrink: 0;
-      }
-
-      .product-name {
-        font-weight: 600;
-        font-size: 15px;
-      }
-
-      .product-tagline {
-        font-size: 12px;
-        color: var(--muted);
-      }
-
-      .product-desc {
-        font-size: 13px;
-        color: var(--muted);
-        margin-bottom: 8px;
-      }
-
-      .product-tags {
-        display: flex;
-        gap: 4px;
-        flex-wrap: wrap;
-        margin-bottom: 8px;
-      }
-
-      .product-tags span {
-        font-size: 10px;
-        padding: 2px 8px;
-        border-radius: 20px;
-        border: 1px solid var(--border);
-        color: var(--muted);
-      }
-
-      .product-link {
-        font-size: 12px;
-        font-weight: 500;
-      }
-
-      /* Refresh the spacing and typography while preserving the page content. */
-      :root { --bg:#101914; --card:#16221b; --text:#e7eee8; --muted:#a6b5aa; --link:#a8d9b9; --border:rgba(190,218,199,.17); }
-      body { background:var(--bg); line-height:1.65; }
-      main { padding:64px 24px; }
-      .card { width:min(920px,100%); padding:48px 56px; border-radius:18px; box-shadow:0 16px 60px rgba(0,0,0,.07); }
-      header { align-items:center; padding-bottom:28px; margin-bottom:26px; border-bottom:1px solid var(--border); }
-      h1 { font-family:Georgia,serif; font-weight:400; font-size:clamp(32px,5vw,44px); letter-spacing:-.035em; line-height:1.2; margin-bottom:12px; }
-      .tagline { font-size:14px; line-height:1.6; }
-      .qr { width:90px; height:90px; opacity:.85; }
-      section { margin-top:34px; }
-      h2 { font-size:12px; letter-spacing:.14em; margin-bottom:16px; }
-      a { text-underline-offset:4px; }
+      :root { color-scheme:light; --bg:#e7e9e2; --card:#f2f3ed; --text:#26362e; --muted:#616d63; --link:#285a41; --border:#cbd2c8; }
+      * { box-sizing:border-box; }
+      body { margin:0; background:var(--bg); color:var(--text); font-family:Arial,Helvetica,sans-serif; font-size:16px; line-height:1.65; }
+      main { padding:48px 24px; }
+      .card { width:min(1020px,100%); margin:auto; padding:64px 64px 36px; background:var(--card); border:1px solid var(--border); }
+      header { padding-bottom:34px; margin-bottom:30px; border-bottom:2px solid var(--link); }
+      h1 { max-width:850px; margin:0 0 22px; color:var(--link); font-size:clamp(46px,7.5vw,84px); font-weight:800; letter-spacing:-.045em; line-height:1.02; }
+      .tagline { margin:0 0 26px; max-width:680px; font-size:clamp(20px,3vw,29px); line-height:1.35; color:var(--link); }
+      h2 { margin:0 0 18px; color:var(--link); font-size:27px; font-weight:700; line-height:1.2; letter-spacing:-.025em; }
+      p { margin:0 0 14px; }
+      section { margin-top:40px; }
+      a { color:var(--link); text-decoration:none; text-underline-offset:4px; }
+      a:hover { text-decoration:underline; }
       a:focus-visible { outline:2px solid var(--link); outline-offset:4px; }
-      .links { gap:8px 10px; }
-      .links a { padding:5px 10px; font-size:12px; }
-      .notice { padding:18px 20px; margin-top:18px; border-radius:10px; background:rgba(113,164,128,.07); font-size:14px; }
-      section[aria-label="Writing"] { border-left:3px solid var(--link); padding:4px 0 4px 20px; }
-      section[aria-label="Writing"] h2 { margin-bottom:8px; }
-      section[aria-label="Writing"] p>a { font-family:Georgia,serif; font-size:23px; line-height:1.35; display:inline-block; margin-bottom:10px; }
-      .timeline { margin-left:5px; }
-      .timeline li { padding-bottom:20px; }
-      .timeline .role,.timeline .when,.pub-meta { font-size:13px; }
+      ul { margin:0; padding-left:20px; }
+      .links { display:flex; flex-wrap:wrap; gap:10px 24px; padding:0; margin:0; list-style:none; }
+      .links a { font-size:14px; text-decoration:underline; }
+      .qr { display:none; }
+      .notice { margin-top:24px; padding:18px 22px; border:1px solid var(--border); border-left:4px solid var(--link); background:#e8ece3; font-size:14px; }
+      .timeline { list-style:none; margin:0; padding:0; }
+      .timeline li { position:relative; padding:0 0 21px 20px; border-left:1px solid var(--border); }
+      .timeline li:last-child { padding-bottom:0; }
+      .timeline li::before { content:""; position:absolute; left:-4px; top:8px; width:7px; height:7px; background:var(--link); }
+      .when { display:inline-block; margin-right:8px; font-size:13px; color:var(--muted); }
+      .what { font-weight:700; }
+      .role { display:block; margin-top:3px; font-size:14px; color:var(--muted); }
+      .pub { margin:0; padding-left:20px; }
       .pub li { margin-bottom:18px; }
-      .scrollbox { max-height:420px; padding:20px; }
-      .product-card { padding:20px; border-radius:10px; }
-      .product-desc { font-size:14px; line-height:1.65; }
-      .product-tagline,.product-link { font-size:13px; }
-      .resume { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px; border-top:1px solid var(--border); padding-top:28px; margin-top:36px; }
-      .resume h2 { margin-bottom:4px; }
+      .pub-meta { margin-top:4px; color:var(--muted); font-size:13px; }
+      .scrollbox { margin-top:16px; max-height:420px; overflow:auto; border:1px solid var(--border); padding:22px; }
+      .scrollbox h3 { margin:0 0 12px; font-size:16px; }
+      .scrollbox ul { margin-bottom:20px; }
+      .scrollbox ul:last-child { margin-bottom:0; }
+      .product-card { border:1px solid var(--border); padding:24px; margin-bottom:14px; }
+      .product-header { display:flex; gap:12px; align-items:center; margin-bottom:10px; }
+      .product-icon { width:36px; height:36px; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:18px; }
+      .product-name { font-weight:700; font-size:19px; color:var(--link); }
+      .product-tagline,.product-desc { color:var(--muted); font-size:14px; }
+      .product-desc { margin-bottom:12px; }
+      .product-tags { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:12px; }
+      .product-tags span { border:1px solid var(--border); padding:2px 8px; color:var(--muted); font-size:11px; }
+      .product-link { font-size:13px; font-weight:700; }
+      .resume { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:20px; padding-top:32px; border-top:2px solid var(--link); }
+      .resume h2 { margin-bottom:8px; }
       .resume p { margin:0; color:var(--muted); font-size:14px; }
-      .resume a { display:inline-block; background:var(--link); color:var(--bg); padding:11px 18px; border-radius:7px; font-size:14px; font-weight:600; }
-      footer { margin-top:28px; padding-top:20px; font-size:12px; }
-      @media(prefers-color-scheme:light) { :root { --bg:#f3f5f1; --card:#fff; --text:#203328; --muted:#657268; --link:#326c4c; --border:#dfe6de; } }
-      @media(max-width:640px) { main { padding:20px 12px; } .card { padding:28px 22px; border-radius:12px; } header { gap:20px; } .qr { display:none; } .links a { font-size:11px; } section { margin-top:28px; } .scrollbox { padding:14px; } }
+      .resume a { display:inline-block; padding:13px 20px; background:var(--link); color:var(--card); font-size:14px; font-weight:700; }
+      footer { margin-top:36px; padding-top:18px; border-top:1px solid var(--border); color:var(--muted); font-size:12px; }
+      @media(max-width:640px) { main { padding:16px 10px; } .card { padding:32px 22px 24px; } header { padding-bottom:26px; } h1 { font-size:clamp(42px,11.5vw,64px); } h2 { font-size:25px; } .links { gap:10px 18px; } .links a { font-size:13px; } section { margin-top:32px; } .notice,.product-card,.scrollbox { padding:16px; } }
     </style>
   </head>
   <body>
@@ -386,7 +88,7 @@
         <section class="notice" aria-label="Announcement">
           Join the <a href="https://luma.com/clawbio" target="_blank" rel="noopener noreferrer">ClawBio calendar</a>
           and the <a href="https://luma.com/future_of_bio" target="_blank" rel="noopener noreferrer">Future of Biology salons</a>
-          for future events.
+          to find upcoming events.
         </section>
 
 
@@ -394,13 +96,12 @@
         <section>
           <h2>Interests</h2>
           <p>
-            Interdisciplinary researcher studying data and genomics in human health. My best experiences have
-            had these in common:
+            I study data and genomics to understand human health. I enjoy:
           </p>
           <ul>
-            <li>Hands on work with the latest technology</li>
-            <li>Working with engaged and excited people</li>
-            <li>Learning about the complex biology that drives our lives</li>
+            <li>Working directly with new technology</li>
+            <li>Working with curious, engaged people</li>
+            <li>Understanding the biology that shapes our lives</li>
           </ul>
         </section>
 
@@ -442,7 +143,7 @@
         </section>
 
         <section>
-          <h2>Select Publications</h2>
+          <h2>Selected publications</h2>
           <div class="scrollbox" role="region" aria-label="Publications and patents">
             <ul class="pub">
               <li>
@@ -617,7 +318,7 @@
                 <div class="product-tagline">Open community for AI-driven biology</div>
               </div>
             </div>
-            <div class="product-desc">Hackathons, a talk series and a public events calendar for people building AI tooling for the life sciences. I have been an early contributor since it started.</div>
+            <div class="product-desc">Hackathons, talks, and events for people building AI tools for the life sciences. I have contributed since the community began.</div>
             <div class="product-tags">
               <span>Hackathons</span>
               <span>AI for Biology</span>
@@ -632,7 +333,7 @@
                 <div class="product-tagline">Salon series in London and Oxford</div>
               </div>
             </div>
-            <div class="product-desc">Evening salons bringing researchers, founders and funders together on where biology goes next. I co-organise the series.</div>
+            <div class="product-desc">I co-organise evening salons in London and Oxford, bringing researchers, founders, and funders together to discuss the future of biology.</div>
             <div class="product-tags">
               <span>Salons</span>
               <span>London &amp; Oxford</span>
