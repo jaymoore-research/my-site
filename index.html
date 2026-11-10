@@ -320,6 +320,41 @@
         font-size: 12px;
         font-weight: 500;
       }
+
+      /* Refresh the spacing and typography while preserving the page content. */
+      :root { --bg:#101914; --card:#16221b; --text:#e7eee8; --muted:#a6b5aa; --link:#a8d9b9; --border:rgba(190,218,199,.17); }
+      body { background:var(--bg); line-height:1.65; }
+      main { padding:64px 24px; }
+      .card { width:min(920px,100%); padding:48px 56px; border-radius:18px; box-shadow:0 16px 60px rgba(0,0,0,.07); }
+      header { align-items:center; padding-bottom:28px; margin-bottom:26px; border-bottom:1px solid var(--border); }
+      h1 { font-family:Georgia,serif; font-weight:400; font-size:clamp(32px,5vw,44px); letter-spacing:-.035em; line-height:1.2; margin-bottom:12px; }
+      .tagline { font-size:14px; line-height:1.6; }
+      .qr { width:90px; height:90px; opacity:.85; }
+      section { margin-top:34px; }
+      h2 { font-size:12px; letter-spacing:.14em; margin-bottom:16px; }
+      a { text-underline-offset:4px; }
+      a:focus-visible { outline:2px solid var(--link); outline-offset:4px; }
+      .links { gap:8px 10px; }
+      .links a { padding:5px 10px; font-size:12px; }
+      .notice { padding:18px 20px; margin-top:18px; border-radius:10px; background:rgba(113,164,128,.07); font-size:14px; }
+      section[aria-label="Writing"] { border-left:3px solid var(--link); padding:4px 0 4px 20px; }
+      section[aria-label="Writing"] h2 { margin-bottom:8px; }
+      section[aria-label="Writing"] p>a { font-family:Georgia,serif; font-size:23px; line-height:1.35; display:inline-block; margin-bottom:10px; }
+      .timeline { margin-left:5px; }
+      .timeline li { padding-bottom:20px; }
+      .timeline .role,.timeline .when,.pub-meta { font-size:13px; }
+      .pub li { margin-bottom:18px; }
+      .scrollbox { max-height:420px; padding:20px; }
+      .product-card { padding:20px; border-radius:10px; }
+      .product-desc { font-size:14px; line-height:1.65; }
+      .product-tagline,.product-link { font-size:13px; }
+      .resume { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px; border-top:1px solid var(--border); padding-top:28px; margin-top:36px; }
+      .resume h2 { margin-bottom:4px; }
+      .resume p { margin:0; color:var(--muted); font-size:14px; }
+      .resume a { display:inline-block; background:var(--link); color:var(--bg); padding:11px 18px; border-radius:7px; font-size:14px; font-weight:600; }
+      footer { margin-top:28px; padding-top:20px; font-size:12px; }
+      @media(prefers-color-scheme:light) { :root { --bg:#f3f5f1; --card:#fff; --text:#203328; --muted:#657268; --link:#326c4c; --border:#dfe6de; } }
+      @media(max-width:640px) { main { padding:20px 12px; } .card { padding:28px 22px; border-radius:12px; } header { gap:20px; } .qr { display:none; } .links a { font-size:11px; } section { margin-top:28px; } .scrollbox { padding:14px; } }
     </style>
   </head>
   <body>
@@ -614,9 +649,14 @@
           </div>
         </section>
 
+        <section class="resume" aria-label="Résumé">
+          <div><h2>Résumé</h2><p>Experience, education, and publications.</p></div>
+          <a href="/assets/Jay%20Moore%202026.pdf" download="Jay Moore 2026.pdf">Download résumé · PDF ↓</a>
+        </section>
+
         <footer>
           <span>Last updated: </span>
-          <time datetime="2026-08-07">August 7, 2026</time>
+          <time datetime="2026-11-10">10 November 2026</time>
         </footer>
       </div>
     </main>
