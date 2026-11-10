@@ -2,7 +2,7 @@ Thoughts on AI biosecurity, discovery, and science's track record of self-regula
 
 All words here are written by me without AI and views shared are my own.
 
-Recently I attended an informal roundtable event on biosecurity. Although I'm a keen advocate for AI adoption in science, hosting events and workshops, I’ve been starting to understand that it is essential for researchers and the public to understand the developing role of AI in biology. Attending the event highlighted how little I knew and how diverse the groups views of the risks were. To begin looking at the changes in biosecurity that will need to happen to adapt to AI adoption, I compiled a timeline biosecurity and biosafety risks in biology.
+Recently I attended an informal roundtable event on biosecurity. Although I'm a keen advocate for AI adoption in science, hosting events and workshops, I’ve been starting to understand that it is essential for researchers and the public to understand biosecurity. Attending the event highlighted how diverse the groups views of the risks were. To begin learning about biosecurity, and what is at risk with AI adoption, I compiled a historic timeline biosecurity and biosafety risks in biology.
 
 The timeline follows discovery milestones, and events that changed the regulation and oversight landscape for that discovery. The view is not intended to be extensive, and I limited the timeline to mostly UK and US regulations. I've include AI lab automation as its own timeline.
 
@@ -18,7 +18,7 @@ My expectations going into this were:
 2) research in fields with strong regulation more slower and lack innovation
 3) dangerous individuals are a risk to science regardless of regulatory environments
 
-Key examples (worth follow up)
+Key examples (worth detailed follow up)
 
 •	The Asilomar Conference on Recombinant DNA (Genetic engineering, 1975). The pausing research to define the regulations. Concerns were raised about biosecurity risks that splicing DNA across viruses and trapping them in the genome of bacteria may infect humans, causing cancer. Paul Berg, who received a Nobel Prize for his contributions to this work, helped organise the Asilomar Conference on Recombinant DNA to develop guidelines with the NIH for this work. Approval and commercialisation of a engineered bacteria-derived insulin in was delivered in 1982.
 
