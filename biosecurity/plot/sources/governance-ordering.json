@@ -1,0 +1,20 @@
+{
+  "rule": "Sort within each group by the earliest mapped oversight or voluntary restraint, including inherited frameworks. Dates are selected historical anchors, not claims of first-ever regulation. Preserve narrative order for equal dates.",
+  "additional_anchors": {
+    "Modified organisms / Cartagena": {
+      "date": "1993-02-01",
+      "label": "GMO deliberate-release rules commenced",
+      "source": "https://publications.parliament.uk/pa/cm199899/cmhansrd/vo990310/text/90310w09.htm",
+      "reading_depth": "Selected indexed ministerial-answer passage",
+      "detail": "Earlier GMO oversight precedes Cartagena; the lane is broader than the treaty."
+    },
+    "Engineered gene drives / guidance": {
+      "date": "1993-02-01",
+      "label": "Inherited GMO release framework",
+      "source": "https://publications.parliament.uk/pa/cm199899/cmhansrd/vo990310/text/90310w09.htm",
+      "reading_depth": "Selected indexed ministerial-answer passage; applicability to qualifying engineered organisms follows the existing audit scope",
+      "detail": "Pre-existing GMO framework, not a gene-drive-specific rule or claim that engineered drives existed in 1993."
+    }
+  },
+  "review_date": "2026-11-06"
+}

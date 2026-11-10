@@ -1,0 +1,200 @@
+{
+  "reviewed": "2026-11-05",
+  "sources": {
+    "s-a932b67bc7": {
+      "url": "https://grants.nih.gov/grants/guide/notice-files/NOT-OD-09-116.html",
+      "title": "NIH 2009 stem-cell guidelines",
+      "review_depth": "Full substantive notice",
+      "finding": "New framework effective 7 July 2009; eligible hESC research permitted subject to law. Not removal of every embryo-research funding restriction.",
+      "accessed": "2026-11-05",
+      "publication_date": "2009-07-06"
+    },
+    "s-09929e2f31": {
+      "url": "https://grants.nih.gov/grants/guide/notice-files/NOT-OD-26-031.html",
+      "title": "NIH new hESC registry approvals paused",
+      "review_depth": "Full substantive notice",
+      "finding": "Pause on review/approval of new hESC registry lines; existing registered lines remain usable. Embryo derivation funding remains prohibited.",
+      "accessed": "2026-11-05",
+      "publication_date": "2026-01-23"
+    },
+    "s-2c776a61a6": {
+      "url": "https://stemcells.nih.gov/node/24",
+      "title": "NIH stem-cell FAQs",
+      "review_depth": "Selected indexed passage",
+      "finding": "Current FAQ repeats the new hESC registry review/approval pause.",
+      "accessed": "2026-11-05",
+      "publication_date": null
+    },
+    "s-f46c49ef91": {
+      "url": "https://www.nationalacademies.org/news/statement-by-the-organizing-committee-of-the-second-international-summit-on-human-genome-editing",
+      "title": "Second summit organising-committee statement",
+      "review_depth": "Full substantive statement",
+      "finding": "Condemns the reported edited-births procedure; reiterates opposition to current germline clinical use and calls for standards. Nonbinding, not a UK law amendment.",
+      "accessed": "2026-11-05",
+      "publication_date": "2018-11-28"
+    },
+    "s-35af88b0f4": {
+      "url": "https://archive.cdc.gov/www_cdc_gov/media/releases/2014/p0711-lab-safety.html",
+      "title": "CDC response to anthrax and influenza incidents",
+      "review_depth": "Full substantive release",
+      "finding": "11 July transfer moratorium and working group; action followed both anthrax and H5N1 incidents. Some reforms underway/planned.",
+      "accessed": "2026-11-05",
+      "publication_date": "2014-07-11"
+    },
+    "s-1a41fcc7f3": {
+      "url": "https://archive.cdc.gov/www_cdc_gov/washington/testimony/2014/t20140716.htm",
+      "title": "CDC Director testimony",
+      "review_depth": "Selected passages, including implemented protections",
+      "finding": "Transfer moratorium lifted lab-by-lab after corrective action; agency policy, not a worldwide ban.",
+      "accessed": "2026-11-05",
+      "publication_date": "2014-07-16"
+    },
+    "s-837bd42dc9": {
+      "url": "https://archive.cdc.gov/www_cdc_gov/media/releases/2014/s0724-lab.html",
+      "title": "First CDC laboratory resumes specified transfers",
+      "review_depth": "Indexed official passage",
+      "finding": "24 July first specified TB-lab transfer permission; not a universal end date.",
+      "accessed": "2026-11-05",
+      "publication_date": "2014-07-24"
+    },
+    "s-eada04f7e1": {
+      "url": "https://www.hfea.gov.uk/about-us/news-and-press-releases/2016/hfea-approves-licence-application-to-use-gene-editing-in-research/",
+      "title": "HFEA embryo-editing research licence",
+      "review_depth": "Full short substantive announcement",
+      "finding": "Research licence approved subject to ethics approval; research embryos cannot be transferred for treatment.",
+      "accessed": "2026-11-05",
+      "publication_date": "2016-02-01"
+    },
+    "s-40589e1f99": {
+      "url": "https://www.ukri.org/councils/mrc/guidance-for-applicants/policies-and-guidance-for-researchers/genome-editing-in-human-cells/",
+      "title": "MRC genome editing policy",
+      "review_depth": "Full substantive policy text",
+      "finding": "Distinguishes licensed germline laboratory research and supported somatic clinical work from prohibited heritable clinical applications. Updated 13 February 2026.",
+      "accessed": "2026-11-05",
+      "publication_date": "2026-02-13"
+    },
+    "s-hfe-original-treatment": {
+      "url": "https://www.legislation.gov.uk/ukpga/1990/37/pdfs/ukpga_19900037_en.pdf",
+      "title": "HFE Act 1990, original Schedule 2 paragraph 1(4)",
+      "review_depth": "Selected statutory passage",
+      "finding": "Treatment licences could not authorise alteration of the genetic structure of a cell forming part of an embryo. Research licences were separately governed.",
+      "accessed": "2026-11-06",
+      "publication_date": "1990-11-01"
+    },
+    "s-hfe-schedule-commencement": {
+      "url": "https://www.legislation.gov.uk/ukpga/1990/37/schedule/2?view=extent",
+      "title": "HFE Act Schedule 2: commencement and amended treatment provisions",
+      "review_depth": "Selected statutory provisions and commencement annotation",
+      "finding": "Schedule 2 wholly in force on 1 August 1991. Later wording includes the specific permitted mitochondrial-donation exception.",
+      "accessed": "2026-11-06"
+    },
+    "s-ipsc-applications": {
+      "url": "https://research.nih.gov/research-at-nih/induced-pluripotent-stem-cell-research",
+      "title": "NIH induced pluripotent stem cell research overview",
+      "review_depth": "Substantive overview text in indexed result",
+      "accessed": "2026-11-06",
+      "finding": "Reprogrammed somatic cells supply pluripotent cells for disease research and drug discovery. The chart note synthesises this alternative source with the original human-iPSC milestone; it does not quantify substitution or imply complete replacement of hESCs."
+    }
+  },
+  "lane_scopes": {
+    "Stem-cell research": {
+      "subtitle": "Red: US hESC line eligibility",
+      "overview_restrictions": [
+        "stem-cells-r-bush",
+        "stem-cells-r-registry2026"
+      ],
+      "explanation": "The overview red periods concern NIH hESC line eligibility: the 2001 restriction was replaced in July 2009; a distinct pause on new registry approvals began in January 2026. Dickey\u2013Wicker remains in the evidence table, but is not used to colour the entire stem-cell/iPSC narrative. iPSCs are a non-embryonic alternative, not the target of the hESC eligibility limit."
+    },
+    "CRISPR / heritable editing": {
+      "subtitle": "Red: reproductive genome editing",
+      "explanation": "Red begins with the August 1991 treatment-licence restriction on genetic alteration of embryo cells and continues under the amended framework from October 2009. This is not a blanket ban on CRISPR research. Licensed research and the specific mitochondrial-donation exception are distinct; the summit statement did not change UK law."
+    }
+  },
+  "additional_restrictions": {
+    "Stem-cell research": [
+      {
+        "id": "stem-cells-r-registry2026",
+        "short_label": "New hESC registry approvals paused [US]",
+        "jurisdiction": "US",
+        "authority_type": "funding_condition",
+        "valid_from": "2026-01-23",
+        "valid_to": null,
+        "date_precision": "day",
+        "end_date_precision": null,
+        "subjects": "NIH review and approval of new hESC registry lines. Already approved lines remain eligible; not an iPSC ban or all-hESC ban.",
+        "activities": "Review and approval of new hESC registry lines.",
+        "source_ids": [
+          "s-09929e2f31",
+          "s-2c776a61a6"
+        ],
+        "continuation_basis": "January notice and current NIH FAQ describe the pause. No verified lifting date found.",
+        "status": "documented",
+        "status_as_of": "2026-11-05",
+        "supported_through": "2026-11-05"
+      }
+    ],
+    "CRISPR / heritable editing": [
+      {
+        "id": "heritable-editing-r-uk1991",
+        "short_label": "Embryo genetic alteration excluded from treatment licences [UK]",
+        "jurisdiction": "UK",
+        "authority_type": "law",
+        "valid_from": "1991-08-01",
+        "valid_to": "2009-10-01",
+        "date_precision": "day",
+        "end_date_precision": "day",
+        "subjects": "UK treatment licences: genetic alteration of a cell while it forms part of an embryo. Not a statement about all research or pre-1991 law.",
+        "activities": "Reproductive embryo genetic modification.",
+        "source_ids": [
+          "s-hfe-original-treatment",
+          "s-hfe-schedule-commencement"
+        ],
+        "continuation_basis": "Original Schedule 2 paragraph 1(4) applied from August 1991. Replaced by amended provisions in October 2009; the separately mapped successor restriction continues.",
+        "status": "documented",
+        "status_as_of": "2026-11-06",
+        "supported_through": "2009-10-01"
+      }
+    ]
+  },
+  "findings": [
+    {
+      "topic": "Summit",
+      "text": "The edited-births claim was discussed at the already organised 2018 summit. Its statement was a nonbinding response, not an immediate UK law change.",
+      "source_ids": [
+        "s-f46c49ef91"
+      ]
+    },
+    {
+      "topic": "CDC",
+      "text": "The 11 July 2014 transfer moratorium was an implemented agency action following two incidents. Resumption was lab-specific, so no whole-field red interval with a guessed endpoint is added.",
+      "source_ids": [
+        "s-35af88b0f4",
+        "s-1a41fcc7f3",
+        "s-837bd42dc9"
+      ]
+    },
+    {
+      "topic": "Stem cells",
+      "text": "2009 widened hESC eligibility; embryo-derivation funding restrictions persisted. January 2026 added a distinct new-line registry pause. None is a blanket iPSC ban.",
+      "source_ids": [
+        "s-a932b67bc7",
+        "s-09929e2f31",
+        "s-2c776a61a6"
+      ]
+    },
+    {
+      "topic": "CRISPR",
+      "text": "Research and reproductive applications have different rules. The red label now names reproductive use.",
+      "source_ids": [
+        "s-eada04f7e1",
+        "s-40589e1f99"
+      ]
+    },
+    {
+      "text": "Human iPSCs provide a non-embryonic pluripotent-cell source for many research applications. This can reduce reliance on hESCs, but is not universal equivalence or replacement of all embryo research.",
+      "source_ids": [
+        "s-ipsc-applications"
+      ]
+    }
+  ]
+}

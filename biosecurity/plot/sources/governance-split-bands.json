@@ -1,0 +1,1357 @@
+{
+  "review_cutoff": "2026-11-05",
+  "splits": {
+    "Stem-cell research": {
+      "rows": [
+        {
+          "label": "UK embryo licences",
+          "governance": [
+            {
+              "id": "stem-cells-g-uk",
+              "short_label": "Embryo-use licensing",
+              "jurisdiction": "UK",
+              "authority_type": "law",
+              "valid_from": "1991-08-01",
+              "valid_to": null,
+              "date_precision": "day",
+              "subjects": "Covered embryo research/derivation, not every established stem-cell line experiment.",
+              "activities": "Covered embryo research/derivation, not every established stem-cell line experiment.",
+              "source_ids": [
+                "s-7fa2cada67"
+              ],
+              "continuation_basis": "HFE Act as amended; purposes expanded in 2001.",
+              "status": "documented",
+              "status_as_of": "2026-11-05",
+              "supported_through": "2026-11-05",
+              "general_framework": false,
+              "end_date_precision": null
+            }
+          ],
+          "restrictions": []
+        },
+        {
+          "label": "US hESC funding",
+          "governance": [
+            {
+              "id": "stem-cells-g-nih09",
+              "short_label": "hESC funding eligibility",
+              "jurisdiction": "US",
+              "authority_type": "funding_condition",
+              "valid_from": "2009-07-07",
+              "valid_to": null,
+              "date_precision": "day",
+              "subjects": "Eligible NIH-funded hESC work; embryo derivation/destruction funding separately restricted.",
+              "activities": "Eligible NIH-funded hESC work; embryo derivation/destruction funding separately restricted.",
+              "source_ids": [
+                "s-4172bb73b0",
+                "s-773a08d633",
+                "s-86d3d8d743"
+              ],
+              "continuation_basis": "2009 policy subject to enacted law; 2026/27 mandate continuity confirmed.",
+              "status": "documented",
+              "status_as_of": "2026-11-05",
+              "supported_through": "2026-11-05",
+              "general_framework": false,
+              "end_date_precision": null
+            }
+          ],
+          "restrictions": [
+            {
+              "id": "stem-cells-r-bush",
+              "short_label": "NIH hESC line-eligibility limit",
+              "jurisdiction": "US",
+              "authority_type": "funding_condition",
+              "valid_from": "2001-08-09",
+              "valid_to": "2009-07-07",
+              "date_precision": "day",
+              "subjects": "Specific Bush-era line-eligibility policy, not a worldwide hESC ban. Other statutory restrictions remain.",
+              "activities": "Specific Bush-era line-eligibility policy, not a worldwide hESC ban. Other statutory restrictions remain.",
+              "source_ids": [
+                "s-4172bb73b0"
+              ],
+              "continuation_basis": "Only the specified restriction is mapped; an open end is not a lifting date.",
+              "status": "documented",
+              "status_as_of": "2026-11-05",
+              "supported_through": "2009-07-07",
+              "end_date_precision": "day",
+              "display": true
+            },
+            {
+              "id": "stem-cells-r-dickey",
+              "short_label": "Specified embryo research unfunded [US]",
+              "jurisdiction": "US",
+              "authority_type": "funding_condition",
+              "valid_from": "1996",
+              "valid_to": null,
+              "date_precision": "year",
+              "subjects": "Annual Dickey–Wicker lineage: creation for research and specified destruction/risk; does not ban all hESC research. FY2027 CR confirms current continuation.",
+              "activities": "Annual Dickey–Wicker lineage: creation for research and specified destruction/risk; does not ban all hESC research. FY2027 CR confirms current continuation.",
+              "source_ids": [
+                "s-773a08d633",
+                "s-86d3d8d743"
+              ],
+              "continuation_basis": "Only the specified restriction is mapped; an open end is not a lifting date.",
+              "status": "documented",
+              "status_as_of": "2026-11-05",
+              "supported_through": "2026-11-05",
+              "end_date_precision": null,
+              "display": false
+            }
+          ],
+          "note": "The 2001–09 strip shows the selected hESC line-eligibility restriction. The separate Dickey–Wicker embryo-research funding restriction continues and is retained below."
+        }
+      ],
+      "events": {
+        "1991 UK embryo licensing": 0,
+        "2001 UK research purposes expanded": 0,
+        "2001 funding limit": 1,
+        "2009 rules replaced": 1
+      }
+    },
+    "Pathogen research and controls": {
+      "rows": [
+        {
+          "label": "UK safety duties",
+          "governance": [
+            {
+              "id": "laboratory-biosafety-g-workplace",
+              "short_label": "General workplace duties",
+              "jurisdiction": "UK",
+              "authority_type": "law",
+              "valid_from": "1975-04",
+              "valid_to": null,
+              "date_precision": "month",
+              "subjects": "GB workplace health/safety duties, subject to territorial and Crown qualifications.",
+              "activities": "GB workplace health/safety duties, subject to territorial and Crown qualifications.",
+              "source_ids": [
+                "s-bc088606ff"
+              ],
+              "continuation_basis": "General framework, not specialist laboratory licensing.",
+              "status": "documented",
+              "status_as_of": "2026-11-05",
+              "supported_through": "2026-11-05",
+              "general_framework": true,
+              "end_date_precision": null
+            }
+          ],
+          "restrictions": []
+        },
+        {
+          "label": "US controls / funding",
+          "governance": [
+            {
+              "id": "pathogen-research-g-select",
+              "short_label": "Select-agent framework",
+              "jurisdiction": "US",
+              "authority_type": "law",
+              "valid_from": "1997-04-15",
+              "valid_to": null,
+              "date_precision": "day",
+              "subjects": "Covered transfers, later possession/use; listed agents, toxins and exemptions.",
+              "activities": "Covered transfers, later possession/use; listed agents, toxins and exemptions.",
+              "source_ids": [
+                "s-63cfd2abee"
+              ],
+              "continuation_basis": "Framework family; 2003 implementation and later amendments are not one unchanged transfer rule.",
+              "status": "continuity_uncertain",
+              "status_as_of": "2026-11-05",
+              "supported_through": "2023-10-26",
+              "general_framework": false,
+              "end_date_precision": null
+            },
+            {
+              "id": "pathogen-research-g-highrisk",
+              "short_label": "High-risk policy transition",
+              "jurisdiction": "US",
+              "authority_type": "funding_condition",
+              "valid_from": "2025-05-07",
+              "valid_to": null,
+              "date_precision": "day",
+              "subjects": "Defined NIH-supported DGOF; 2026 policy adds international-research categories.",
+              "activities": "Defined NIH-supported DGOF; 2026 policy adds international-research categories.",
+              "source_ids": [
+                "s-7ede01724a",
+                "s-4130598602",
+                "s-f08f0cdf78"
+              ],
+              "continuation_basis": "July notice confirms potential DGOF paused pending NIH implementation; later implementation not found.",
+              "status": "continuity_uncertain",
+              "status_as_of": "2026-11-05",
+              "supported_through": "2026-07-28",
+              "general_framework": false,
+              "end_date_precision": null
+            }
+          ],
+          "restrictions": [
+            {
+              "id": "pathogen-research-r-gof",
+              "short_label": "Selected US funding pause",
+              "jurisdiction": "US",
+              "authority_type": "funding_condition",
+              "valid_from": "2014-10-17",
+              "valid_to": "2017-12-19",
+              "date_precision": "day",
+              "subjects": "Defined US-funded influenza/SARS/MERS gain-of-function work; exceptions existed, not all pathogen research.",
+              "activities": "Defined US-funded influenza/SARS/MERS gain-of-function work; exceptions existed, not all pathogen research.",
+              "source_ids": [
+                "s-fee2fe189f"
+              ],
+              "continuation_basis": "Only the specified restriction is mapped; an open end is not a lifting date.",
+              "status": "documented",
+              "status_as_of": "2026-11-05",
+              "supported_through": "2017-12-19",
+              "end_date_precision": "day"
+            },
+            {
+              "id": "pathogen-research-r-dgof",
+              "short_label": "NIH-defined DGOF pause",
+              "jurisdiction": "US",
+              "authority_type": "funding_condition",
+              "valid_from": "2025-06-18",
+              "valid_to": null,
+              "date_precision": "day",
+              "subjects": "Covered NIH funding and other support, including specified unfunded collaborations; foreign terminations differ from suspensions. No verified lifting date.",
+              "activities": "Covered NIH funding and other support, including specified unfunded collaborations; foreign terminations differ from suspensions. No verified lifting date.",
+              "source_ids": [
+                "s-4130598602",
+                "s-f08f0cdf78"
+              ],
+              "continuation_basis": "Only the specified restriction is mapped; an open end is not a lifting date.",
+              "status": "continuity_uncertain",
+              "status_as_of": "2026-11-05",
+              "supported_through": "2026-07-28",
+              "end_date_precision": null
+            }
+          ]
+        }
+      ],
+      "events": {
+        "1974 CDC classification": 1,
+        "1975 DPAG established": 0,
+        "1976 DPAG precautions": 0,
+        "1997 Select-agent transfer rules effective": 1,
+        "2003 Possession rules effective": 1,
+        "2012 federal review": 1,
+        "2014 funding pause": 1,
+        "2015 Institutional DURC implemented": 1,
+        "2017 P3CO review": 1,
+        "2025 NIH DGOF restrictions": 1,
+        "2026 High-risk policy released": 1
+      }
+    },
+    "Gene synthesis / screening": {
+      "rows": [
+        {
+          "label": "UK voluntary guidance",
+          "governance": [
+            {
+              "id": "gene-synthesis-g-uk",
+              "short_label": "UK screening guidance",
+              "jurisdiction": "UK",
+              "authority_type": "guidance",
+              "valid_from": "2024-10-08",
+              "valid_to": null,
+              "date_precision": "day",
+              "subjects": "UK synthesis users/providers and benchtop equipment; controlled sequences can engage existing law.",
+              "activities": "UK synthesis users/providers and benchtop equipment; controlled sequences can engage existing law.",
+              "source_ids": [
+                "s-2a6b2f385d"
+              ],
+              "continuation_basis": "Government guidance, not industry self-regulation.",
+              "status": "documented",
+              "status_as_of": "2026-11-05",
+              "supported_through": "2026-11-05",
+              "general_framework": false,
+              "end_date_precision": null
+            }
+          ],
+          "restrictions": []
+        },
+        {
+          "label": "NIH-funded purchases",
+          "governance": [
+            {
+              "id": "gene-synthesis-g-nih",
+              "short_label": "NIH procurement conditions",
+              "jurisdiction": "US",
+              "authority_type": "funding_condition",
+              "valid_from": "2025-04-26",
+              "valid_to": null,
+              "date_precision": "day",
+              "subjects": "NIH-funded nucleic-acid/benchtop equipment procurement from adhering sources.",
+              "activities": "NIH-funded nucleic-acid/benchtop equipment procurement from adhering sources.",
+              "source_ids": [
+                "s-a5fae55f42",
+                "s-881c07e503",
+                "s-d99d424ec7"
+              ],
+              "continuation_basis": "Original condition is supported; current successor technical requirements unresolved.",
+              "status": "continuity_uncertain",
+              "status_as_of": "2026-11-05",
+              "supported_through": "2025-04-26",
+              "general_framework": false,
+              "end_date_precision": null
+            }
+          ],
+          "restrictions": []
+        }
+      ],
+      "events": {
+        "2024 UK screening guidance": 0,
+        "2025 NIH procurement conditions": 1
+      }
+    }
+  },
+  "sources": {
+    "s-3708fde147": {
+      "id": "s-3708fde147",
+      "url": "https://www.niehs.nih.gov/research/resources/bioethics/timeline",
+      "title": "https://www.niehs.nih.gov/research/resources/bioethics/timeline",
+      "accessed": "2026-11-05",
+      "review_depth": "retained citation; not re-read in implementation pass",
+      "finding": "",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-b245100db6": {
+      "id": "s-b245100db6",
+      "url": "https://digirepo.nlm.nih.gov/ext/mm/2934097RX289/PDF/2934097RX289.pdf",
+      "title": "https://digirepo.nlm.nih.gov/ext/mm/2934097RX289/PDF/2934097RX289.pdf",
+      "accessed": "2026-11-05",
+      "review_depth": "retained citation; prior review used metadata, abstract or selected passages",
+      "finding": "",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-ab6b1d5809": {
+      "id": "s-ab6b1d5809",
+      "url": "https://www.cdc.gov/tuskegee/about/",
+      "title": "https://www.cdc.gov/tuskegee/about/",
+      "accessed": "2026-11-05",
+      "review_depth": "retained citation; prior review used metadata, abstract or selected passages",
+      "finding": "",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-8c2daaa545": {
+      "id": "s-8c2daaa545",
+      "url": "https://www.hhs.gov/ohrp/regulations-and-policy/regulations/common-rule/index.html",
+      "title": "OHRP Common Rule overview",
+      "accessed": "2026-11-05",
+      "review_depth": "selected passages",
+      "finding": "Separate agency rules; FDA is not a Common Rule agency; publication and compliance differ.",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-8d7349da2d": {
+      "id": "s-8d7349da2d",
+      "url": "https://www.legislation.gov.uk/uksi/2004/1031/contents/made",
+      "title": "https://www.legislation.gov.uk/uksi/2004/1031/contents/made",
+      "accessed": "2026-11-05",
+      "review_depth": "retained citation; prior review used metadata, abstract or selected passages",
+      "finding": "",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-ab1fe7683f": {
+      "id": "s-ab1fe7683f",
+      "url": "https://www.hhs.gov/ohrp/regulations-and-policy/regulations/finalized-revisions-common-rule/index.html",
+      "title": "https://www.hhs.gov/ohrp/regulations-and-policy/regulations/finalized-revisions-common-rule/index.html",
+      "accessed": "2026-11-05",
+      "review_depth": "retained citation; prior review used metadata, abstract or selected passages",
+      "finding": "",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-d57317f9dd": {
+      "id": "s-d57317f9dd",
+      "url": "https://1997-2001.state.gov/global/arms/treaties/geneva1.html",
+      "title": "US State Department: Geneva Protocol text and dates",
+      "accessed": "2026-11-05",
+      "review_depth": "selected passages",
+      "finding": "Signed 17 June 1925, in force 8 February 1928; use in war, not development/stockpiling or peaceful-research licensing.",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-cf8d2cef16": {
+      "id": "s-cf8d2cef16",
+      "url": "https://treaties.un.org/Pages/showDetails.aspx?objid=0800000280101653",
+      "title": "https://treaties.un.org/Pages/showDetails.aspx?objid=0800000280101653",
+      "accessed": "2026-11-05",
+      "review_depth": "retained citation; prior review used metadata, abstract or selected passages",
+      "finding": "",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-d879f70789": {
+      "id": "s-d879f70789",
+      "url": "https://www.who.int/news-room/feature-stories/detail/celebrating-70-years-of-the-global-influenza-surveillance-and-response-system",
+      "title": "https://www.who.int/news-room/feature-stories/detail/celebrating-70-years-of-the-global-influenza-surveillance-and-response-system",
+      "accessed": "2026-11-05",
+      "review_depth": "retained citation; not re-read in implementation pass",
+      "finding": "",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-5315d98e3a": {
+      "id": "s-5315d98e3a",
+      "url": "https://www.nlm.nih.gov/nichsr/esmallpox/report_1978_london.pdf",
+      "title": "Report of the investigation into the cause of the 1978 Birmingham smallpox occurrence",
+      "accessed": "2026-11-05",
+      "review_depth": "selected complete scanned pages, visually read",
+      "finding": "DPAG first met 14 November 1975 (paragraph 151); formed November 1975; code/handbook produced October 1976. Advisory discretion and laboratory-specific approvals described; not a universal statutory licensing scheme.",
+      "locator": "Printed p.40, paragraphs 150–152 (PDF page 56), and pp.42–43, paragraphs 155–162 (PDF pages 58–59).",
+      "publication_date": null
+    },
+    "s-63cfd2abee": {
+      "id": "s-63cfd2abee",
+      "url": "https://www.selectagents.gov/resources/docs/History-of-FSAP_10262023.pdf",
+      "title": "Federal Select Agent Program history",
+      "accessed": "2026-11-05",
+      "review_depth": "selected passages",
+      "finding": "2003 requirements phased; February registration stage and November 12 compliance are distinct.",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-b90d2d49b5": {
+      "id": "s-b90d2d49b5",
+      "url": "https://archive.cdc.gov/www_cdc_gov/flu/avianflu/avian-durc-qa.htm",
+      "title": "https://archive.cdc.gov/www_cdc_gov/flu/avianflu/avian-durc-qa.htm",
+      "accessed": "2026-11-05",
+      "review_depth": "retained citation; prior review used metadata, abstract or selected passages",
+      "finding": "",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-14c41ebb9b": {
+      "id": "s-14c41ebb9b",
+      "url": "https://19january2021snapshot.epa.gov/research/policy-and-procedures-managing-dual-use-research-concern_.html",
+      "title": "https://19january2021snapshot.epa.gov/research/policy-and-procedures-managing-dual-use-research-concern_.html",
+      "accessed": "2026-11-05",
+      "review_depth": "retained citation; prior review used metadata, abstract or selected passages",
+      "finding": "",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-4130598602": {
+      "id": "s-4130598602",
+      "url": "https://grants.nih.gov/grants/guide/notice-files/NOT-OD-25-127.html",
+      "title": "NIH NOT-OD-25-127: June 2025 restrictions",
+      "accessed": "2026-11-05",
+      "review_depth": "full substantive notice/statement",
+      "finding": "18 June specified foreign support terminated; other defined DGOF support suspended, including covered unfunded collaborations.",
+      "locator": "",
+      "publication_date": "2025-06-18"
+    },
+    "s-f08f0cdf78": {
+      "id": "s-f08f0cdf78",
+      "url": "https://grants.nih.gov/grants/guide/notice-files/NOT-OD-26-101.html",
+      "title": "NIH NOT-OD-26-101: high-risk policy release",
+      "accessed": "2026-11-05",
+      "review_depth": "full substantive notice/statement",
+      "finding": "28 July release notice: potential DGOF remains paused pending NIH implementation requirements; policy release is not completed implementation.",
+      "locator": "",
+      "publication_date": "2026-07-28"
+    },
+    "s-3a6e269ccc": {
+      "id": "s-3a6e269ccc",
+      "url": "https://www.nobelprize.org/prizes/medicine/2010/advanced-information/",
+      "title": "https://www.nobelprize.org/prizes/medicine/2010/advanced-information/",
+      "accessed": "2026-11-05",
+      "review_depth": "retained citation; not re-read in implementation pass",
+      "finding": "",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-8fccbdbc39": {
+      "id": "s-8fccbdbc39",
+      "url": "https://www.hfea.gov.uk/media/tfyhvl2k/2024-11-20-authority-papers.pdf",
+      "title": "https://www.hfea.gov.uk/media/tfyhvl2k/2024-11-20-authority-papers.pdf",
+      "accessed": "2026-11-05",
+      "review_depth": "retained citation; prior review used metadata, abstract or selected passages",
+      "finding": "",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-6805071c86": {
+      "id": "s-6805071c86",
+      "url": "https://researchbriefings.files.parliament.uk/documents/LLN-2018-0094/LLN-2018-0094.pdf",
+      "title": "https://researchbriefings.files.parliament.uk/documents/LLN-2018-0094/LLN-2018-0094.pdf",
+      "accessed": "2026-11-05",
+      "review_depth": "retained citation; prior review used metadata, abstract or selected passages",
+      "finding": "",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-66db0ebc20": {
+      "id": "s-66db0ebc20",
+      "url": "https://preprodportal.hfea.gov.uk/knowledge-base/chairs-letters/663",
+      "title": "https://preprodportal.hfea.gov.uk/knowledge-base/chairs-letters/663",
+      "accessed": "2026-11-05",
+      "review_depth": "retained citation; prior review used metadata, abstract or selected passages",
+      "finding": "",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-019c718690": {
+      "id": "s-019c718690",
+      "url": "https://absa.org/about/hist01/",
+      "title": "https://absa.org/about/hist01/",
+      "accessed": "2026-11-05",
+      "review_depth": "retained citation; not re-read in implementation pass",
+      "finding": "",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-8f00bf13c2": {
+      "id": "s-8f00bf13c2",
+      "url": "https://hansard.parliament.uk/commons/1979-02-01/debates/bb9ff067-f07f-4a43-ad7f-7913b7e7f2f6/Laboratories%28HealthAndSafety%29",
+      "title": "https://hansard.parliament.uk/commons/1979-02-01/debates/bb9ff067-f07f-4a43-ad7f-7913b7e7f2f6/Laboratories%28HealthAndSafety%29",
+      "accessed": "2026-11-05",
+      "review_depth": "retained citation; prior review used metadata, abstract or selected passages",
+      "finding": "",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-aec81a0905": {
+      "id": "s-aec81a0905",
+      "url": "https://www.ins.gov.co/BibliotecaDigital/laboratory-biosafety-manual-fourth-edition-who-2020.pdf",
+      "title": "https://www.ins.gov.co/BibliotecaDigital/laboratory-biosafety-manual-fourth-edition-who-2020.pdf",
+      "accessed": "2026-11-05",
+      "review_depth": "retained citation; prior review used metadata, abstract or selected passages",
+      "finding": "",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-8877d30620": {
+      "id": "s-8877d30620",
+      "url": "https://www.cdc.gov/labs/bmbl/index.html",
+      "title": "https://www.cdc.gov/labs/bmbl/index.html",
+      "accessed": "2026-11-05",
+      "review_depth": "retained citation; prior review used metadata, abstract or selected passages",
+      "finding": "",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-e27b91d188": {
+      "id": "s-e27b91d188",
+      "url": "https://www.legislation.gov.uk/uksi/1994/3246/made",
+      "title": "https://www.legislation.gov.uk/uksi/1994/3246/made",
+      "accessed": "2026-11-05",
+      "review_depth": "retained citation; prior review used metadata, abstract or selected passages",
+      "finding": "",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-9954f5344f": {
+      "id": "s-9954f5344f",
+      "url": "https://stacks.cdc.gov/view/cdc/24057",
+      "title": "https://stacks.cdc.gov/view/cdc/24057",
+      "accessed": "2026-11-05",
+      "review_depth": "retained citation; prior review used metadata, abstract or selected passages",
+      "finding": "",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-ac29f95700": {
+      "id": "s-ac29f95700",
+      "url": "https://www.who.int/publications/i/item/9789240011311",
+      "title": "WHO: Laboratory Biosafety Manual, fourth edition",
+      "accessed": "2026-11-05",
+      "review_depth": "selected passages",
+      "finding": "Fourth edition published 21 December 2020; risk-based biosafety guidance.",
+      "locator": "",
+      "publication_date": "2020-12-21"
+    },
+    "s-7cfd437eb7": {
+      "id": "s-7cfd437eb7",
+      "url": "https://www.nature.com/articles/227027a0",
+      "title": "https://www.nature.com/articles/227027a0",
+      "accessed": "2026-11-05",
+      "review_depth": "retained citation; not re-read in implementation pass",
+      "finding": "",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-167f43ffe1": {
+      "id": "s-167f43ffe1",
+      "url": "https://genesynthesisconsortium.org/wp-content/uploads/IGSC-Harmonized-Screening-Protocol-11_18_09.pdf",
+      "title": "https://genesynthesisconsortium.org/wp-content/uploads/IGSC-Harmonized-Screening-Protocol-11_18_09.pdf",
+      "accessed": "2026-11-05",
+      "review_depth": "retained citation; prior review used metadata, abstract or selected passages",
+      "finding": "",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-2a6b2f385d": {
+      "id": "s-2a6b2f385d",
+      "url": "https://www.gov.uk/government/publications/uk-screening-guidance-on-synthetic-nucleic-acids/uk-screening-guidance-on-synthetic-nucleic-acids-for-users-and-providers",
+      "title": "https://www.gov.uk/government/publications/uk-screening-guidance-on-synthetic-nucleic-acids/uk-screening-guidance-on-synthetic-nucleic-acids-for-users-and-providers",
+      "accessed": "2026-11-05",
+      "review_depth": "retained citation; prior review used metadata, abstract or selected passages",
+      "finding": "",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-a5fae55f42": {
+      "id": "s-a5fae55f42",
+      "url": "https://www.grants.nih.gov/grants/guide/notice-files/NOT-OD-25-012.html",
+      "title": "NIH NOT-OD-25-012: synthesis procurement condition",
+      "accessed": "2026-11-05",
+      "review_depth": "full substantive notice/statement",
+      "finding": "Released 25 October 2024; NIH procurement condition takes effect 26 April 2025.",
+      "locator": "",
+      "publication_date": "2024-10-25"
+    },
+    "s-230d1f59f7": {
+      "id": "s-230d1f59f7",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/5061866/",
+      "title": "https://pubmed.ncbi.nlm.nih.gov/5061866/",
+      "accessed": "2026-11-05",
+      "review_depth": "retained citation; not re-read in implementation pass",
+      "finding": "",
+      "locator": "",
+      "publication_date": "1972-03-03"
+    },
+    "s-2935725b76": {
+      "id": "s-2935725b76",
+      "url": "https://www.whistleblowerllc.com/wp-content/uploads/2020/07/USAO-EDPA-U.S.-Settles-Case-of-Gene-Therapy-Study-That-Ended-With-Teens-Death.pdf",
+      "title": "https://www.whistleblowerllc.com/wp-content/uploads/2020/07/USAO-EDPA-U.S.-Settles-Case-of-Gene-Therapy-Study-That-Ended-With-Teens-Death.pdf",
+      "accessed": "2026-11-05",
+      "review_depth": "retained citation; prior review used metadata, abstract or selected passages",
+      "finding": "",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-7a08bf28d2": {
+      "id": "s-7a08bf28d2",
+      "url": "https://www.fda.gov/vaccines-blood-biologics/cellular-gene-therapy-products/luxturna",
+      "title": "https://www.fda.gov/vaccines-blood-biologics/cellular-gene-therapy-products/luxturna",
+      "accessed": "2026-11-05",
+      "review_depth": "retained citation; prior review used metadata, abstract or selected passages",
+      "finding": "",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-4d4f2c7834": {
+      "id": "s-4d4f2c7834",
+      "url": "https://www.gov.uk/government/news/mhra-authorises-world-first-gene-therapy-that-aims-to-cure-sickle-cell-disease-and-transfusion-dependent-thalassemia",
+      "title": "MHRA: Casgevy authorisation announcement",
+      "accessed": "2026-11-05",
+      "review_depth": "selected passages",
+      "finding": "MHRA announcement 16 November 2023 concerns somatic gene therapy, not heritable editing.",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-58480e4212": {
+      "id": "s-58480e4212",
+      "url": "https://www.genome.gov/25520302/online-education-kit-1972-first-recombinant-dna",
+      "title": "https://www.genome.gov/25520302/online-education-kit-1972-first-recombinant-dna",
+      "accessed": "2026-11-05",
+      "review_depth": "retained citation; not re-read in implementation pass",
+      "finding": "",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-16c7e0ce5f": {
+      "id": "s-16c7e0ce5f",
+      "url": "https://bch.cbd.int/protocol/background",
+      "title": "CBD: Cartagena Protocol background",
+      "accessed": "2026-11-05",
+      "review_depth": "selected passages",
+      "finding": "Adopted 29 January 2000; entered into force 11 September 2003; transboundary LMOs.",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-b5706bcdb3": {
+      "id": "s-b5706bcdb3",
+      "url": "https://www.cbd.int/countries?country=gb",
+      "title": "https://www.cbd.int/countries?country=gb",
+      "accessed": "2026-11-05",
+      "review_depth": "retained citation; prior review used metadata, abstract or selected passages",
+      "finding": "",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-bd0bb78104": {
+      "id": "s-bd0bb78104",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC1691325/",
+      "title": "https://pmc.ncbi.nlm.nih.gov/articles/PMC1691325/",
+      "accessed": "2026-11-05",
+      "review_depth": "retained citation; not re-read in implementation pass",
+      "finding": "",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-52365eaf94": {
+      "id": "s-52365eaf94",
+      "url": "https://www.who.int/publications/i/item/9789240025233",
+      "title": "WHO: testing GM mosquitoes, second edition",
+      "accessed": "2026-11-05",
+      "review_depth": "selected passages",
+      "finding": "Second edition 19 May 2021; first edition 2014; GM mosquitoes, not every gene-drive application.",
+      "locator": "",
+      "publication_date": "2021-05-19"
+    },
+    "s-3f95f517b8": {
+      "id": "s-3f95f517b8",
+      "url": "https://research.aber.ac.uk/en/publications/functional-genomic-hypothesis-generation-and-experimentation-by-a/",
+      "title": "https://research.aber.ac.uk/en/publications/functional-genomic-hypothesis-generation-and-experimentation-by-a/",
+      "accessed": "2026-11-05",
+      "review_depth": "retained citation; not re-read in implementation pass",
+      "finding": "",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-4966f3b90d": {
+      "id": "s-4966f3b90d",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/14724639/",
+      "title": "https://pubmed.ncbi.nlm.nih.gov/14724639/",
+      "accessed": "2026-11-05",
+      "review_depth": "retained citation; prior review used metadata, abstract or selected passages",
+      "finding": "",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-bf6da433b1": {
+      "id": "s-bf6da433b1",
+      "url": "https://research.manchester.ac.uk/en/publications/the-automation-of-science/",
+      "title": "https://research.manchester.ac.uk/en/publications/the-automation-of-science/",
+      "accessed": "2026-11-05",
+      "review_depth": "retained citation; prior review used metadata, abstract or selected passages",
+      "finding": "",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-03c540e535": {
+      "id": "s-03c540e535",
+      "url": "https://www.who.int/publications/i/item/9789240095113",
+      "title": "WHO: laboratory biosecurity guidance, 2024",
+      "accessed": "2026-11-05",
+      "review_depth": "selected passages",
+      "finding": "21 June 2024 general laboratory biosecurity guidance includes AI among emerging technologies.",
+      "locator": "",
+      "publication_date": "2024-06-21"
+    },
+    "s-86fba9bc49": {
+      "id": "s-86fba9bc49",
+      "url": "https://www.gov.uk/government/news/introducing-the-ai-biosecurity-lab",
+      "title": "UK Cabinet Office: AI Biosecurity Lab announcement",
+      "accessed": "2026-11-05",
+      "review_depth": "selected passages",
+      "finding": "24 October 2026 programme announcement describes planned organisation and capabilities; does not establish completed operations.",
+      "locator": "",
+      "publication_date": "2026-10-24"
+    },
+    "s-dbfaa0666b": {
+      "id": "s-dbfaa0666b",
+      "url": "https://www.nobelprize.org/uploads/2020/10/popular-chemistryprize2020.pdf",
+      "title": "https://www.nobelprize.org/uploads/2020/10/popular-chemistryprize2020.pdf",
+      "accessed": "2026-11-05",
+      "review_depth": "retained citation; not re-read in implementation pass",
+      "finding": "",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-452d840cd8": {
+      "id": "s-452d840cd8",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/22745249/",
+      "title": "https://pubmed.ncbi.nlm.nih.gov/22745249/",
+      "accessed": "2026-11-05",
+      "review_depth": "retained citation; prior review used metadata, abstract or selected passages",
+      "finding": "",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-f46c49ef91": {
+      "id": "s-f46c49ef91",
+      "url": "https://www.nationalacademies.org/news/statement-by-the-organizing-committee-of-the-second-international-summit-on-human-genome-editing",
+      "title": "https://www.nationalacademies.org/news/statement-by-the-organizing-committee-of-the-second-international-summit-on-human-genome-editing",
+      "accessed": "2026-11-05",
+      "review_depth": "retained citation; prior review used metadata, abstract or selected passages",
+      "finding": "",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-eada04f7e1": {
+      "id": "s-eada04f7e1",
+      "url": "https://www.hfea.gov.uk/about-us/news-and-press-releases/2016/hfea-approves-licence-application-to-use-gene-editing-in-research/",
+      "title": "https://www.hfea.gov.uk/about-us/news-and-press-releases/2016/hfea-approves-licence-application-to-use-gene-editing-in-research/",
+      "accessed": "2026-11-05",
+      "review_depth": "retained citation; prior review used metadata, abstract or selected passages",
+      "finding": "",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-c2fb844b5d": {
+      "id": "s-c2fb844b5d",
+      "url": "https://www.nature.com/articles/nmeth.3016",
+      "title": "https://www.nature.com/articles/nmeth.3016",
+      "accessed": "2026-11-05",
+      "review_depth": "retained citation; not re-read in implementation pass",
+      "finding": "",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-e85455383b": {
+      "id": "s-e85455383b",
+      "url": "https://www.isscr.org/the-archives",
+      "title": "https://www.isscr.org/the-archives",
+      "accessed": "2026-11-05",
+      "review_depth": "retained citation; prior review used metadata, abstract or selected passages",
+      "finding": "",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-14c94389dd": {
+      "id": "s-14c94389dd",
+      "url": "https://www.isscr.org/resources/guidelines-for-stem-cell-research",
+      "title": "ISSCR: guidelines version 1.2, August 2025",
+      "accessed": "2026-11-05",
+      "review_depth": "selected passages",
+      "finding": "August 2025 version 1.2 changes embryo-model sections only; other sections remain 2021.",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-a4dd75f14f": {
+      "id": "s-a4dd75f14f",
+      "url": "https://news.wisc.edu/research-on-human-embryonic-stem-cells-marks-10-year-milestone/",
+      "title": "https://news.wisc.edu/research-on-human-embryonic-stem-cells-marks-10-year-milestone/",
+      "accessed": "2026-11-05",
+      "review_depth": "retained citation; not re-read in implementation pass",
+      "finding": "",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-90e98e5137": {
+      "id": "s-90e98e5137",
+      "url": "https://www.legislation.gov.uk/uksi/2001/188/made",
+      "title": "https://www.legislation.gov.uk/uksi/2001/188/made",
+      "accessed": "2026-11-05",
+      "review_depth": "retained citation; prior review used metadata, abstract or selected passages",
+      "finding": "",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-2b5cd9c22b": {
+      "id": "s-2b5cd9c22b",
+      "url": "https://grants.nih.gov/grants/guide/notice-files/NOT-OD-01-059.html",
+      "title": "https://grants.nih.gov/grants/guide/notice-files/NOT-OD-01-059.html",
+      "accessed": "2026-11-05",
+      "review_depth": "retained citation; prior review used metadata, abstract or selected passages",
+      "finding": "",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-b6d5b6a163": {
+      "id": "s-b6d5b6a163",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/16904174/",
+      "title": "https://pubmed.ncbi.nlm.nih.gov/16904174/",
+      "accessed": "2026-11-05",
+      "review_depth": "retained citation; prior review used metadata, abstract or selected passages",
+      "finding": "",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-25cb4c03dc": {
+      "id": "s-25cb4c03dc",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/18035408/",
+      "title": "https://pubmed.ncbi.nlm.nih.gov/18035408/",
+      "accessed": "2026-11-05",
+      "review_depth": "retained citation; prior review used metadata, abstract or selected passages",
+      "finding": "",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-5e49da2d4f": {
+      "id": "s-5e49da2d4f",
+      "url": "https://www.ncbi.nlm.nih.gov/sites/books/NBK195888/",
+      "title": "https://www.ncbi.nlm.nih.gov/sites/books/NBK195888/",
+      "accessed": "2026-11-05",
+      "review_depth": "retained citation; prior review used metadata, abstract or selected passages",
+      "finding": "",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-f2ddf0533f": {
+      "id": "s-f2ddf0533f",
+      "url": "https://www.fda.gov/about-fda/fda-history-exhibits/100-years-insulin",
+      "title": "https://www.fda.gov/about-fda/fda-history-exhibits/100-years-insulin",
+      "accessed": "2026-11-05",
+      "review_depth": "retained citation; prior review used metadata, abstract or selected passages",
+      "finding": "",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-a0d8de0aa2": {
+      "id": "s-a0d8de0aa2",
+      "url": "https://bioethicsarchive.georgetown.edu/pcsbi/sites/default/files/PCSBI-Synthetic-Biology-Report-12.16.10_0.pdf",
+      "title": "https://bioethicsarchive.georgetown.edu/pcsbi/sites/default/files/PCSBI-Synthetic-Biology-Report-12.16.10_0.pdf",
+      "accessed": "2026-11-05",
+      "review_depth": "retained citation; prior review used metadata, abstract or selected passages",
+      "finding": "",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-b798c61b31": {
+      "id": "s-b798c61b31",
+      "url": "https://www.fda.gov/about-fda/fda-history-exhibits/brief-history-center-drug-evaluation-and-research",
+      "title": "FDA history: 1962 Drug Amendments",
+      "accessed": "2026-11-05",
+      "review_depth": "selected passages",
+      "finding": "Drug Amendments signed 10 October 1962; clinical-trial consent provisions, not all research.",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-2059fae6d0": {
+      "id": "s-2059fae6d0",
+      "url": "https://encyclopedia.ushmm.org/content/en/article/the-nuremberg-code?series=18",
+      "title": "USHMM: Nuremberg Code and Doctors’ Trial",
+      "accessed": "2026-11-05",
+      "review_depth": "selected passages",
+      "finding": "Judgment-related ethical principles, not a worldwide enacted statute.",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-eaccde7957": {
+      "id": "s-eaccde7957",
+      "url": "https://www.wma.net/policies-post/wma-declaration-of-helsinki/",
+      "title": "WMA Declaration of Helsinki",
+      "accessed": "2026-11-05",
+      "review_depth": "selected passages",
+      "finding": "Adopted June 1964; revised October 2024. Professional ethical declaration.",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-6c93d5f477": {
+      "id": "s-6c93d5f477",
+      "url": "https://www.hhs.gov/ohrp/regulations-and-policy/belmont-report/read-the-belmont-report/index.html",
+      "title": "HHS Belmont Report",
+      "accessed": "2026-11-05",
+      "review_depth": "selected passages",
+      "finding": "Report dated 18 April 1979; records National Research Act signing 12 July 1974.",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-f399701f74": {
+      "id": "s-f399701f74",
+      "url": "https://www.hra.nhs.uk/about-us/news-updates/new-uk-clinical-trials-regulations-now-in-force/",
+      "title": "HRA: UK trial reforms now in force",
+      "accessed": "2026-11-05",
+      "review_depth": "selected passages",
+      "finding": "Amended UK medicinal-product trial regulations came into force 28 April 2026.",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-7fa2cada67": {
+      "id": "s-7fa2cada67",
+      "url": "https://www.legislation.gov.uk/ukpga/1990/37/contents/data.html",
+      "title": "Human Fertilisation and Embryology Act 1990, as amended",
+      "accessed": "2026-11-05",
+      "review_depth": "selected passages",
+      "finding": "Amended Act retains licensing of embryo creation/use; framework family is not an unchanged 1990 instrument.",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-0534f170a4": {
+      "id": "s-0534f170a4",
+      "url": "https://www.legislation.gov.uk/ukpga/1990/37/section/3ZA/data.html",
+      "title": "HFE Act section 3ZA: permitted eggs, sperm and embryos",
+      "accessed": "2026-11-05",
+      "review_depth": "full substantive notice/statement",
+      "finding": "Section 3ZA limits permitted eggs, sperm and embryos; mitochondrial-disease regulation exception is explicit.",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-bc088606ff": {
+      "id": "s-bc088606ff",
+      "url": "https://www.hse.gov.uk/biosafety/gmo/law.htm",
+      "title": "HSE: GMOs and the law",
+      "accessed": "2026-11-05",
+      "review_depth": "selected passages",
+      "finding": "Contained-use law applies to qualifying GMO work; environmental duties differ for microbes versus larger GMOs; other laws also apply.",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-207a39feb2": {
+      "id": "s-207a39feb2",
+      "url": "https://www.legislation.gov.uk/uksi/2000/2831/contents/made",
+      "title": "GMO Contained Use Regulations 2000",
+      "accessed": "2026-11-05",
+      "review_depth": "indexed excerpts",
+      "finding": "Earlier contained-use instrument; exact provisions not re-read. Cited as predecessor, not proof of complete current scope.",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-7baa5f64b7": {
+      "id": "s-7baa5f64b7",
+      "url": "https://www.legislation.gov.uk/uksi/2002/2443/pdfs/uksi_20022443_en.pdf",
+      "title": "GMO Deliberate Release Regulations 2002",
+      "accessed": "2026-11-05",
+      "review_depth": "indexed excerpts",
+      "finding": "England deliberate-release regulations commenced 17 October 2002; distinct from containment.",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-4eff5207fd": {
+      "id": "s-4eff5207fd",
+      "url": "https://www.legislation.gov.uk/uksi/2014/1663/pdfs/uksi_20141663_en.pdf",
+      "title": "GMO Contained Use Regulations 2014",
+      "accessed": "2026-11-05",
+      "review_depth": "indexed excerpts",
+      "finding": "Made 23 June 2014; commenced 1 October 2014.",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-9ccf8c192f": {
+      "id": "s-9ccf8c192f",
+      "url": "https://grants.nih.gov/grants/guide/notice-files/NOT-OD-24-093.html",
+      "title": "NIH Guidelines revisions, NOT-OD-24-093",
+      "accessed": "2026-11-05",
+      "review_depth": "selected passages",
+      "finding": "Released 4 April 2024; effective 30 September 2024. Adds specific contained gene-drive requirements; NIH does not currently support potential field-release research.",
+      "locator": "Purpose, paragraphs 3-5; Sections III-D-8 and IV.",
+      "publication_date": "2024-04-04"
+    },
+    "s-14b6f1c570": {
+      "id": "s-14b6f1c570",
+      "url": "https://www.govinfo.gov/content/pkg/FR-1977-09-27/pdf/FR-1977-09-27.pdf",
+      "title": "Federal Register: NIH recombinant-DNA guidelines history",
+      "accessed": "2026-11-05",
+      "review_depth": "indexed excerpts",
+      "finding": "NIH guidelines issued 23 June 1976; funding-linked conditions, including prohibited experiments.",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-93623fe380": {
+      "id": "s-93623fe380",
+      "url": "https://www.govinfo.gov/content/pkg/FR-1982-08-27/pdf/FR-1982-08-27.pdf",
+      "title": "Federal Register: CDC hazard classification, fourth edition",
+      "accessed": "2026-11-05",
+      "review_depth": "indexed excerpts",
+      "finding": "Original reference is fourth edition, July 1974; cannot establish the first classification.",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-fee2fe189f": {
+      "id": "s-fee2fe189f",
+      "url": "https://www.nih.gov/about-nih/nih-almanac/chronology-events",
+      "title": "NIH chronology of events",
+      "accessed": "2026-11-05",
+      "review_depth": "selected passages",
+      "finding": "NIH chronology records 14 September 1990 treatment and 19 December 2017 lifting of specified funding pause.",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-7ede01724a": {
+      "id": "s-7ede01724a",
+      "url": "https://www.grants.nih.gov/grants/guide/notice-files/NOT-OD-25-112.html",
+      "title": "NIH NOT-OD-25-112: May 2025 implementation",
+      "accessed": "2026-11-05",
+      "review_depth": "full substantive notice/statement",
+      "finding": "7 May restrictions on competitive DGOF applications; planned DURC/PEPP implementation notice rescinded.",
+      "locator": "",
+      "publication_date": "2025-05-07"
+    },
+    "s-86d3d8d743": {
+      "id": "s-86d3d8d743",
+      "url": "https://www.grants.nih.gov/grants/guide/notice-files/NOT-OD-26-131.html",
+      "title": "NIH NOT-OD-26-131: FY2027 continuing resolution",
+      "accessed": "2026-11-05",
+      "review_depth": "full substantive notice/statement",
+      "finding": "28 September notice: FY2026 legislative mandates continue under FY2027 CR through 11 December 2026.",
+      "locator": "",
+      "publication_date": "2026-09-28"
+    },
+    "s-773a08d633": {
+      "id": "s-773a08d633",
+      "url": "https://www.grants.nih.gov/grants/guide/notice-files/NOT-OD-26-060.html",
+      "title": "NIH NOT-OD-26-060: FY2026 legislative mandates",
+      "accessed": "2026-11-05",
+      "review_depth": "selected passages",
+      "finding": "Section 508 restricts creation of embryos for research and research destroying or excessively risking embryos; includes broad embryo definition.",
+      "locator": "",
+      "publication_date": "2026-03-18"
+    },
+    "s-9e9799b822": {
+      "id": "s-9e9799b822",
+      "url": "https://www.govinfo.gov/content/pkg/PLAW-119publ103/html/PLAW-119publ103.htm",
+      "title": "Public Law 119-103: FY2027 continuing resolution",
+      "accessed": "2026-11-05",
+      "review_depth": "selected passages",
+      "finding": "Sections 101 and 106 continue FY2026 authorities/conditions, subject to exceptions, through December 11, 2026.",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-4172bb73b0": {
+      "id": "s-4172bb73b0",
+      "url": "https://www.grants.nih.gov/grants/guide/notice-files/NOT-OD-09-116.html",
+      "title": "NIH NOT-OD-09-116: 2009 stem-cell guidelines",
+      "accessed": "2026-11-05",
+      "review_depth": "full substantive notice/statement",
+      "finding": "Released 6 July 2009, effective 7 July; broadens eligible hESC work subject to law and eligibility requirements.",
+      "locator": "",
+      "publication_date": "2009-07-06"
+    },
+    "s-93c56408d6": {
+      "id": "s-93c56408d6",
+      "url": "https://www.isscr.org/isscr-news/the-isscr-releases-updated-guidelines-for-stem-cell-research-and-clinical-translation",
+      "title": "ISSCR: 2021 guidelines release",
+      "accessed": "2026-11-05",
+      "review_depth": "selected passages",
+      "finding": "Guidelines released 26 May 2021; companion articles have different publication dates.",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-a4de44a83b": {
+      "id": "s-a4de44a83b",
+      "url": "https://www.isscr.org/isscr-news/the-i-in-the-isscr",
+      "title": "ISSCR: guideline history",
+      "accessed": "2026-11-05",
+      "review_depth": "indexed excerpts",
+      "finding": "2006 research and 2008 translation guidelines combined in 2016.",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-c18eb59fb4": {
+      "id": "s-c18eb59fb4",
+      "url": "https://sgp.fas.org/news/2003/02/sci021503.html",
+      "title": "Joint statement on scientific publication and security",
+      "accessed": "2026-11-05",
+      "review_depth": "full substantive notice/statement",
+      "finding": "Original statement reproduced in full; archive note dates release 15 February 2003; not evidence of universal compliance.",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-509f764e4f": {
+      "id": "s-509f764e4f",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/12590130/",
+      "title": "Cozzarelli: PNAS publication policy, 2003",
+      "accessed": "2026-11-05",
+      "review_depth": "indexed excerpts",
+      "finding": "Cozzarelli PNAS-specific policy, page 1463, distinct from joint statement on page 1464. Original full text blocked.",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-9fd8550081": {
+      "id": "s-9fd8550081",
+      "url": "https://bch.cbd.int/database/attachment/?id=20860",
+      "title": "Cartagena Protocol: text and annexes",
+      "accessed": "2026-11-05",
+      "review_depth": "selected passages",
+      "finding": "Articles 4-7, 11 and 24 distinguish scope, exclusions, procedures and non-party trade.",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-158ac910ae": {
+      "id": "s-158ac910ae",
+      "url": "https://www.nationalacademies.org/news/gene-drive-modified-organisms-are-not-ready-to-be-released-into-environment-new-report",
+      "title": "National Academies: gene-drive report release",
+      "accessed": "2026-11-05",
+      "review_depth": "selected passages",
+      "finding": "Report release 8 June 2016; phased testing recommendations, not an imposed legal moratorium.",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-7f98426b88": {
+      "id": "s-7f98426b88",
+      "url": "https://www.who.int/publications/i/item/9789240030381",
+      "title": "WHO: human genome editing recommendations",
+      "accessed": "2026-11-05",
+      "review_depth": "selected passages",
+      "finding": "12 July 2021 recommendations; nonbinding governance guidance, not a national-law amendment.",
+      "locator": "",
+      "publication_date": "2021-07-12"
+    },
+    "s-78c82a7234": {
+      "id": "s-78c82a7234",
+      "url": "https://www.nationalacademies.org/news/on-human-gene-editing-international-summit-statement",
+      "title": "First human genome editing summit statement",
+      "accessed": "2026-11-05",
+      "review_depth": "selected passages",
+      "finding": "3 December 2015 statement supports basic research with oversight; edited embryos should not establish pregnancy.",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-b09bd724d9": {
+      "id": "s-b09bd724d9",
+      "url": "https://www.royalsociety.org/science-events-and-lectures/2023/03/2023-human-genome-editing-summit/",
+      "title": "Royal Society: third genome editing summit",
+      "accessed": "2026-11-05",
+      "review_depth": "selected passages",
+      "finding": "Third summit held 6-8 March 2023; statement is not national law.",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-3925512ad3": {
+      "id": "s-3925512ad3",
+      "url": "https://www.cam.ac.uk/stories/code-of-practice-embryo-models",
+      "title": "Cambridge: UK embryo-model code release",
+      "accessed": "2026-11-05",
+      "review_depth": "selected passages",
+      "finding": "UK voluntary embryo-model code released 4 July 2024; original code page blocked.",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-6a7dd613a4": {
+      "id": "s-6a7dd613a4",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/24973948/?dopt=Abstract",
+      "title": "Warmflash et al.: stem-cell patterning model",
+      "accessed": "2026-11-05",
+      "review_depth": "metadata",
+      "finding": "Online publication 29 June 2014; patterned stem-cell precursor, not an integrated embryo.",
+      "locator": "",
+      "publication_date": "2014-06-29"
+    },
+    "s-d7a9be10a6": {
+      "id": "s-d7a9be10a6",
+      "url": "https://aspr.hhs.gov/s3/documents/ostp-nucleic-acid-synthesis-screening-framework-sep2024.pdf",
+      "title": "OSTP: synthesis-screening framework, September 2024",
+      "accessed": "2026-11-05",
+      "review_depth": "indexed excerpts",
+      "finding": "2024 framework schedules added screening practices on 13 October 2026; successor implementation remains uncertain.",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-d99d424ec7": {
+      "id": "s-d99d424ec7",
+      "url": "https://www.aspr.gov/s3",
+      "title": "ASPR S3: framework replacement notice",
+      "accessed": "2026-11-05",
+      "review_depth": "indexed excerpts",
+      "finding": "Current indexed notice says framework will be revised/replaced and page updated once available; does not prove no successor exists elsewhere.",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-881c07e503": {
+      "id": "s-881c07e503",
+      "url": "https://www.whitehouse.gov/presidential-actions/2025/05/improving-the-safety-and-security-of-biological-research/",
+      "title": "Executive Order 14292: biological research safety",
+      "accessed": "2026-11-05",
+      "review_depth": "selected passages",
+      "finding": "5 May 2025 order directs revisions and restrictions; an instruction/deadline is not proof of completed implementation.",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-8047baee8c": {
+      "id": "s-8047baee8c",
+      "url": "https://www.hse.gov.uk/pubns/priced/l5.pdf",
+      "title": "HSE: COSHH 2002 approved code and guidance",
+      "accessed": "2026-11-05",
+      "review_depth": "selected passages",
+      "finding": "Current HSE code concerns COSHH 2002 as amended; distinguishes approved code legal status from noncompulsory guidance.",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-f9287eae6d": {
+      "id": "s-f9287eae6d",
+      "url": "https://www.nature.com/articles/481443a",
+      "title": "Fouchier et al.: H5N1 transmission pause",
+      "accessed": "2026-11-05",
+      "review_depth": "indexed excerpts",
+      "finding": "Original investigators announced selected H5N1 transmission research pause online 20 January 2012.",
+      "locator": "",
+      "publication_date": "2012-01-20"
+    },
+    "s-c857d586cd": {
+      "id": "s-c857d586cd",
+      "url": "https://www.govinfo.gov/content/pkg/PLAW-114publ113/html/PLAW-114publ113.htm",
+      "title": "Public Law 114-113: 2015 heritable-embryo FDA rider",
+      "accessed": "2026-11-05",
+      "review_depth": "indexed excerpts",
+      "finding": "2015 appropriations rider restricts FDA acknowledgement of covered heritable-embryo IND submissions; not all gene-editing research.",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-475393d53e": {
+      "id": "s-475393d53e",
+      "url": "https://www.govinfo.gov/content/pkg/PLAW-119publ37/html/PLAW-119publ37.htm",
+      "title": "FY2026 agriculture/FDA appropriation, section 734",
+      "accessed": "2026-11-05",
+      "review_depth": "selected enacted-law passage",
+      "finding": "Section 734 blocks FDA acknowledgement of covered heritable-embryo IND submissions; FY2027 CR section 101(1) continues this appropriation subject to CR terms.",
+      "locator": "Section 734; Public Law 119-37. Continuation: Public Law 119-103, sections 101(1), 106.",
+      "publication_date": null
+    },
+    "s-e3ddefba5a": {
+      "id": "s-e3ddefba5a",
+      "url": "https://findingaids.nlm.nih.gov/repositories/4/resources/779",
+      "title": "https://findingaids.nlm.nih.gov/repositories/4/resources/779",
+      "accessed": "2026-11-05",
+      "review_depth": "selected passages",
+      "finding": "",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-c4563c2384": {
+      "id": "s-c4563c2384",
+      "url": "https://www.govinfo.gov/content/pkg/CHRG-106hhrg70580/pdf/CHRG-106hhrg70580.pdf",
+      "title": "https://www.govinfo.gov/content/pkg/CHRG-106hhrg70580/pdf/CHRG-106hhrg70580.pdf",
+      "accessed": "2026-11-05",
+      "review_depth": "indexed testimony excerpts",
+      "finding": "",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-b1e4da3884": {
+      "id": "s-b1e4da3884",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/20488990/?dopt=Abstract",
+      "title": "https://pubmed.ncbi.nlm.nih.gov/20488990/?dopt=Abstract",
+      "accessed": "2026-11-05",
+      "review_depth": "abstract and metadata",
+      "finding": "",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-7df4f7f37a": {
+      "id": "s-7df4f7f37a",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/4600381/",
+      "title": "https://pubmed.ncbi.nlm.nih.gov/4600381/",
+      "accessed": "2026-11-05",
+      "review_depth": "metadata",
+      "finding": "",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-9834ece5f0": {
+      "id": "s-9834ece5f0",
+      "url": "https://www.nature.com/articles/255442a0",
+      "title": "https://www.nature.com/articles/255442a0",
+      "accessed": "2026-11-05",
+      "review_depth": "original statement indexed excerpts",
+      "finding": "",
+      "locator": "",
+      "publication_date": null
+    },
+    "s-edaeb35bd6": {
+      "id": "s-edaeb35bd6",
+      "url": "https://www.nature.com/articles/nature11858",
+      "title": "Transmission studies resume for avian flu",
+      "accessed": "2026-11-05",
+      "review_depth": "original indexed passages and metadata",
+      "finding": "23 January 2013 statement ends voluntary moratorium; resumption subject to country-specific approval, not simultaneous global restart.",
+      "locator": "",
+      "publication_date": "2013-01-23"
+    },
+    "s-fab9833a2d": {
+      "id": "s-fab9833a2d",
+      "url": "https://www.legislation.gov.uk/uksi/2002/2677/regulation/1",
+      "title": "COSHH 2002: citation and commencement",
+      "review_depth": "official indexed provision",
+      "accessed": "2026-11-05",
+      "finding": "Regulation 1: commencement 21 November 2002.",
+      "locator": "Regulation 1",
+      "publication_date": null
+    },
+    "s-257431271c": {
+      "id": "s-257431271c",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/9804556/",
+      "title": "Thomson et al.: human blastocyst-derived stem-cell lines",
+      "review_depth": "original abstract and metadata via indexed record",
+      "accessed": "2026-11-05",
+      "finding": "Science paper published 6 November 1998; establishes selected human ESC-line milestone, not all stem-cell origins.",
+      "locator": "",
+      "publication_date": "1998-11-06"
+    }
+  }
+}
