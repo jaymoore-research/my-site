@@ -20,7 +20,7 @@ My expectations going into this were:
 
 Key examples (worth detailed follow up)
 
-•	The Asilomar Conference on Recombinant DNA (Genetic engineering, 1975). Concerns were raised about biosecurity risk of recombinant DNA research due to its risks to infect people with e coli containing viral genomes. Paul Berg, who received a Nobel Prize for his contributions to this work, helped organise the Asilomar Conference on Recombinant DNA to develop guidelines for synthetic biology (from Summary statement of the Asilomar conference on recombinant DNA molecules, P Berg, D Baltimore, S Brenner, R O Roblin, M F Singer, 1975):
+•	The Asilomar Conference on Recombinant DNA (Genetic engineering, 1975). Concerns were raised about biosecurity risk of recombinant DNA research due to its risks to infect people with E. coli containing viral genomes. Paul Berg, who received a Nobel Prize for his contributions to this work, helped organise the Asilomar Conference on Recombinant DNA to develop guidelines for this work (from Summary statement of the Asilomar conference on recombinant DNA molecules, P Berg, D Baltimore, S Brenner, R O Roblin, M F Singer, 1975):
     * “i) containment be made an essential consideration in the experimental design”
     * “ii) that the effectiveness of the containment should match ... the estimated risk”
     * "Estimating the risks will be difficult and intuitive at first but this will improve as we acquire additional knowledge"
@@ -28,7 +28,7 @@ Key examples (worth detailed follow up)
 * Even within periods of funding restrictions, innovation can occur. The discovery of iPSCs, during a funding restriction of hESCs, opened up new fields (personalised medicine) and safer technologies (iPSC-based cell therapy).
 
 
-* Other discoveries ran on trust first: IVF was licensed voluntarily by the profession for six years before laws were instated. While other discoveries have included examples of breaking of rules and trust: CRISPR editing of germline genome of two babies born in China by scientist He Jiankui (Heritability editing, 2018).
+* Other discoveries ran on trust first: IVF was licensed voluntarily by the profession for six years before statutory licensing began in 1991. While other discoveries have included examples of breaking of rules and trust: CRISPR editing of germline genome of two babies born in China by scientist He Jiankui (Heritability editing, 2018).
 
 AI's role in biosecurity
 
@@ -47,5 +47,5 @@ Wrap up
 Considering the biosecurity and biosafety risks that already exist today is helpful for framing AI for biology:
 
 * AI is entering research now, and has limited safeguards.
-* We have seen that science has handled discovery risks through a mix of self-regulations and guidelines.
+* We have seen that science has handled discovery risks through a mix of self-regulation, regulations and guidelines.
 * We need to develop tools quickly to manage AI entering fields already with risks, this may come in the form of guidelines, software, models and lab automation.
