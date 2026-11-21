@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Measured MungeSumstats runtime and peak memory across autoresearch benchmarks.">
+  <title>MungeSumstats benchmark progress | Jay Alexander Moore</title>
+  <style>
+    :root { color-scheme:light; --paper:#f8f9f4; --ink:#24362d; --muted:#556259; --rule:#d5ded5; --green:#235f43; --kept:#23744d; --dot:#65746e; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--paper); color:var(--ink); font:16px/1.5 system-ui,sans-serif; }
+    main { max-width:1040px; padding:40px 24px 50px; margin:auto; }
+    a { color:var(--green); text-underline-offset:3px; }
+    h1 { margin:14px 0 5px; font-size:clamp(2rem,5.8vw,3.4rem); line-height:1.07; letter-spacing:-.05em; }
+    p { margin:.45rem 0; }
+    .sub,.meta,.methods { color:var(--muted); }
+    .toolbar { display:flex; flex-wrap:wrap; align-items:center; gap:9px 16px; margin:27px 0 14px; }
+    label { font-weight:650; }
+    select { color:var(--ink); font:inherit; background:white; border:1px solid #9dac9f; border-radius:4px; padding:6px 10px; max-width:100%; }
+    .legend { display:flex; flex-wrap:wrap; gap:5px 19px; margin:8px 0 14px; color:var(--muted); font-size:.9rem; }
+    .legend span::before { content:""; display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:6px; background:var(--dot); }
+    .legend .kept::before { background:var(--kept); }
+    .legend .reference::before { background:#405e80; }
+    .legend .noisy::before { background:white; border:1px solid #8d6727; }
+    .legend .best::before { border-radius:0; width:15px; height:2px; vertical-align:middle; background:var(--kept); }
+    .plot { background:white; border:1px solid var(--rule); border-radius:6px; margin:0 0 12px; padding:12px 12px 2px; }
+    h2 { margin:0 0 1px 5px; font-size:1.08rem; }
+    svg { width:100%; height:222px; display:block; overflow:visible; }
+    svg text { font:12px system-ui,sans-serif; fill:var(--muted); }
+    svg .point { cursor:pointer; }
+    svg .point:focus-visible, svg .selected { stroke:#132d21; stroke-width:2.2px; outline:none; }
+    .detail { min-height:3.6rem; margin:9px 0; color:var(--ink); font-size:.94rem; }
+    .methods { font-size:.92rem; border-top:1px solid var(--rule); padding-top:10px; }
+    @media(max-width:520px) { main { padding:23px 12px 34px; } .plot { padding:9px 5px 1px; } svg { height:197px; } }
+  </style>
+  <script src="progress.js" defer></script>
+</head>
+<body>
+  <main>
+    <nav><a href="/">Jay Alexander Moore</a></nav>
+    <h1>MungeSumstats benchmark progress</h1>
+    <p class="sub">Measured runtime and peak RAM across tested builds.</p>
+    <div class="toolbar">
+      <label for="cohort">Benchmark</label>
+      <select id="cohort" disabled></select>
+      <span id="meta" class="meta">Loading measurements…</span>
+    </div>
+    <div class="legend" aria-label="Chart legend">
+      <span>Tested</span><span class="kept">Promoted</span><span class="reference">Baseline measurement</span>
+      <span class="noisy">Noisy</span><span class="best">Best promoted value</span>
+    </div>
+    <section class="plot" aria-labelledby="runtime-title">
+      <h2 id="runtime-title">Runtime (seconds)</h2>
+      <svg id="runtime" role="group" aria-labelledby="runtime-title"></svg>
+    </section>
+    <section class="plot" aria-labelledby="ram-title">
+      <h2 id="ram-title">Peak RAM (GiB)</h2>
+      <svg id="ram" role="group" aria-labelledby="ram-title"></svg>
+    </section>
+    <p class="detail" id="detail" aria-live="polite">Select a dot for the commit and measurements.</p>
+    <div class="methods">
+      <p>Each dot is one MungeSumstats commit and its tested BSgenome version. For each file, we take the median of two runs per build. Each dot shows the median across files in that benchmark.</p>
+      <p>Benchmarks use separate views when inputs or run layouts differ. The step line tracks the lowest promoted value for each metric. Lower is better. <a href="https://github.com/karpathy/autoresearch/blob/master/progress.png">Chart reference</a> · <a href="progress.json">Benchmark data</a></p>
+    </div>
+  </main>
+</body>
+</html>
