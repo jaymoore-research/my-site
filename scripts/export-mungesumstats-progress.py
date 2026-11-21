@@ -40,6 +40,7 @@ def measurements(studies, arm):
 
 def export(root):
     cohorts = defaultdict(dict)
+    baselines = {}
     for location in (root, root / "screen"):
         config = json.loads((location / "eval.json").read_text())
         stock = config.get("dependencies", {}).get("BSgenome", {}).get("stock_commit", "")
@@ -61,11 +62,17 @@ def export(root):
                 kind = {"2": "Screening", "3": "Extended panel", "holdout": "Holdout"}[tier]
                 parallel = all(s.get("side_by_side", False) for s in studies.values())
                 names = tuple(sorted(studies))
-                group = cohorts[kind, names, parallel]
+                panel = kind, names, parallel
+                group = cohorts[panel]
                 status = "kept" if trial in promotions and row["tier_reached"] == tier else "tested"
                 if sum(s.get("noisy", False) for s in studies.values()) * 3 > len(studies):
                     status = "noisy"
                 date = datetime.fromisoformat(row["at_utc"]).isoformat(timespec="seconds")
+                if panel not in baselines or date < baselines[panel]["date"]:
+                    commit, _ = build(record, "B", stock)
+                    seconds, ram = measurements(studies, "B")
+                    baselines[panel] = dict(commit=commit[:12], date=date, seconds=seconds, gib=ram,
+                                            stockDependency=stock[:12])
                 for arm in ("B", "C"):
                     key = build(record, arm, stock)
                     point_status = status if arm == "C" else "reference"
@@ -87,7 +94,8 @@ def export(root):
         points = sorted(group.values(), key=lambda p: p["first"])
         # Initial baseline and candidate can share a timestamp. Insertion order puts the baseline first.
         identity = sha256(repr((kind, names, parallel)).encode()).hexdigest()[:10]
-        panels.append(dict(id=identity, kind=kind, studies=len(names), parallel=parallel, points=points))
+        panels.append(dict(id=identity, kind=kind, studies=len(names), parallel=parallel,
+                           baseline=baselines[kind, names, parallel], points=points))
     order = {"Screening":0,"Holdout":1,"Extended panel":2}
     panels.sort(key=lambda p: (order[p["kind"]], -len(p["points"]), p["id"]))
     if not panels:
