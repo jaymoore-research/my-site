@@ -38,6 +38,18 @@ def measurements(studies, arm):
     return round(median(runtime), 3), round(median(ram), 3)
 
 
+def runtime_saved(studies):
+    """Median of baseline minus candidate runtime within each input file, in seconds."""
+    savings = []
+    for study in studies.values():
+        baseline, candidate = (
+            median(run["seconds"] for run in study["runs"] if run["label"] == arm)
+            for arm in ("B", "C")
+        )
+        savings.append(baseline - candidate)
+    return round(median(savings), 3)
+
+
 def export(root):
     cohorts = defaultdict(dict)
     baselines = {}
@@ -68,8 +80,9 @@ def export(root):
                 if sum(s.get("noisy", False) for s in studies.values()) * 3 > len(studies):
                     status = "noisy"
                 date = datetime.fromisoformat(row["at_utc"]).isoformat(timespec="seconds")
+                baseline = build(record, "B", stock)
                 if panel not in baselines or date < baselines[panel]["date"]:
-                    commit, _ = build(record, "B", stock)
+                    commit, _ = baseline
                     seconds, ram = measurements(studies, "B")
                     baselines[panel] = dict(commit=commit[:12], date=date, seconds=seconds, gib=ram,
                                             stockDependency=stock[:12])
@@ -84,8 +97,17 @@ def export(root):
                     ):
                         continue
                     runtime, ram = measurements(studies, arm)
+                    change = None
+                    if arm == "C":
+                        mss_changed, bsg_changed = (a != b for a, b in zip(key, baseline))
+                        change = "both" if mss_changed and bsg_changed else (
+                            "mss" if mss_changed else "bsg" if bsg_changed else "same"
+                        )
                     group[key] = dict(
                         commit=key[0][:12], dependency=key[1][:12], date=date,
+                        commitSha=key[0], dependencySha=key[1], change=change,
+                        pairedBase=baseline[0][:12] if change else None,
+                        savedSeconds=runtime_saved(studies) if change else None,
                         first=min(date, old["first"]) if old else date, measured=arm,
                         status=point_status, seconds=runtime, gib=ram,
                     )
