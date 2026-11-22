@@ -58,6 +58,7 @@
     </div>
     <section class="benchmark" id="screening" aria-labelledby="screening-title">
       <h2 id="screening-title">Three-file screening</h2>
+      <p class="sub">A quick test on the full GCST005538 file and 1 million rows each from GCST006345 and GCST90000489. Two CPU cores run the baseline and candidate builds in opposite orders, giving two measurements per build.</p>
       <div class="toolbar">
         <span data-cohort-picker hidden>
           <label for="screening-cohort">Screening input set</label>
@@ -78,6 +79,7 @@
     </section>
     <section class="benchmark" id="holdout" aria-labelledby="holdout-title">
       <h2 id="holdout-title">Ten-file holdout</h2>
+      <p class="sub">A check on ten full GWAS files outside the screening set. For each file, the baseline and candidate builds run twice each on the same CPU core, one run at a time.</p>
       <div class="toolbar">
         <span data-cohort-picker hidden>
           <label for="holdout-cohort">Larger input set</label>
@@ -102,7 +104,6 @@
       <p>We show trials with two complete runs per build for every input. We exclude a trial when its two baseline runtimes differ by more than 10% of their mean on over a third of its inputs.</p>
       <p>Dashed horizontal lines mark targets relative to the first measured baseline for the selected benchmark.</p>
       <p>Screening input sets appear once at least ten measured builds meet the reading checks.</p>
-      <p>The main screening benchmark uses three inputs: the full GCST005538 file and one million rows each from GCST006345 and GCST90000489. The harness runs baseline then candidate on one CPU core and candidate then baseline on a second core in parallel.</p>
       <p>Labels summarise reviewed changes in promoted builds that beat the previous best time or peak RAM by at least 20%.</p>
       <p>Point details show median runtime saved against each build’s paired baseline. Package labels compare the exact MungeSumstats and BSgenome versions in that pair.</p>
       <p>Benchmarks use separate views when inputs or run layouts differ. The step line tracks the lowest promoted value for each metric. Lower is better. <a href="https://github.com/karpathy/autoresearch/blob/master/progress.png">Chart reference</a> · <a href="progress.json">Benchmark data</a></p>
