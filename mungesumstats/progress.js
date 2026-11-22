@@ -82,52 +82,90 @@ function actualValue(point, metric) {
   return point[metric] * (metric === "gib" ? 1.073741824 : 1);
 }
 
-function drawChanges(svg, notes, changes, left, right, top, bottom, compact) {
-  notes.replaceChildren();
-  notes.hidden = !compact || changes.length === 0;
-  const boxes = [];
-  changes.forEach(({x, y, description}, i) => {
-    if (compact) {
-      element(svg, "text", {x:x+5, y:y-6, class:"change-label"}, i+1);
-      const item = document.createElement("li");
-      item.textContent = description;
-      notes.append(item);
-      return;
+function layoutChanges(svg, changes, x, width) {
+  const guides = element(svg, "g", {class:"change-guides", "aria-hidden":"true", "pointer-events":"none"});
+  const captions = element(svg, "g", {class:"change-captions"});
+  const rows = [];
+  const padding = 6;
+  for (const change of changes) {
+    const label = element(captions, "text", {class:"change-label"});
+    const lines = [];
+    let line = "";
+    for (const word of change.description.split(" ")) {
+      label.textContent = line ? line + " " + word : word;
+      if (line && label.getComputedTextLength() > width - 2*padding) {
+        lines.push(line);
+        line = word;
+      } else {
+        line = label.textContent;
+      }
     }
-    const label = element(svg, "text", {class:"change-label"}, description);
-    const width = label.getComputedTextLength();
-    const preferredX = x + 9 + width <= right ? x + 9 : x - 9 - width;
-    const labelX = Math.max(left, Math.min(preferredX, right-width));
-    const preferredY = Math.max(top+11, Math.min(y-13, bottom-3));
-    const overlapping = boxes.filter(box => labelX+width+8 >= box.left && labelX <= box.right+8);
-    const candidates = [preferredY, top+11, bottom-3, ...overlapping.flatMap(box => [box.y-18, box.y+18])];
-    const labelY = candidates.sort((a,b) => Math.abs(a-preferredY) - Math.abs(b-preferredY)).find(line =>
-      line >= top+11 && line <= bottom-3 && overlapping.every(box => Math.abs(line-box.y) >= 17) &&
-      Math.abs(line-y) >= 11
-    ) ?? preferredY;
-    label.setAttribute("x", labelX);
-    label.setAttribute("y", labelY);
-    boxes.push({left:labelX, right:labelX+width, y:labelY});
-    const endX = Math.max(labelX, Math.min(x, labelX+width));
-    element(svg, "line", {x1:x, x2:endX, y1:y, y2:labelY+3, stroke:"#8b9b90", "pointer-events":"none"});
-  });
+    lines.push(line);
+    const labelWidth = Math.max(...lines.map(text => {
+      label.textContent = text;
+      return label.getComputedTextLength();
+    }));
+    label.textContent = "";
+    const pointX = x(change.index);
+    const left = Math.max(padding, Math.min(pointX-labelWidth/2, width-padding-labelWidth));
+    const right = left + labelWidth;
+    const entry = {...change, label, lines, left, right, pointX};
+    let row = rows.find(items => items.every(item => right+12 <= item.left || left >= item.right+12));
+    if (!row) {
+      row = [];
+      rows.push(row);
+    }
+    row.push(entry);
+  }
+  let rowY = 34;
+  const placed = [];
+  for (const row of rows) {
+    for (const {label, lines, left, right, pointX, value} of row) {
+      lines.forEach((text, i) => element(label, "tspan", {x:left, y:rowY+i*15}, text));
+      placed.push({value, pointX, x:Math.max(left, Math.min(pointX, right)), y:rowY+(lines.length-1)*15+4});
+    }
+    rowY += Math.max(...row.map(item => item.lines.length))*15 + 7;
+  }
+  return {
+    height:rows.length ? rowY-28 : 0,
+    connect(y) {
+      for (const guide of placed) {
+        element(guides, "line", {x1:guide.x, y1:guide.y, x2:guide.pointX, y2:y(guide.value), stroke:"#bac7bd"});
+      }
+    },
+  };
 }
 
-function draw(svg, notes, metric, unit, panel, select) {
+function draw(svg, metric, unit, panel, select) {
   const points = panel.points;
   const width = svg.clientWidth;
-  const height = svg.clientHeight;
-  const left = 53, right = width - 56, top = 28, bottom = height - 34;
+  const left = 53, right = width - 56;
   if (right <= left) return;
   svg.replaceChildren();
-  svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
   const baseline = actualValue(panel.baseline, metric);
   const max = Math.max(baseline, ...points.map(point => actualValue(point, metric)));
   const step = 10 ** Math.floor(Math.log10(max / 4));
   const interval = [1, 2, 2.5, 5, 10].map(v => v * step).find(v => v >= max / 4);
   const limit = interval * Math.ceil(max / interval);
   const x = i => left + (points.length === 1 ? 0.5 : i / (points.length - 1)) * (right - left);
+  let best = Infinity;
+  const bestSteps = [], changes = [];
+  points.forEach((point, index) => {
+    if (point.status !== "kept" && !(index === 0 && point.status === "reference")) return;
+    const value = actualValue(point, metric);
+    if (value >= best) return;
+    const description = changeDescriptions[point.commitSha];
+    if (Number.isFinite(best) && 1-value/best >= .20 && description) changes.push({index, value, description});
+    bestSteps.push({index, value});
+    best = value;
+  });
+  const annotations = layoutChanges(svg, changes, x, width);
+  svg.style.setProperty("--annotation-height", annotations.height + "px");
+  const height = svg.clientHeight;
+  const top = 28 + annotations.height, bottom = height - 34;
+  svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
   const y = value => bottom - value / limit * (bottom - top);
+  annotations.connect(y);
 
   element(svg, "text", {x:1, y:12}, metric === "seconds" ? "Speedup" : "RAM saved");
   element(svg, "text", {x:right+7, y:12}, unit);
@@ -152,18 +190,10 @@ function draw(svg, notes, metric, unit, panel, select) {
     element(svg, "text", {x:left-6, y:y(value)+4, "text-anchor":"end"}, label.replace(" less", ""));
   }
 
-  let path = "", best = Infinity;
-  const changes = [];
-  points.forEach((point, i) => {
-    if (point.status !== "kept" && !(i === 0 && point.status === "reference")) return;
-    const next = actualValue(point, metric);
-    if (next >= best) return;
-    const drop = 1 - next / best;
-    const description = changeDescriptions[point.commitSha];
-    if (Number.isFinite(best) && drop >= .20 && description) changes.push({x:x(i), y:y(next), description});
-    path += best === Infinity ? `M ${x(i)} ${y(next)}` : ` H ${x(i)} V ${y(next)}`;
-    best = next;
-  });
+  let path = "";
+  for (const {index, value} of bestSteps) {
+    path += path ? ` H ${x(index)} V ${y(value)}` : `M ${x(index)} ${y(value)}`;
+  }
   if (path) element(svg, "path", {d:path + ` H ${right}`, fill:"none", stroke:colours.kept, "stroke-width":2});
 
   points.forEach((point, i) => {
@@ -173,7 +203,6 @@ function draw(svg, notes, metric, unit, panel, select) {
     const label = `${point.commit}, ${numbers.format(amount)} ${unit}, ${relative}, ${statuses[point.status]}`;
     drawPoint(svg, x(i), y(amount), point, i, label, select);
   });
-  drawChanges(svg, notes, changes, left, right, top, bottom, width < 620);
 }
 
 function setup(section, panels, initial) {
@@ -186,8 +215,8 @@ function setup(section, panels, initial) {
   const baselineNote = section.querySelector("[data-baseline]");
   const detail = section.querySelector("[data-detail]");
   const charts = [
-    [section.querySelector("[data-runtime]"), section.querySelector("[data-runtime-notes]"), "seconds", "s"],
-    [section.querySelector("[data-ram]"), section.querySelector("[data-ram-notes]"), "gib", "GB"],
+    [section.querySelector("[data-runtime]"), "seconds", "s"],
+    [section.querySelector("[data-ram]"), "gib", "GB"],
   ];
   let panel, selectedIndex = null, resizeFrame;
   const select = index => {
@@ -195,7 +224,7 @@ function setup(section, panels, initial) {
     showPoint(section, panel, index);
   };
   function paint() {
-    charts.forEach(([svg, notes, metric, unit]) => draw(svg, notes, metric, unit, panel, select));
+    charts.forEach(([svg, metric, unit]) => draw(svg, metric, unit, panel, select));
     if (selectedIndex !== null) select(selectedIndex);
   }
   function switchCohort() {
