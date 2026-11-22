@@ -98,11 +98,13 @@ function drawChanges(svg, notes, changes, left, right, top, bottom, compact) {
     const width = label.getComputedTextLength();
     const preferredX = x + 9 + width <= right ? x + 9 : x - 9 - width;
     const labelX = Math.max(left, Math.min(preferredX, right-width));
-    const offsets = [-13, -30, -47, -64, 19, 36, 53];
-    const labelY = offsets.map(offset => y + offset).find(line =>
-      line >= top + 11 && line <= bottom - 3 &&
-      boxes.every(box => Math.abs(line-box.y) >= 17 || labelX+width+8 < box.left || labelX > box.right+8)
-    ) ?? Math.max(top+11, Math.min(y-13, bottom-3));
+    const preferredY = Math.max(top+11, Math.min(y-13, bottom-3));
+    const overlapping = boxes.filter(box => labelX+width+8 >= box.left && labelX <= box.right+8);
+    const candidates = [preferredY, top+11, bottom-3, ...overlapping.flatMap(box => [box.y-18, box.y+18])];
+    const labelY = candidates.sort((a,b) => Math.abs(a-preferredY) - Math.abs(b-preferredY)).find(line =>
+      line >= top+11 && line <= bottom-3 && overlapping.every(box => Math.abs(line-box.y) >= 17) &&
+      Math.abs(line-y) >= 11
+    ) ?? preferredY;
     label.setAttribute("x", labelX);
     label.setAttribute("y", labelY);
     boxes.push({left:labelX, right:labelX+width, y:labelY});
