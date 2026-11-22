@@ -3,22 +3,18 @@
 const cohort = document.getElementById("cohort");
 const meta = document.getElementById("meta");
 const detail = document.getElementById("detail");
-const packageFilter = document.getElementById("package");
-const savingsMeta = document.getElementById("savings-meta");
-const savingsSvg = document.getElementById("savings");
 const baselineNote = document.getElementById("baseline");
 const charts = [
   [document.getElementById("runtime"), "seconds", "s"],
   [document.getElementById("ram"), "gib", "GB"],
 ];
-const colours = {tested:"#65746e", kept:"#23744d", reference:"#405e80", noisy:"#8d6727"};
-const statuses = {tested:"Tested", kept:"Promoted", reference:"Baseline measurement", noisy:"Noisy"};
+const colours = {tested:"#65746e", kept:"#23744d", reference:"#405e80"};
+const statuses = {tested:"Tested", kept:"Promoted", reference:"Baseline measurement"};
 const targets = {
   seconds:[[1/2, "2×"], [1/5, "5×"], [1/10, "10×"]],
   gib:[[.75, "25% less"], [.5, "50% less"], [.25, "75% less"]],
 };
 const packageNames = {mss:"MungeSumstats only", bsg:"BSgenome only", both:"Both packages"};
-const packageColours = {mss:"#36658e", bsg:"#765c96", both:"#23744d"};
 const commitRoot = "https://github.com/neurogenomics/";
 const numbers = new Intl.NumberFormat("en-GB", {maximumFractionDigits:2});
 const dates = new Intl.DateTimeFormat("en-GB", {dateStyle:"medium", timeStyle:"short", timeZone:"UTC"});
@@ -57,7 +53,7 @@ function drawPoint(svg, x, y, point, index, label, colour, radius) {
     ...link, class:"point", "aria-label":title, "data-index":index,
   });
   element(dot, "circle", {
-    cx:x, cy:y, r:radius, fill:point.status === "noisy" ? "white" : colour, stroke:colour,
+    cx:x, cy:y, r:radius, fill:colour, stroke:colour,
     opacity:point.status === "tested" ? .7 : 1,
   });
   element(dot, "title", {}, title);
@@ -133,44 +129,9 @@ function draw(svg, metric, unit) {
   });
 }
 
-function drawSavings() {
-  const points = active.points;
-  const included = points.map((point, index) => [point, index]).filter(([point]) =>
-    packageNames[point.change] && (packageFilter.value === "all" || point.change === packageFilter.value));
-  const width = savingsSvg.clientWidth, height = savingsSvg.clientHeight;
-  const left = 52, right = width - 56, top = 15, bottom = height - 34;
-  savingsSvg.replaceChildren();
-  savingsSvg.setAttribute("viewBox", `0 0 ${width} ${height}`);
-  const counts = Object.keys(packageNames).map(key => [
-    key, included.filter(([point]) => point.change === key).length,
-  ]).filter(([, count]) => count);
-  savingsMeta.textContent = counts.map(([key,count]) => `${packageNames[key]}: ${count}`).join(" · ") || "No measured comparisons in this group.";
-  if (!included.length || right <= left) return;
-
-  const values = included.map(([point]) => point.savedSeconds);
-  const low = Math.min(0, ...values), high = Math.max(0, ...values);
-  const span = high - low || 1;
-  const step = 10 ** Math.floor(Math.log10(span / 4));
-  const interval = [1, 2, 2.5, 5, 10].map(v => v * step).find(v => v >= span / 4);
-  const min = interval * Math.floor(low / interval);
-  const max = interval * (high ? Math.ceil(high / interval) : 1);
-  const x = i => left + i / Math.max(points.length - 1, 1) * (right - left);
-  const y = value => bottom - (value - min) / (max - min) * (bottom - top);
-  for (let v = min; v <= max + interval/10; v += interval) {
-    element(savingsSvg, "line", {x1:left, x2:right, y1:y(v), y2:y(v), stroke:v === 0 ? "#708476" : "#e1e8e2"});
-    element(savingsSvg, "text", {x:right+7, y:y(v)+4}, numbers.format(v));
-  }
-  element(savingsSvg, "text", {x:(left+right)/2, y:height-3, "text-anchor":"middle"}, "Build order");
-  included.forEach(([point, index]) => {
-    const label = `${point.commit}, ${packageNames[point.change]}, ${numbers.format(point.savedSeconds)} seconds saved`;
-    drawPoint(savingsSvg, x(index), y(point.savedSeconds), point, index, label, packageColours[point.change], 4.2);
-  });
-}
-
 function paint() {
   if (!active) return;
   charts.forEach(args => draw(...args));
-  drawSavings();
   if (selectedIndex !== null) select(selectedIndex);
 }
 
@@ -188,7 +149,7 @@ function switchCohort() {
 
 async function start() {
   try {
-    const response = await fetch("progress.json?v=commits", {cache:"no-cache"});
+    const response = await fetch("progress.json?v=stable", {cache:"no-cache"});
     if (!response.ok) throw new Error("Could not load benchmark data");
     panels = (await response.json()).panels;
     const counts = new Map();
@@ -208,7 +169,6 @@ async function start() {
 }
 
 cohort.addEventListener("change", switchCohort);
-packageFilter.addEventListener("change", paint);
 new ResizeObserver(() => {
   cancelAnimationFrame(resizeFrame);
   resizeFrame = requestAnimationFrame(paint);

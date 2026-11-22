@@ -74,16 +74,21 @@ def export(root):
                 kind = {"2": "Screening", "3": "Extended panel", "holdout": "Holdout"}[tier]
                 parallel = all(s.get("side_by_side", False) for s in studies.values())
                 names = tuple(sorted(studies))
+                # Match the harness: reject a trial when more than one third of its studies are noisy.
+                if sum(s["noisy"] for s in studies.values()) * 3 > len(studies):
+                    continue
+                try:
+                    observed = {arm: measurements(studies, arm) for arm in ("B", "C")}
+                except ValueError:
+                    continue
                 panel = kind, names, parallel
                 group = cohorts[panel]
                 status = "kept" if trial in promotions and row["tier_reached"] == tier else "tested"
-                if sum(s.get("noisy", False) for s in studies.values()) * 3 > len(studies):
-                    status = "noisy"
                 date = datetime.fromisoformat(row["at_utc"]).isoformat(timespec="seconds")
                 baseline = build(record, "B", stock)
                 if panel not in baselines or date < baselines[panel]["date"]:
                     commit, _ = baseline
-                    seconds, ram = measurements(studies, "B")
+                    seconds, ram = observed["B"]
                     baselines[panel] = dict(commit=commit[:12], date=date, seconds=seconds, gib=ram,
                                             stockDependency=stock[:12])
                 for arm in ("B", "C"):
@@ -92,11 +97,11 @@ def export(root):
                     old = group.get(key)
                     if old and point_status == "reference":
                         continue
-                    if old and ({"reference":0,"noisy":1,"tested":2,"kept":3}[old["status"]], old["date"]) >= (
-                        {"reference":0,"noisy":1,"tested":2,"kept":3}[point_status], date
+                    if old and ({"reference":0,"tested":1,"kept":2}[old["status"]], old["date"]) >= (
+                        {"reference":0,"tested":1,"kept":2}[point_status], date
                     ):
                         continue
-                    runtime, ram = measurements(studies, arm)
+                    runtime, ram = observed[arm]
                     change = None
                     if arm == "C":
                         mss_changed, bsg_changed = (a != b for a, b in zip(key, baseline))
