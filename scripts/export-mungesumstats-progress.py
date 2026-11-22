@@ -65,13 +65,13 @@ def export(root):
                 continue
             receipt = location / "trials" / trial
             record = json.loads((receipt / "trial.json").read_text())
-            for tier in ("2", "3", "holdout"):
+            for tier in ("2", "holdout"):
                 studies = record["tiers"].get(tier, {}).get("studies")
                 if tier == "holdout" and isinstance(studies, int):
                     studies = json.loads((receipt / "holdout.json").read_text())["studies"]
                 if not isinstance(studies, dict) or not studies:
                     continue
-                kind = {"2": "Screening", "3": "Extended panel", "holdout": "Holdout"}[tier]
+                kind = "Screening" if tier == "2" else "Holdout"
                 parallel = all(s.get("side_by_side", False) for s in studies.values())
                 names = tuple(sorted(studies))
                 # Match the harness: reject a trial when more than one third of its studies are noisy.
@@ -119,11 +119,13 @@ def export(root):
     panels = []
     for (kind, names, parallel), group in cohorts.items():
         points = sorted(group.values(), key=lambda p: p["first"])
+        if kind == "Screening" and len(points) < 10:
+            continue
         # Initial baseline and candidate can share a timestamp. Insertion order puts the baseline first.
         identity = sha256(repr((kind, names, parallel)).encode()).hexdigest()[:10]
         panels.append(dict(id=identity, kind=kind, studies=len(names), parallel=parallel,
                            baseline=baselines[kind, names, parallel], points=points))
-    order = {"Screening":0,"Holdout":1,"Extended panel":2}
+    order = {"Screening":0,"Holdout":1}
     panels.sort(key=lambda p: (order[p["kind"]], -len(p["points"]), p["id"]))
     if not panels:
         raise SystemExit("No completed timing receipts found")

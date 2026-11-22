@@ -7,6 +7,15 @@ const targets = {
   gib:[[.75, "25% less"], [.5, "50% less"], [.25, "75% less"]],
 };
 const packageNames = {mss:"MungeSumstats only", bsg:"BSgenome only", both:"Both packages"};
+const changeDescriptions = {
+  ca626a046eefe39e8b85552b29212883939fc750:"Reuse RefSNP ID tables",
+  c7db7ea7c4fbcc18347f6a67bbac85ac00bd3d9b:"Free unused genome-build tables",
+  "94b229292e99d973b83c419b19d20edaf8ae1c84":"Read GRCh37 ID tables as needed",
+  d45e4ddd0d7e9d46d794f9c8157651dc054ac147:"Stream RefSNP IDs from disk",
+  "5b3b1e0b66798e1b8e8a4eb5f9b5e08257d971cd":"Stream RefSNP IDs and speed up block reads",
+  e89ecd2da8dd3b0e52f18a3e4ee39054f8d06078:"Read genome files directly",
+  b77919ae8ebd4dca4c079fbca45683b3b34b20ef:"Read genome sequences in chunks",
+};
 const commitRoot = "https://github.com/neurogenomics/";
 const numbers = new Intl.NumberFormat("en-GB", {maximumFractionDigits:2});
 const dates = new Intl.DateTimeFormat("en-GB", {dateStyle:"medium", timeStyle:"short", timeZone:"UTC"});
@@ -73,7 +82,26 @@ function actualValue(point, metric) {
   return point[metric] * (metric === "gib" ? 1.073741824 : 1);
 }
 
-function draw(svg, metric, unit, panel, select) {
+function drawChanges(svg, notes, changes, left, right, top, compact) {
+  notes.replaceChildren();
+  notes.hidden = !compact || changes.length === 0;
+  changes.forEach(({x, y, drop, description}, i) => {
+    const label = `${Math.round(drop * 100)}% lower · ${description}`;
+    if (compact) {
+      element(svg, "text", {x:x+5, y:y-6, class:"change-label"}, i+1);
+      const item = document.createElement("li");
+      item.textContent = label;
+      notes.append(item);
+      return;
+    }
+    const labelY = top + 14 + i * 19;
+    const labelX = Math.min(Math.max(x + 9, left+4), right - label.length * 6.45);
+    element(svg, "line", {x1:x, x2:labelX+3, y1:y, y2:labelY+3, stroke:"#809287", "pointer-events":"none"});
+    element(svg, "text", {x:labelX, y:labelY, class:"change-label"}, label);
+  });
+}
+
+function draw(svg, notes, metric, unit, panel, select) {
   const points = panel.points;
   const width = svg.clientWidth;
   const height = svg.clientHeight;
@@ -113,10 +141,14 @@ function draw(svg, metric, unit, panel, select) {
   }
 
   let path = "", best = Infinity;
+  const changes = [];
   points.forEach((point, i) => {
     if (point.status !== "kept" && !(i === 0 && point.status === "reference")) return;
     const next = actualValue(point, metric);
     if (next >= best) return;
+    const drop = 1 - next / best;
+    const description = changeDescriptions[point.commitSha];
+    if (Number.isFinite(best) && drop >= .20 && description) changes.push({x:x(i), y:y(next), drop, description});
     path += best === Infinity ? `M ${x(i)} ${y(next)}` : ` H ${x(i)} V ${y(next)}`;
     best = next;
   });
@@ -129,6 +161,7 @@ function draw(svg, metric, unit, panel, select) {
     const label = `${point.commit}, ${numbers.format(amount)} ${unit}, ${relative}, ${statuses[point.status]}`;
     drawPoint(svg, x(i), y(amount), point, i, label, select);
   });
+  drawChanges(svg, notes, changes, left, right, top, width < 620);
 }
 
 function setup(section, panels, initial) {
@@ -141,8 +174,8 @@ function setup(section, panels, initial) {
   const baselineNote = section.querySelector("[data-baseline]");
   const detail = section.querySelector("[data-detail]");
   const charts = [
-    [section.querySelector("[data-runtime]"), "seconds", "s"],
-    [section.querySelector("[data-ram]"), "gib", "GB"],
+    [section.querySelector("[data-runtime]"), section.querySelector("[data-runtime-notes]"), "seconds", "s"],
+    [section.querySelector("[data-ram]"), section.querySelector("[data-ram-notes]"), "gib", "GB"],
   ];
   let panel, selectedIndex = null, resizeFrame;
   const select = index => {
@@ -150,7 +183,7 @@ function setup(section, panels, initial) {
     showPoint(section, panel, index);
   };
   function paint() {
-    charts.forEach(([svg, metric, unit]) => draw(svg, metric, unit, panel, select));
+    charts.forEach(([svg, notes, metric, unit]) => draw(svg, notes, metric, unit, panel, select));
     if (selectedIndex !== null) select(selectedIndex);
   }
   function switchCohort() {
@@ -171,6 +204,7 @@ function setup(section, panels, initial) {
     cohort.add(new Option(n === 1 ? base : `${base} (panel ${n})`, i));
   });
   cohort.value = String(Math.max(0, panels.findIndex(initial)));
+  section.querySelector("[data-cohort-picker]").hidden = panels.length < 2;
   cohort.disabled = panels.length < 2;
   cohort.addEventListener("change", switchCohort);
   switchCohort();
@@ -184,11 +218,11 @@ async function start() {
   const screening = document.getElementById("screening");
   const holdout = document.getElementById("holdout");
   try {
-    const response = await fetch("progress.json?v=stable", {cache:"no-cache"});
+    const response = await fetch("progress.json?v=reviewed", {cache:"no-cache"});
     if (!response.ok) throw new Error("Could not load benchmark data");
     const {panels} = await response.json();
     setup(screening, panels.filter(p => p.kind === "Screening"), p => p.studies === 3 && p.parallel);
-    setup(holdout, panels.filter(p => p.kind !== "Screening"), p => p.kind === "Holdout");
+    setup(holdout, panels.filter(p => p.kind === "Holdout"), p => p.kind === "Holdout");
   } catch (error) {
     for (const section of [screening, holdout]) {
       section.querySelector("[data-meta]").textContent = "Benchmark data is temporarily unavailable.";
