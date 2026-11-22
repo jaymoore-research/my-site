@@ -22,7 +22,6 @@
     .legend .kept::before { background:var(--kept); }
     .legend .reference::before { background:#405e80; }
     .legend .noisy::before { background:white; border:1px solid #8d6727; }
-    .legend .milestone::before { border-radius:0; width:2px; height:12px; vertical-align:middle; background:#765c96; }
     .legend .best::before { border-radius:0; width:15px; height:2px; vertical-align:middle; background:var(--kept); }
     .plot { background:white; border:1px solid var(--rule); border-radius:6px; margin:0 0 12px; padding:12px 12px 2px; }
     h2 { margin:0 0 1px 5px; font-size:1.08rem; }
@@ -31,7 +30,6 @@
     svg .point { cursor:pointer; }
     svg .point:focus-visible circle, svg .point.selected circle { stroke:#132d21; stroke-width:2.2px; }
     svg .point:focus-visible { outline:none; }
-    svg .milestone-link:focus-visible text, svg .milestone-link:hover text { text-decoration:underline; }
     .attribution { margin-top:22px; }
     .attribution p { margin-left:5px; }
     .attribution .toolbar { margin:8px 0 0 5px; }
@@ -39,7 +37,7 @@
     .methods { font-size:.92rem; border-top:1px solid var(--rule); padding-top:10px; }
     @media(max-width:520px) { main { padding:23px 12px 34px; } .plot { padding:9px 5px 1px; } svg { height:197px; } }
   </style>
-  <script src="progress.js?v=commits" defer></script>
+  <script src="progress.js?v=axes" defer></script>
 </head>
 <body>
   <main>
@@ -54,7 +52,6 @@
     <div class="legend" aria-label="Chart legend">
       <span>Tested</span><span class="kept">Promoted</span><span class="reference">Baseline measurement</span>
       <span class="noisy">Noisy</span><span class="best">Best promoted value</span>
-      <span class="milestone" id="milestone-legend" hidden>First optimised BSgenome build</span>
     </div>
     <p class="meta" id="baseline"></p>
     <section class="plot" aria-labelledby="runtime-title">
@@ -84,7 +81,7 @@
     <div class="methods">
       <p>GitHub links open in a new tab. The code repositories are private. Builds that are only on the benchmark server show their measurements here.</p>
       <p>Each dot is one MungeSumstats commit and its tested BSgenome version. For each file, we take the median of two runs per build. Each dot shows the median across files in that benchmark.</p>
-      <p>Dashed horizontal lines mark targets relative to the first measured baseline for the selected benchmark. The purple marker shows the first tested build with a non-stock BSgenome version.</p>
+      <p>Dashed horizontal lines mark targets relative to the first measured baseline for the selected benchmark.</p>
       <p>The main screening benchmark uses three inputs: the full GCST005538 file and one million rows each from GCST006345 and GCST90000489. The harness runs baseline then candidate on one CPU core and candidate then baseline on a second core in parallel.</p>
       <p>For runtime saved, we subtract candidate time from paired baseline time for each file and take the median across files. The package labels compare the exact MungeSumstats and BSgenome versions in each pair. Each build can use a different paired baseline.</p>
       <p>Benchmarks use separate views when inputs or run layouts differ. The step line tracks the lowest promoted value for each metric. Lower is better. <a href="https://github.com/karpathy/autoresearch/blob/master/progress.png">Chart reference</a> · <a href="progress.json">Benchmark data</a></p>

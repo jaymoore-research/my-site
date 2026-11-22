@@ -7,7 +7,6 @@ const packageFilter = document.getElementById("package");
 const savingsMeta = document.getElementById("savings-meta");
 const savingsSvg = document.getElementById("savings");
 const baselineNote = document.getElementById("baseline");
-const milestoneLegend = document.getElementById("milestone-legend");
 const charts = [
   [document.getElementById("runtime"), "seconds", "s"],
   [document.getElementById("ram"), "gib", "GB"],
@@ -21,10 +20,9 @@ const targets = {
 const packageNames = {mss:"MungeSumstats only", bsg:"BSgenome only", both:"Both packages"};
 const packageColours = {mss:"#36658e", bsg:"#765c96", both:"#23744d"};
 const commitRoot = "https://github.com/neurogenomics/";
-const markerColour = "#765c96";
 const numbers = new Intl.NumberFormat("en-GB", {maximumFractionDigits:2});
 const dates = new Intl.DateTimeFormat("en-GB", {dateStyle:"medium", timeStyle:"short", timeZone:"UTC"});
-let panels = [], active = null, selectedIndex = null, resizeFrame = null, milestone = -1;
+let panels = [], active = null, selectedIndex = null, resizeFrame = null;
 
 function element(parent, name, attributes, content) {
   const item = document.createElementNS("http://www.w3.org/2000/svg", name);
@@ -43,12 +41,11 @@ function select(index) {
 
   });
   const dependency = point.dependency ? " · BSgenome " + point.dependency : "";
-  const marker = index === milestone ? " · First optimised BSgenome build" : "";
   const change = packageNames[point.change]
     ? ` · ${packageNames[point.change]} · ${numbers.format(point.savedSeconds)} s saved vs ${point.pairedBase}`
     : "";
   const link = point.github ? "" : " · MungeSumstats commit is local";
-  detail.textContent = `${point.commit}${dependency} · ${numbers.format(point.seconds)} s · ${numbers.format(point.gib * 1.073741824)} GB · ${statuses[point.status]}${marker}${change}${link} · ${dates.format(new Date(point.date))} UTC`;
+  detail.textContent = `${point.commit}${dependency} · ${numbers.format(point.seconds)} s · ${numbers.format(point.gib * 1.073741824)} GB · ${statuses[point.status]}${change}${link} · ${dates.format(new Date(point.date))} UTC`;
 }
 
 function drawPoint(svg, x, y, point, index, label, colour, radius) {
@@ -117,20 +114,6 @@ function draw(svg, metric, unit) {
     element(svg, "text", {x:left-6, y:y(value)+4, "text-anchor":"end"}, label.replace(" less", ""));
   }
 
-  if (milestone >= 0) {
-    const markerX = x(milestone);
-    const markerLink = element(svg, "a", {
-      href:`${commitRoot}bsgenome-autoresearch/commit/${points[milestone].dependencySha}`,
-      target:"_blank", rel:"noopener noreferrer", class:"milestone-link",
-      "aria-label":"Open the first optimised BSgenome commit on GitHub",
-    });
-    element(markerLink, "line", {
-      x1:markerX, x2:markerX, y1:top-4, y2:bottom, stroke:markerColour,
-      "stroke-dasharray":"2 3", "stroke-width":1.5, class:"bsgenome-marker",
-    });
-    element(markerLink, "text", {x:markerX+6, y:top-9, style:`fill:${markerColour}`}, "BSgenome");
-  }
-
   let path = "", best = Infinity;
   points.forEach((point, i) => {
     if (point.status !== "kept" && !(i === 0 && point.status === "reference")) return;
@@ -195,11 +178,6 @@ function switchCohort() {
   active = panels[Number(cohort.value)];
   selectedIndex = null;
   const points = active.points;
-  const stock = active.baseline.stockDependency;
-  milestone = stock && points.some(point => point.dependency === stock)
-    ? points.findIndex(point => point.measured === "C" && point.dependency && point.dependency !== stock)
-    : -1;
-  milestoneLegend.hidden = milestone < 0;
   const {commit, seconds, gib} = active.baseline;
   baselineNote.textContent = `Target baseline ${commit} · ${numbers.format(seconds)} s · ${numbers.format(gib * 1.073741824)} GB`;
   const latest = points.map(p => p.date).sort().at(-1);
