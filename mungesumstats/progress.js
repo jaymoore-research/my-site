@@ -1,13 +1,5 @@
 "use strict";
 
-const cohort = document.getElementById("cohort");
-const meta = document.getElementById("meta");
-const detail = document.getElementById("detail");
-const baselineNote = document.getElementById("baseline");
-const charts = [
-  [document.getElementById("runtime"), "seconds", "s"],
-  [document.getElementById("ram"), "gib", "GB"],
-];
 const colours = {tested:"#65746e", kept:"#23744d", reference:"#405e80"};
 const statuses = {tested:"Tested", kept:"Promoted", reference:"Baseline measurement"};
 const targets = {
@@ -18,7 +10,7 @@ const packageNames = {mss:"MungeSumstats only", bsg:"BSgenome only", both:"Both 
 const commitRoot = "https://github.com/neurogenomics/";
 const numbers = new Intl.NumberFormat("en-GB", {maximumFractionDigits:2});
 const dates = new Intl.DateTimeFormat("en-GB", {dateStyle:"medium", timeStyle:"short", timeZone:"UTC"});
-let panels = [], active = null, selectedIndex = null, resizeFrame = null;
+const pointPrompt = "Focus or hover over a mark for measurements. Open it to view the commit on GitHub.";
 
 function element(parent, name, attributes, content) {
   const item = document.createElementNS("http://www.w3.org/2000/svg", name);
@@ -28,10 +20,9 @@ function element(parent, name, attributes, content) {
   return item;
 }
 
-function select(index) {
-  selectedIndex = index;
-  const point = active.points[index];
-  document.querySelectorAll(".point").forEach(dot => {
+function showPoint(section, panel, index) {
+  const point = panel.points[index];
+  section.querySelectorAll(".point").forEach(dot => {
     const selected = Number(dot.dataset.index) === index;
     dot.classList.toggle("selected", selected);
   });
@@ -40,10 +31,12 @@ function select(index) {
     ? ` · ${packageNames[point.change]} · ${numbers.format(point.savedSeconds)} s saved vs ${point.pairedBase}`
     : "";
   const link = point.github ? "" : " · MungeSumstats commit is local";
-  detail.textContent = `${point.commit}${dependency} · ${numbers.format(point.seconds)} s · ${numbers.format(point.gib * 1.073741824)} GB · ${statuses[point.status]}${change}${link} · ${dates.format(new Date(point.date))} UTC`;
+  section.querySelector("[data-detail]").textContent = `${point.commit}${dependency} · ${numbers.format(point.seconds)} s · ${numbers.format(point.gib * 1.073741824)} GB · ${statuses[point.status]}${change}${link} · ${dates.format(new Date(point.date))} UTC`;
 }
 
-function drawPoint(svg, x, y, point, index, label, colour, radius) {
+function drawPoint(svg, x, y, point, index, label, select) {
+  const colour = colours[point.status];
+  const radius = point.status === "kept" ? 4.3 : 3.4;
   const link = point.github
     ? {href:`${commitRoot}mungesumstats-autoresearch/commit/${point.commitSha}`, target:"_blank", rel:"noopener noreferrer"}
     : {role:"button", tabindex:0};
@@ -80,15 +73,15 @@ function actualValue(point, metric) {
   return point[metric] * (metric === "gib" ? 1.073741824 : 1);
 }
 
-function draw(svg, metric, unit) {
-  const points = active.points;
+function draw(svg, metric, unit, panel, select) {
+  const points = panel.points;
   const width = svg.clientWidth;
   const height = svg.clientHeight;
   const left = 53, right = width - 56, top = 28, bottom = height - 34;
   if (right <= left) return;
   svg.replaceChildren();
   svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
-  const baseline = actualValue(active.baseline, metric);
+  const baseline = actualValue(panel.baseline, metric);
   const max = Math.max(baseline, ...points.map(point => actualValue(point, metric)));
   const step = 10 ** Math.floor(Math.log10(max / 4));
   const interval = [1, 2, 2.5, 5, 10].map(v => v * step).find(v => v >= max / 4);
@@ -134,52 +127,74 @@ function draw(svg, metric, unit) {
     const relative = metric === "seconds" ? numbers.format(baseline / amount) + "×"
       : numbers.format(100 * (1 - amount / baseline)) + "% RAM reduction";
     const label = `${point.commit}, ${numbers.format(amount)} ${unit}, ${relative}, ${statuses[point.status]}`;
-    drawPoint(svg, x(i), y(amount), point, i, label, colours[point.status], point.status === "kept" ? 4.3 : 3.4);
+    drawPoint(svg, x(i), y(amount), point, i, label, select);
   });
 }
 
-function paint() {
-  if (!active) return;
-  charts.forEach(args => draw(...args));
-  if (selectedIndex !== null) select(selectedIndex);
-}
-
-function switchCohort() {
-  active = panels[Number(cohort.value)];
-  selectedIndex = null;
-  const points = active.points;
-  const {commit, seconds, gib} = active.baseline;
-  baselineNote.textContent = `Target baseline ${commit} · ${numbers.format(seconds)} s · ${numbers.format(gib * 1.073741824)} GB`;
-  const latest = points.map(p => p.date).sort().at(-1);
-  meta.textContent = `${points.length} measured builds · ${active.studies} GWAS files · Latest measurement ${dates.format(new Date(latest))} UTC`;
-  detail.textContent = "Focus or hover over a dot for measurements. Open it to view the commit on GitHub.";
-  paint();
+function setup(section, panels, initial) {
+  const cohort = section.querySelector("select");
+  const meta = section.querySelector("[data-meta]");
+  if (!panels.length) {
+    meta.textContent = "No benchmark data is available.";
+    return;
+  }
+  const baselineNote = section.querySelector("[data-baseline]");
+  const detail = section.querySelector("[data-detail]");
+  const charts = [
+    [section.querySelector("[data-runtime]"), "seconds", "s"],
+    [section.querySelector("[data-ram]"), "gib", "GB"],
+  ];
+  let panel, selectedIndex = null, resizeFrame;
+  const select = index => {
+    selectedIndex = index;
+    showPoint(section, panel, index);
+  };
+  function paint() {
+    charts.forEach(([svg, metric, unit]) => draw(svg, metric, unit, panel, select));
+    if (selectedIndex !== null) select(selectedIndex);
+  }
+  function switchCohort() {
+    panel = panels[Number(cohort.value)];
+    selectedIndex = null;
+    const {commit, seconds} = panel.baseline;
+    baselineNote.textContent = `Target baseline ${commit} · ${numbers.format(seconds)} s · ${numbers.format(actualValue(panel.baseline, "gib"))} GB`;
+    const latest = panel.points.map(point => point.date).sort().at(-1);
+    meta.textContent = `${panel.points.length} measured builds · Latest measurement ${dates.format(new Date(latest))} UTC`;
+    detail.textContent = pointPrompt;
+    paint();
+  }
+  const counts = new Map();
+  panels.forEach((choice, i) => {
+    const base = `${choice.kind} · ${choice.studies} files · ${choice.parallel ? "side-by-side" : "serial"}`;
+    const n = (counts.get(base) || 0) + 1;
+    counts.set(base, n);
+    cohort.add(new Option(n === 1 ? base : `${base} (panel ${n})`, i));
+  });
+  cohort.value = String(Math.max(0, panels.findIndex(initial)));
+  cohort.disabled = panels.length < 2;
+  cohort.addEventListener("change", switchCohort);
+  switchCohort();
+  new ResizeObserver(() => {
+    cancelAnimationFrame(resizeFrame);
+    resizeFrame = requestAnimationFrame(paint);
+  }).observe(charts[0][0]);
 }
 
 async function start() {
+  const screening = document.getElementById("screening");
+  const holdout = document.getElementById("holdout");
   try {
     const response = await fetch("progress.json?v=stable", {cache:"no-cache"});
     if (!response.ok) throw new Error("Could not load benchmark data");
-    panels = (await response.json()).panels;
-    const counts = new Map();
-    panels.forEach((panel, i) => {
-      const base = `${panel.kind} · ${panel.studies} files · ${panel.parallel ? "side-by-side" : "serial"}`;
-      const n = (counts.get(base) || 0) + 1;
-      counts.set(base, n);
-      cohort.add(new Option(n === 1 ? base : `${base} (panel ${n})`, i));
-    });
-    if (!panels.length) throw new Error("No benchmark data");
-    cohort.disabled = false;
-    switchCohort();
+    const {panels} = await response.json();
+    setup(screening, panels.filter(p => p.kind === "Screening"), p => p.studies === 3 && p.parallel);
+    setup(holdout, panels.filter(p => p.kind !== "Screening"), p => p.kind === "Holdout");
   } catch (error) {
-    meta.textContent = "Benchmark data is temporarily unavailable.";
+    for (const section of [screening, holdout]) {
+      section.querySelector("[data-meta]").textContent = "Benchmark data is temporarily unavailable.";
+    }
     console.error(error);
   }
 }
 
-cohort.addEventListener("change", switchCohort);
-new ResizeObserver(() => {
-  cancelAnimationFrame(resizeFrame);
-  resizeFrame = requestAnimationFrame(paint);
-}).observe(charts[0][0]);
 start();

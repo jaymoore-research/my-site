@@ -14,7 +14,10 @@
     h1 { margin:14px 0 5px; font-size:clamp(2rem,5.8vw,3.4rem); line-height:1.07; letter-spacing:-.05em; }
     p { margin:.45rem 0; }
     .sub,.meta,.methods { color:var(--muted); }
-    .toolbar { display:flex; flex-wrap:wrap; align-items:center; gap:9px 16px; margin:27px 0 14px; }
+    .benchmark { margin-top:26px; }
+    .benchmark + .benchmark { margin-top:35px; padding-top:24px; border-top:1px solid var(--rule); }
+    .benchmark h2 { margin:0 0 4px; font-size:1.45rem; }
+    .toolbar { display:flex; flex-wrap:wrap; align-items:center; gap:9px 16px; margin:8px 0 6px; }
     label { font-weight:650; }
     select { color:var(--ink); font:inherit; background:white; border:1px solid #9dac9f; border-radius:4px; padding:6px 10px; max-width:100%; }
     .legend { display:flex; flex-wrap:wrap; gap:5px 19px; margin:8px 0 14px; color:var(--muted); font-size:.9rem; }
@@ -27,28 +30,24 @@
     .legend .reference::before { background:#405e80; }
     .legend .best::before { border-radius:0; width:15px; height:2px; vertical-align:middle; background:var(--kept); }
     .plot { background:white; border:1px solid var(--rule); border-radius:6px; margin:0 0 12px; padding:12px 12px 2px; }
-    h2 { margin:0 0 1px 5px; font-size:1.08rem; }
+    .plot h3 { margin:0 0 1px 5px; font-size:1.08rem; }
     svg { width:100%; height:222px; display:block; overflow:visible; }
+    #holdout .plot svg { height:246px; }
     svg text { font:12px system-ui,sans-serif; fill:var(--muted); }
     svg .point { cursor:pointer; }
     svg .point:focus-visible .point-mark, svg .point.selected .point-mark { stroke:#132d21; stroke-width:2.2px; }
     svg .point:focus-visible { outline:none; }
     .detail { min-height:3.6rem; margin:9px 0; color:var(--ink); font-size:.94rem; }
     .methods { font-size:.92rem; border-top:1px solid var(--rule); padding-top:10px; }
-    @media(max-width:520px) { main { padding:23px 12px 34px; } .plot { padding:9px 5px 1px; } svg { height:197px; } }
+    @media(max-width:520px) { main { padding:23px 12px 34px; } .plot { padding:9px 5px 1px; } svg { height:197px; } #holdout .plot svg { height:217px; } }
   </style>
-  <script src="progress.js?v=shapes" defer></script>
+  <script src="progress.js?v=stacked" defer></script>
 </head>
 <body>
   <main>
     <nav><a href="/">Jay Alexander Moore</a></nav>
     <h1>MungeSumstats benchmark progress</h1>
     <p class="sub">Measured runtime and peak RAM across tested builds.</p>
-    <div class="toolbar">
-      <label for="cohort">Benchmark</label>
-      <select id="cohort" disabled></select>
-      <span id="meta" class="meta">Loading measurements…</span>
-    </div>
     <div class="legend" aria-label="Benchmark status by colour">
       <span>Tested</span><span class="kept">Promoted</span><span class="reference">Baseline measurement</span>
       <span class="best">Best promoted value</span>
@@ -57,16 +56,42 @@
       <span>MungeSumstats only</span><span class="square">BSgenome only</span>
       <span class="diamond">Both repositories</span><span class="ring">Baseline or no change</span>
     </div>
-    <p class="meta" id="baseline"></p>
-    <section class="plot" aria-labelledby="runtime-title">
-      <h2 id="runtime-title">Runtime (seconds)</h2>
-      <svg id="runtime" role="group" aria-labelledby="runtime-title"></svg>
+    <section class="benchmark" id="screening" aria-labelledby="screening-title">
+      <h2 id="screening-title">Three-file screening</h2>
+      <div class="toolbar">
+        <label for="screening-cohort">Screening input set</label>
+        <select id="screening-cohort" disabled></select>
+        <span data-meta class="meta">Loading measurements…</span>
+      </div>
+      <p class="meta" data-baseline></p>
+      <section class="plot" aria-labelledby="screening-runtime-title">
+        <h3 id="screening-runtime-title">Runtime (seconds)</h3>
+        <svg data-runtime role="group" aria-labelledby="screening-runtime-title"></svg>
+      </section>
+      <section class="plot" aria-labelledby="screening-ram-title">
+        <h3 id="screening-ram-title">Peak RAM (GB)</h3>
+        <svg data-ram role="group" aria-labelledby="screening-ram-title"></svg>
+      </section>
+      <p class="detail" data-detail aria-live="polite">Focus or hover over a mark for measurements.</p>
     </section>
-    <section class="plot" aria-labelledby="ram-title">
-      <h2 id="ram-title">Peak RAM (GB)</h2>
-      <svg id="ram" role="group" aria-labelledby="ram-title"></svg>
+    <section class="benchmark" id="holdout" aria-labelledby="holdout-title">
+      <h2 id="holdout-title">Holdout benchmarks</h2>
+      <div class="toolbar">
+        <label for="holdout-cohort">Larger input set</label>
+        <select id="holdout-cohort" disabled></select>
+        <span data-meta class="meta">Loading measurements…</span>
+      </div>
+      <p class="meta" data-baseline></p>
+      <section class="plot" aria-labelledby="holdout-runtime-title">
+        <h3 id="holdout-runtime-title">Runtime (seconds)</h3>
+        <svg data-runtime role="group" aria-labelledby="holdout-runtime-title"></svg>
+      </section>
+      <section class="plot" aria-labelledby="holdout-ram-title">
+        <h3 id="holdout-ram-title">Peak RAM (GB)</h3>
+        <svg data-ram role="group" aria-labelledby="holdout-ram-title"></svg>
+      </section>
+      <p class="detail" data-detail aria-live="polite">Focus or hover over a mark for measurements.</p>
     </section>
-    <p class="detail" id="detail" aria-live="polite">Focus or hover over a dot for measurements. Open it to view the commit on GitHub.</p>
     <div class="methods">
       <p>GitHub links open in a new tab. The code repositories are private. Builds that are only on the benchmark server show their measurements here.</p>
       <p>Each mark shows one MungeSumstats commit and its tested BSgenome version. For each file, we take the median of two runs per build. Each mark shows the median across files in that benchmark.</p>
