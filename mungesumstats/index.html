@@ -19,6 +19,10 @@
     select { color:var(--ink); font:inherit; background:white; border:1px solid #9dac9f; border-radius:4px; padding:6px 10px; max-width:100%; }
     .legend { display:flex; flex-wrap:wrap; gap:5px 19px; margin:8px 0 14px; color:var(--muted); font-size:.9rem; }
     .legend span::before { content:""; display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:6px; background:var(--dot); }
+    .legend + .legend { margin-top:-7px; }
+    .legend .square::before { border-radius:0; }
+    .legend .diamond::before { border-radius:0; transform:rotate(45deg) scale(.84); }
+    .legend .ring::before { border:1px solid var(--dot); background:transparent; }
     .legend .kept::before { background:var(--kept); }
     .legend .reference::before { background:#405e80; }
     .legend .best::before { border-radius:0; width:15px; height:2px; vertical-align:middle; background:var(--kept); }
@@ -27,13 +31,13 @@
     svg { width:100%; height:222px; display:block; overflow:visible; }
     svg text { font:12px system-ui,sans-serif; fill:var(--muted); }
     svg .point { cursor:pointer; }
-    svg .point:focus-visible circle, svg .point.selected circle { stroke:#132d21; stroke-width:2.2px; }
+    svg .point:focus-visible .point-mark, svg .point.selected .point-mark { stroke:#132d21; stroke-width:2.2px; }
     svg .point:focus-visible { outline:none; }
     .detail { min-height:3.6rem; margin:9px 0; color:var(--ink); font-size:.94rem; }
     .methods { font-size:.92rem; border-top:1px solid var(--rule); padding-top:10px; }
     @media(max-width:520px) { main { padding:23px 12px 34px; } .plot { padding:9px 5px 1px; } svg { height:197px; } }
   </style>
-  <script src="progress.js?v=stable" defer></script>
+  <script src="progress.js?v=shapes" defer></script>
 </head>
 <body>
   <main>
@@ -45,9 +49,13 @@
       <select id="cohort" disabled></select>
       <span id="meta" class="meta">Loading measurements…</span>
     </div>
-    <div class="legend" aria-label="Chart legend">
+    <div class="legend" aria-label="Benchmark status by colour">
       <span>Tested</span><span class="kept">Promoted</span><span class="reference">Baseline measurement</span>
       <span class="best">Best promoted value</span>
+    </div>
+    <div class="legend" aria-label="Repository changed by marker shape">
+      <span>MungeSumstats only</span><span class="square">BSgenome only</span>
+      <span class="diamond">Both repositories</span><span class="ring">Baseline or no change</span>
     </div>
     <p class="meta" id="baseline"></p>
     <section class="plot" aria-labelledby="runtime-title">
@@ -61,7 +69,7 @@
     <p class="detail" id="detail" aria-live="polite">Focus or hover over a dot for measurements. Open it to view the commit on GitHub.</p>
     <div class="methods">
       <p>GitHub links open in a new tab. The code repositories are private. Builds that are only on the benchmark server show their measurements here.</p>
-      <p>Each dot is one MungeSumstats commit and its tested BSgenome version. For each file, we take the median of two runs per build. Each dot shows the median across files in that benchmark.</p>
+      <p>Each mark shows one MungeSumstats commit and its tested BSgenome version. For each file, we take the median of two runs per build. Each mark shows the median across files in that benchmark.</p>
       <p>We show trials with two complete runs per build for every input. We exclude a trial when its two baseline runtimes differ by more than 10% of their mean on over a third of its inputs.</p>
       <p>Dashed horizontal lines mark targets relative to the first measured baseline for the selected benchmark.</p>
       <p>The main screening benchmark uses three inputs: the full GCST005538 file and one million rows each from GCST006345 and GCST90000489. The harness runs baseline then candidate on one CPU core and candidate then baseline on a second core in parallel.</p>

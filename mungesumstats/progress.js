@@ -34,7 +34,6 @@ function select(index) {
   document.querySelectorAll(".point").forEach(dot => {
     const selected = Number(dot.dataset.index) === index;
     dot.classList.toggle("selected", selected);
-
   });
   const dependency = point.dependency ? " · BSgenome " + point.dependency : "";
   const change = packageNames[point.change]
@@ -48,14 +47,24 @@ function drawPoint(svg, x, y, point, index, label, colour, radius) {
   const link = point.github
     ? {href:`${commitRoot}mungesumstats-autoresearch/commit/${point.commitSha}`, target:"_blank", rel:"noopener noreferrer"}
     : {role:"button", tabindex:0};
-  const title = label + (point.github ? " · Open commit on GitHub" : " · Commit is local");
+  const changed = packageNames[point.change];
+  const title = `${label} · ${changed || "Baseline or no change"} · ${point.github ? "Open commit on GitHub" : "Commit is local"}`;
   const dot = element(svg, point.github ? "a" : "g", {
     ...link, class:"point", "aria-label":title, "data-index":index,
   });
-  element(dot, "circle", {
-    cx:x, cy:y, r:radius, fill:colour, stroke:colour,
+  const paint = {
+    class:"point-mark", fill:changed ? colour : "white", stroke:colour,
     opacity:point.status === "tested" ? .7 : 1,
-  });
+  };
+  if (point.change === "bsg") {
+    const d = radius * .9;
+    element(dot, "rect", {...paint, x:x-d, y:y-d, width:2*d, height:2*d});
+  } else if (point.change === "both") {
+    const d = radius * 1.2;
+    element(dot, "polygon", {...paint, points:`${x},${y-d} ${x+d},${y} ${x},${y+d} ${x-d},${y}`});
+  } else {
+    element(dot, "circle", {...paint, cx:x, cy:y, r:radius});
+  }
   element(dot, "title", {}, title);
   dot.addEventListener("pointerenter", () => select(index));
   dot.addEventListener("focus", () => select(index));
