@@ -82,22 +82,32 @@ function actualValue(point, metric) {
   return point[metric] * (metric === "gib" ? 1.073741824 : 1);
 }
 
-function drawChanges(svg, notes, changes, left, right, top, compact) {
+function drawChanges(svg, notes, changes, left, right, top, bottom, compact) {
   notes.replaceChildren();
   notes.hidden = !compact || changes.length === 0;
-  changes.forEach(({x, y, drop, description}, i) => {
-    const label = `${Math.round(drop * 100)}% lower · ${description}`;
+  const boxes = [];
+  changes.forEach(({x, y, description}, i) => {
     if (compact) {
       element(svg, "text", {x:x+5, y:y-6, class:"change-label"}, i+1);
       const item = document.createElement("li");
-      item.textContent = label;
+      item.textContent = description;
       notes.append(item);
       return;
     }
-    const labelY = top + 14 + i * 19;
-    const labelX = Math.min(Math.max(x + 9, left+4), right - label.length * 6.45);
-    element(svg, "line", {x1:x, x2:labelX+3, y1:y, y2:labelY+3, stroke:"#809287", "pointer-events":"none"});
-    element(svg, "text", {x:labelX, y:labelY, class:"change-label"}, label);
+    const label = element(svg, "text", {class:"change-label"}, description);
+    const width = label.getComputedTextLength();
+    const preferredX = x + 9 + width <= right ? x + 9 : x - 9 - width;
+    const labelX = Math.max(left, Math.min(preferredX, right-width));
+    const offsets = [-13, -30, -47, -64, 19, 36, 53];
+    const labelY = offsets.map(offset => y + offset).find(line =>
+      line >= top + 11 && line <= bottom - 3 &&
+      boxes.every(box => Math.abs(line-box.y) >= 17 || labelX+width+8 < box.left || labelX > box.right+8)
+    ) ?? Math.max(top+11, Math.min(y-13, bottom-3));
+    label.setAttribute("x", labelX);
+    label.setAttribute("y", labelY);
+    boxes.push({left:labelX, right:labelX+width, y:labelY});
+    const endX = Math.max(labelX, Math.min(x, labelX+width));
+    element(svg, "line", {x1:x, x2:endX, y1:y, y2:labelY+3, stroke:"#8b9b90", "pointer-events":"none"});
   });
 }
 
@@ -148,7 +158,7 @@ function draw(svg, notes, metric, unit, panel, select) {
     if (next >= best) return;
     const drop = 1 - next / best;
     const description = changeDescriptions[point.commitSha];
-    if (Number.isFinite(best) && drop >= .20 && description) changes.push({x:x(i), y:y(next), drop, description});
+    if (Number.isFinite(best) && drop >= .20 && description) changes.push({x:x(i), y:y(next), description});
     path += best === Infinity ? `M ${x(i)} ${y(next)}` : ` H ${x(i)} V ${y(next)}`;
     best = next;
   });
@@ -161,7 +171,7 @@ function draw(svg, notes, metric, unit, panel, select) {
     const label = `${point.commit}, ${numbers.format(amount)} ${unit}, ${relative}, ${statuses[point.status]}`;
     drawPoint(svg, x(i), y(amount), point, i, label, select);
   });
-  drawChanges(svg, notes, changes, left, right, top, width < 620);
+  drawChanges(svg, notes, changes, left, right, top, bottom, width < 620);
 }
 
 function setup(section, panels, initial) {
