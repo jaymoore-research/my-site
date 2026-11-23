@@ -28,10 +28,11 @@
     return e;
   }
 
-  // Eight id-lookup branches in fixed palette order (validated on white: dataviz validate_palette.js).
+  // Eight competing id-lookup branches in fixed palette order. dbsnp/build is the shared reference
+  // table, not a contender, and echtvar-l2 is position-only, so neither is charted (validated on white: dataviz validate_palette.js).
   // Colour follows the branch, never its rank; a marker shape repeats the identity for CVD readers.
   const SERIES = [
-    ["canonical", "#2a78d6", "circle"], ["duckdb-parquet", "#eb6834", "square"],
+    ["sqlite", "#2a78d6", "circle"], ["duckdb-parquet", "#eb6834", "square"],
     ["duckdb-native", "#1baf7a", "diamond"], ["arrow-parquet", "#eda100", "triangle"],
     ["flat-mmap", "#e87ba4", "circle"], ["hdf5", "#008300", "square"],
     ["vortex", "#6250d6", "diamond"], ["hail", "#e34948", "triangle"],
