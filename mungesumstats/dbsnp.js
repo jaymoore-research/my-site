@@ -36,6 +36,9 @@
     ["duckdb-native", "#1baf7a", "diamond"], ["arrow-parquet", "#eda100", "triangle"],
     ["flat-mmap", "#e87ba4", "circle"], ["hdf5", "#008300", "square"],
     ["vortex", "#6250d6", "diamond"], ["hail", "#e34948", "triangle"],
+    // A ninth branch takes the page ink and a dashed line rather than a generated hue; the legend,
+    // hover detail and turn table carry its identity.
+    ["genomicscores", "#24362d", "cross", "5 3"],
   ];
 
   function marker(parent, shape, x, y, colour, filled) {
@@ -43,6 +46,7 @@
     const r = 4.5;
     if (shape === "square") return svgEl(parent, "rect", {...paint, x: x - r * .85, y: y - r * .85, width: r * 1.7, height: r * 1.7});
     if (shape === "diamond") return svgEl(parent, "polygon", {...paint, points: `${x},${y - r * 1.2} ${x + r * 1.2},${y} ${x},${y + r * 1.2} ${x - r * 1.2},${y}`});
+    if (shape === "cross") return svgEl(parent, "path", {d: `M ${x - r} ${y - r} L ${x + r} ${y + r} M ${x - r} ${y + r} L ${x + r} ${y - r}`, stroke: colour, "stroke-width": filled ? 2.6 : 1.6, fill: "none"});
     if (shape === "triangle") return svgEl(parent, "polygon", {...paint, points: `${x},${y - r * 1.2} ${x + r * 1.1},${y + r * .8} ${x - r * 1.1},${y + r * .8}`});
     return svgEl(parent, "circle", {...paint, cx: x, cy: y, r});
   }
@@ -83,7 +87,7 @@
     }
     for (const s of series) {
       const pts = s.turns.map((t, i) => [x(i), t[metric] === null ? null : y(t[metric])]).filter(p => p[1] !== null);
-      if (pts.length > 1) svgEl(svg, "path", {d: "M " + pts.map(p => p.join(" ")).join(" L "), fill: "none", stroke: s.colour, "stroke-width": 2, opacity: .85});
+      if (pts.length > 1) svgEl(svg, "path", {d: "M " + pts.map(p => p.join(" ")).join(" L "), fill: "none", stroke: s.colour, "stroke-width": 2, opacity: .85, ...(s.dash ? {"stroke-dasharray": s.dash} : {})});
     }
     for (const s of series) {
       s.turns.forEach((t, i) => {
@@ -127,8 +131,8 @@
     }
 
     const names = Object.fromEntries(data.branches.map(br => [br.backend, br.branch]));
-    const series = SERIES.map(([backend, colour, shape]) => ({
-      backend, colour, shape, branch: names[backend] || backend,
+    const series = SERIES.map(([backend, colour, shape, dash]) => ({
+      backend, colour, shape, dash, branch: names[backend] || backend,
       turns: data.turns.filter(t => t.backend === backend && t.kind === "screen"),
     }));
     const legend = root.querySelector("[data-dbsnp-legend]");

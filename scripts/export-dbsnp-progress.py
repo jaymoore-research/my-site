@@ -23,6 +23,7 @@ BRANCHES = [
     ("flat-mmap", "flat-mmap", "Sorted binary files merged in C over a memory map"),
     ("hdf5", "hdf5", "HDF5 through rhdf5 (gwaslab layout)"),
     ("sqlite", "sqlite", "SQLite tables keyed by id and by position"),
+    ("genomicscores", "genomicscores", "GenomicScores layout: per-position tracks, exact one-byte allele code"),
     ("vortex", "vortex", "Vortex files through DuckDB"),
     ("hail", "hail", "Hail tables through BiocHail"),
     ("echtvar-l2", "echtvar-l2", "Position-and-allele lookup with echtvar"),
