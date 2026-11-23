@@ -53,6 +53,11 @@
     .verdict-better { color:var(--kept); font-weight:650; }
     .verdict-worse, .verdict-wrong, .verdict-fail, .verdict-fail-speed { color:#9a3b2e; font-weight:650; }
     .small { font-size:.84rem; color:var(--muted); }
+    .legend span.series::before { background:var(--c); }
+    .legend span.series.square::before { border-radius:0; }
+    .legend span.series.diamond::before { border-radius:0; transform:rotate(45deg) scale(.84); }
+    .legend span.series.triangle::before { border-radius:0; background:none; width:0; height:0; border-left:5px solid transparent; border-right:5px solid transparent; border-bottom:9px solid var(--c); }
+    .legend .snplocs::before { border-radius:0; width:15px; height:0; border-top:2px dashed #405e80; background:none; vertical-align:middle; }
     @media(max-width:520px) { main { padding:23px 12px 34px; } .plot { padding:9px 5px 1px; } svg { --plot-height:197px; } #holdout .plot svg { --plot-height:217px; } }
   </style>
   <script src="progress.js?v=inline-labels" defer></script>
@@ -138,10 +143,8 @@
         <div class="table-wrap"><table data-dbsnp-branches>
           <thead><tr><th>Branch</th><th>Approach</th><th>Stage</th><th class="num">Turns</th><th class="num">Better</th><th class="num">Best cold s</th><th class="num">Best GB</th><th>Gate A</th></tr></thead>
           <tbody></tbody></table></div>
-        <div class="toolbar">
-          <label for="dbsnp-backend">Branch</label>
-          <select id="dbsnp-backend"></select>
-        </div>
+        <div class="legend" data-dbsnp-legend aria-label="Branch by colour and marker"></div>
+        <div class="legend"><span class="ring">Turn not better than the branch's best</span><span class="snplocs">SNPlocs baseline</span></div>
         <section class="plot" aria-labelledby="dbsnp-runtime-title">
           <h3 id="dbsnp-runtime-title">Cold lookup of 1M ids (seconds)</h3>
           <svg data-dbsnp-runtime role="group" aria-labelledby="dbsnp-runtime-title"></svg>
@@ -150,6 +153,7 @@
           <h3 id="dbsnp-ram-title">Peak RAM (GB)</h3>
           <svg data-dbsnp-ram role="group" aria-labelledby="dbsnp-ram-title"></svg>
         </section>
+        <p class="detail" data-dbsnp-detail aria-live="polite">Focus or hover over a mark for its turn.</p>
         <h3>Turns</h3>
         <div class="table-wrap"><table data-dbsnp-turns>
           <thead><tr><th>UTC</th><th>Branch</th><th>Kind</th><th>Output</th><th class="num">Cold s</th><th class="num">GB</th><th class="num">Time ratio</th><th class="num">RAM ratio</th><th>Verdict</th><th>Change</th></tr></thead>
