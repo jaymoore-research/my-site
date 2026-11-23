@@ -65,10 +65,17 @@ def main():
     mode.add_argument("--check", action="store_true", help="Compare data without publishing")
     mode.add_argument("--snapshot", type=Path, help="Save refreshed data locally without publishing")
     parser.add_argument("--dbsnp-root", default="/mnt/data3/jmoore3/mss-dbsnp",
-                        help="dbSNP lane root on the same host; empty string skips the dbSNP tab")
+                        help="dbSNP lane root; empty string skips the dbSNP tab")
+    parser.add_argument("--dbsnp-host", help="SSH host of the dbSNP lane root (default: host). The exporter "
+                        "reads a few small files, so a CX3 login node is acceptable.")
     args = parser.parse_args()
+    lane = None
     if args.dbsnp_root:
-        lane = export_dbsnp(args.host, args.dbsnp_root)
+        try:
+            lane = export_dbsnp(args.dbsnp_host or args.host, args.dbsnp_root)
+        except (subprocess.CalledProcessError, ValueError) as err:
+            print(f"dbSNP tab skipped: {err}")
+    if lane:
         endpoint = "repos/jaymoore-research/my-site/contents/mungesumstats/dbsnp.json"
         try:
             old = json.loads(base64.b64decode(json.loads(run(["gh", "api", endpoint]))["content"]))
