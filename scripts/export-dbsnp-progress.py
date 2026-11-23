@@ -50,6 +50,8 @@ def export(root):
     ledger = root / "records" / "dbsnp-ledger.tsv"
     rows = list(csv.DictReader(ledger.open(), delimiter="\t")) if ledger.exists() else []
     # Holdout accessions, read on the server so they can be refused, never written out.
+    if rows and not any((root / "hidden").glob("*.rds")):
+        raise SystemExit("No holdout list beside the ledger, so holdout names cannot be refused; refusing to publish")
     hidden = {m.group(0).upper() for p in (root / "hidden").glob("*.rds") for m in ACCESSION.finditer(p.stem)}
     turns = []
     for row in rows:
