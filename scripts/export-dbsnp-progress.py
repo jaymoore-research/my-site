@@ -112,8 +112,9 @@ def export(*roots):
             entryFailed=sorted({f["id"] for f in (entry or {}).get("failed", [])}),
             turns=len(screens), better=sum(t["verdict"] == "better" for t in screens),
             lastVerdict=screens[-1]["verdict"] if screens else None,
-            bestColdSeconds=round(median(best["cold_s"]), 3) if best else None,
-            bestColdGB=round(median(best["cold_gb"]), 3) if best else None,
+            # The comparator keeps no best file; its row shows the baseline the header quotes.
+            bestColdSeconds=round(median(best["cold_s"]), 3) if best else (baseline or {}).get("cold_s") if backend == "snplocs" else None,
+            bestColdGB=round(median(best["cold_gb"]), 3) if best else (baseline or {}).get("cold_gb") if backend == "snplocs" else None,
             gateA=gates[-1]["verdict"] if gates else None,
         ))
     generated = datetime.now(timezone.utc).isoformat(timespec="seconds")
