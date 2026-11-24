@@ -48,11 +48,11 @@ def publish(path, fresh, message, check):
     print(f"Published {path} in {receipt['commit']['sha'][:12]}.")
 
 
-def export_dbsnp(host, root):
+def export_dbsnp(host, roots):
     """The dbSNP lane's tab data. A missing lane is not an error for the loop's data."""
     exporter = Path(__file__).with_name("export-dbsnp-progress.py")
     report = json.loads(run(["ssh", "-o", "BatchMode=yes", "-o", "ConnectTimeout=10", "--", host,
-                             "python3 - " + shlex.quote(root)], exporter.read_bytes()))
+                             "python3 - " + " ".join(shlex.quote(r) for r in roots)], exporter.read_bytes()))
     # The generated time changes every run; leave it out of the comparison by keeping it only when data changed.
     return report
 
@@ -64,12 +64,13 @@ def main():
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument("--check", action="store_true", help="Compare data without publishing")
     mode.add_argument("--snapshot", type=Path, help="Save refreshed data locally without publishing")
-    parser.add_argument("--dbsnp-root", default="/mnt/data3/jmoore3/mss-dbsnp",
-                        help="dbSNP lane root; empty string skips the dbSNP tab")
+    parser.add_argument("--dbsnp-root", nargs="+", default=["/mnt/data3/jmoore3/mss-dbsnp"],
+                        help="dbSNP lane roots, iclneuro first; an empty string skips the dbSNP tab")
     parser.add_argument("--dbsnp-host", help="SSH host of the dbSNP lane root (default: host). The exporter "
                         "reads a few small files, so a CX3 login node is acceptable.")
     args = parser.parse_args()
     lane = None
+    args.dbsnp_root = [r for r in args.dbsnp_root if r]
     if args.dbsnp_root:
         try:
             lane = export_dbsnp(args.dbsnp_host or args.host, args.dbsnp_root)

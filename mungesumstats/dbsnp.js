@@ -115,7 +115,7 @@
     }
     const b = data.baseline;
     meta.textContent = `dbSNP ${data.release} · ${data.input} · updated ${utc(data.generated)} UTC` +
-      (b ? ` · SNPlocs ${fmt.format(b.cold_s)} s cold, ${fmt.format(b.cold_gb)} GB` : " · SNPlocs baseline not measured yet");
+      (b ? ` · SNPlocs ${fmt.format(b.cold_s)} s cold, ${fmt.format(b.cold_gb)} GB${b.machine ? " on " + b.machine : ""}` : " · SNPlocs baseline not measured yet");
 
     const body = root.querySelector("[data-dbsnp-branches] tbody");
     for (const br of data.branches) {
@@ -147,7 +147,7 @@
     const select = (s, t, i) => {
       detail.textContent = `${s.branch} · turn ${i + 1} · ${show(t.cold_s)} s cold · ${show(t.cold_gb)} GB · ` +
         `${show(t.time_ratio)}× time, ${show(t.ram_ratio)}× RAM vs ${t.ref || "reference"} · ${t.verdict || ""}` +
-        (t.note ? ` · ${t.note}` : "") + ` · ${utc(t.utc)} UTC`;
+        (t.note ? ` · ${t.note}` : "") + (t.machine ? ` · ${t.machine}` : "") + ` · ${utc(t.utc)} UTC`;
     };
     const runtime = root.querySelector("[data-dbsnp-runtime]"), ram = root.querySelector("[data-dbsnp-ram]");
     function paint() {
@@ -165,7 +165,7 @@
       cell(row, t.cold_s, "num"); cell(row, t.cold_gb, "num");
       cell(row, t.time_ratio, "num"); cell(row, t.ram_ratio, "num");
       cell(row, t.verdict, t.verdict ? "verdict-" + t.verdict : "");
-      cell(row, t.note, "small");
+      cell(row, [t.machine, t.note].filter(Boolean).join(": "), "small");
       log.append(row);
     }
     if (!data.turns.length) {

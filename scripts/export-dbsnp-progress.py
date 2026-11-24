@@ -1,6 +1,10 @@
 """Read the dbSNP lane's ledger and state and export public data for the dbSNP tab.
 
-    python3 - /mnt/data3/jmoore3/mss-dbsnp < export-dbsnp-progress.py
+    python3 - /mnt/data3/jmoore3/mss-dbsnp [/mnt/data3/jmoore3/mss-cx3/mss-dbsnp] < export-dbsnp-progress.py
+
+Each root is one machine's copy of the lane: iclneuro's own, and the CX3 results that pull-results.sh
+copies to iclneuro. Turns from all roots are merged; branch state and the baseline come from the first
+root that has them, so list iclneuro first: turns are timed there.
 
 The lane writes holdout inputs as holdout-N, so no accession reaches this file. Rows whose detail
 still names a GCST accession are refused rather than published.
@@ -16,7 +20,7 @@ from statistics import median
 # Branch, the backend directory it measures, and a plain description. Order is the page's order.
 BRANCHES = [
     ("snplocs-baseline", "snplocs", "SNPlocs packages, as MungeSumstats uses them now (comparator)"),
-    ("build", "canonical", "Release builder: NCBI files to one shared table"),
+    ("build", "build", "Release builder: NCBI files to one shared table"),
     ("duckdb-parquet", "duckdb-parquet", "Parquet sorted by id and by position, queried with DuckDB"),
     ("duckdb-native", "duckdb-native", "One DuckDB file per genome build"),
     ("arrow-parquet", "arrow-parquet", "Parquet through R arrow (tidyGWAS layout)"),
@@ -46,13 +50,28 @@ def read_json(path):
         return None
 
 
-def export(root):
-    ledger = root / "records" / "dbsnp-ledger.tsv"
-    rows = list(csv.DictReader(ledger.open(), delimiter="\t")) if ledger.exists() else []
+def machine(root):
+    return "CX3" if "mss-cx3" in str(root) else "iclneuro"
+
+
+def first(roots, rel):
+    for root in roots:
+        found = read_json(root / rel)
+        if found: return found, machine(root)
+    return None, None
+
+
+def export(*roots):
+    rows = []
+    for root in roots:
+        ledger = root / "records" / "dbsnp-ledger.tsv"
+        if ledger.exists():
+            rows += [dict(r, machine=machine(root)) for r in csv.DictReader(ledger.open(), delimiter="\t")]
+    rows.sort(key=lambda r: r.get("utc") or "")
     # Holdout accessions, read on the server so they can be refused, never written out.
-    if rows and not any((root / "hidden").glob("*.rds")):
+    if rows and not any(p for root in roots for p in (root / "hidden").glob("*.rds")):
         raise SystemExit("No holdout list beside the ledger, so holdout names cannot be refused; refusing to publish")
-    hidden = {m.group(0).upper() for p in (root / "hidden").glob("*.rds") for m in ACCESSION.finditer(p.stem)}
+    hidden = {m.group(0).upper() for root in roots for p in (root / "hidden").glob("*.rds") for m in ACCESSION.finditer(p.stem)}
     turns = []
     for row in rows:
         detail = row.get("b0_detail", "")
@@ -61,24 +80,24 @@ def export(root):
             raise SystemExit("A ledger row names a holdout study; refusing to publish")
         if re.search(r"/mnt/|/rds/", detail):
             raise SystemExit("Ledger detail names a private path; refusing to publish")
-        turn = {k: row.get(k) or None for k in ("utc", "backend", "commit", "kind", "release", "b0", "ref", "verdict", "note")}
+        turn = {k: row.get(k) or None for k in ("utc", "backend", "commit", "kind", "release", "b0", "ref", "verdict", "note", "machine")}
         turn.update({k: number(row.get(k)) for k in NUMBER})
         turn["b0Detail"] = detail[:300]
         turns.append(turn)
 
-    base = read_json(root / "state" / "snplocs" / "155.screen.json")
+    base, base_machine = first(roots, "state/snplocs/155.screen.json")
     baseline = None
     if base:
         baseline = dict(cold_s=round(median(base["cold_s"]), 3), cold_gb=round(median(base["cold_gb"]), 3),
-                        warm_s=round(median(base["warm_s"]), 3), warm_gb=round(median(base["warm_gb"]), 3))
+                        warm_s=round(median(base["warm_s"]), 3), warm_gb=round(median(base["warm_gb"]), 3), machine=base_machine)
 
     branches = []
     for branch, backend, description in BRANCHES:
         mine = [t for t in turns if t["backend"] == backend]
         screens = [t for t in mine if t["kind"] == "screen"]
         gates = [t for t in mine if t["kind"] == "gate-a"]
-        best = read_json(root / "state" / backend / "155.best.json")
-        entry = read_json(root / "state" / backend / "entry.json")
+        best, _ = first(roots, f"state/{backend}/155.best.json")
+        entry, _ = first(roots, f"state/{backend}/entry.json")
         if gates:
             stage = "Gate A " + (gates[-1]["verdict"] or "")
         elif screens:
@@ -103,5 +122,5 @@ def export(root):
 
 
 if __name__ == "__main__":
-    json.dump(export(Path(sys.argv[1])), sys.stdout, separators=(",", ":"))
+    json.dump(export(*(Path(a) for a in sys.argv[1:])), sys.stdout, separators=(",", ":"))
     print()
