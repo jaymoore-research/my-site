@@ -117,15 +117,29 @@
     meta.textContent = `dbSNP ${data.release} · ${data.input} · updated ${utc(data.generated)} UTC` +
       (b ? ` · SNPlocs ${fmt.format(b.cold_s)} s cold, ${fmt.format(b.cold_gb)} GB${b.machine ? " on " + b.machine : ""}` : " · SNPlocs baseline not measured yet");
 
+    // Fastest best cold time first; branches with no time yet go last. Speed and RAM cells take one green
+    // ramp, darkest for the best, on a log scale between the branch minimum and maximum (text keeps the ink).
+    const byTime = (x, y) => (x.bestColdSeconds ?? Infinity) - (y.bestColdSeconds ?? Infinity) ||
+      (x.bestColdGB ?? Infinity) - (y.bestColdGB ?? Infinity);
+    const GREENS = ["#eef6ef", "#d6ecd9", "#b8dfc0", "#93cda0", "#6db882"];
+    function shade(td, v, all) {
+      const xs = all.filter(x => typeof x === "number" && x > 0);
+      if (typeof v !== "number" || xs.length < 2) return;
+      const lo = Math.log(Math.min(...xs)), hi = Math.log(Math.max(...xs));
+      const t = hi > lo ? (Math.log(v) - lo) / (hi - lo) : 0;
+      td.style.background = GREENS[Math.round((1 - t) * (GREENS.length - 1))];
+    }
+    const secs = data.branches.map(br => br.bestColdSeconds), gbs = data.branches.map(br => br.bestColdGB);
     const body = root.querySelector("[data-dbsnp-branches] tbody");
-    for (const br of data.branches) {
+    for (const br of [...data.branches].sort(byTime)) {
       const row = document.createElement("tr");
       cell(row, br.branch);
       cell(row, br.description);
       const stage = cell(row, br.stage);
       if (br.stage === "Waiting" && br.entryFailed.length) stage.title = "Entry gate: " + br.entryFailed.join(", ");
       cell(row, br.turns, "num"); cell(row, br.better, "num");
-      cell(row, br.bestColdSeconds, "num"); cell(row, br.bestColdGB, "num");
+      shade(cell(row, br.bestColdSeconds, "num"), br.bestColdSeconds, secs);
+      shade(cell(row, br.bestColdGB, "num"), br.bestColdGB, gbs);
       cell(row, br.gateA, br.gateA ? "verdict-" + br.gateA : "");
       body.append(row);
     }

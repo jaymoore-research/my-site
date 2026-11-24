@@ -62,7 +62,7 @@
     @media(max-width:520px) { main { padding:23px 12px 34px; } .plot { padding:9px 5px 1px; } svg { --plot-height:197px; } #holdout .plot svg { --plot-height:217px; } }
   </style>
   <script src="progress.js?v=inline-labels" defer></script>
-  <script src="dbsnp.js?v=2" defer></script>
+  <script src="dbsnp.js?v=3" defer></script>
   <script src="tabs.js?v=1" defer></script>
 </head>
 <body>
@@ -144,6 +144,7 @@
         <div class="table-wrap"><table data-dbsnp-branches>
           <thead><tr><th>Branch</th><th>Approach</th><th>Stage</th><th class="num">Turns</th><th class="num">Better</th><th class="num">Best cold s</th><th class="num">Best GB</th><th>Gate A</th></tr></thead>
           <tbody></tbody></table></div>
+        <p class="meta">Sorted by best cold time. Darker green is faster or uses less RAM, relative to the other branches.</p>
         <div class="legend" data-dbsnp-legend aria-label="Branch by colour and marker"></div>
         <div class="legend"><span class="ring">Turn not better than the branch's best</span><span class="snplocs">SNPlocs baseline</span></div>
         <section class="plot" aria-labelledby="dbsnp-runtime-title">
