@@ -1,0 +1,614 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Jay Alexander Moore</title>
+    <meta
+      name="description"
+      content="Jay Alexander Moore • computational biology, cancer genomics, and neurodegeneration."
+    />
+    <style>
+      :root {
+        color-scheme: light dark;
+        --bg: #0b0d12;
+        --card: #111827;
+        --text: #e5e7eb;
+        --muted: #9ca3af;
+        --link: #93c5fd;
+        --border: rgba(255, 255, 255, 0.08);
+        --shadow: rgba(0, 0, 0, 0.25);
+      }
+
+      @media (prefers-color-scheme: light) {
+        :root {
+          --bg: #f6f7fb;
+          --card: #ffffff;
+          --text: #0f172a;
+          --muted: #475569;
+          --link: #2563eb;
+          --border: rgba(15, 23, 42, 0.12);
+          --shadow: rgba(15, 23, 42, 0.08);
+        }
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
+          Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+        background: radial-gradient(
+            1200px 600px at 10% 10%,
+            rgba(59, 130, 246, 0.18),
+            transparent 55%
+          ),
+          radial-gradient(
+            900px 600px at 90% 10%,
+            rgba(16, 185, 129, 0.14),
+            transparent 45%
+          ),
+          var(--bg);
+        color: var(--text);
+        line-height: 1.5;
+      }
+
+      main {
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: 48px 18px;
+      }
+
+      .card {
+        width: min(820px, 100%);
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        box-shadow: 0 12px 40px var(--shadow);
+        padding: 28px;
+      }
+
+      header {
+        display: flex;
+        gap: 16px;
+        align-items: baseline;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        margin-bottom: 8px;
+      }
+
+      h1 {
+        font-size: 28px;
+        margin: 0;
+        letter-spacing: -0.02em;
+      }
+
+      .tagline {
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      section {
+        margin-top: 18px;
+      }
+
+      h2 {
+        font-size: 14px;
+        margin: 0 0 10px 0;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--muted);
+      }
+
+      p {
+        margin: 0 0 10px 0;
+      }
+
+      ul {
+        margin: 0;
+        padding-left: 18px;
+      }
+
+      a {
+        color: var(--link);
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+
+      .links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px 14px;
+        padding: 0;
+        list-style: none;
+      }
+
+      .links a {
+        display: inline-block;
+        padding: 6px 10px;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.02);
+      }
+
+      footer {
+        margin-top: 18px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .links-top {
+        margin: 10px 0 0 0;
+      }
+
+      .qr {
+        width: 140px;
+        height: 140px;
+        border-radius: 10px;
+        background: #fff;
+        padding: 6px;
+        border: 1px solid var(--border);
+      }
+
+      .scrollbox {
+        margin-top: 10px;
+        max-height: 320px;
+        overflow: auto;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 12px 14px;
+        background: rgba(255, 255, 255, 0.02);
+      }
+
+      .scrollbox h3 {
+        margin: 0 0 8px 0;
+        font-size: 13px;
+        color: var(--text);
+        letter-spacing: -0.01em;
+      }
+
+      .scrollbox ul {
+        margin: 0 0 14px 0;
+      }
+
+      .scrollbox ul:last-child {
+        margin-bottom: 0;
+      }
+
+      .pub {
+        margin: 0;
+        padding-left: 18px;
+      }
+
+      .pub li {
+        margin: 0 0 10px 0;
+      }
+
+      .pub-meta {
+        margin-top: 2px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .timeline {
+        list-style: none;
+        margin: 0;
+        padding: 0 0 0 18px;
+        border-left: 1px solid var(--border);
+      }
+
+      .timeline li {
+        position: relative;
+        padding: 2px 0 12px 16px;
+      }
+
+      .timeline li::before {
+        content: "";
+        position: absolute;
+        left: -6px;
+        top: 6px;
+        width: 10px;
+        height: 10px;
+        border-radius: 999px;
+        background: var(--link);
+        box-shadow: 0 0 0 4px rgba(147, 197, 253, 0.15);
+      }
+
+      .timeline .when {
+        display: inline-block;
+        font-size: 12px;
+        color: var(--muted);
+        margin-right: 8px;
+      }
+
+      .timeline .what {
+        font-weight: 600;
+      }
+
+      .timeline .role {
+        display: block;
+        margin-top: 2px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .notice {
+        margin-top: 18px;
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 12px 14px;
+        background: rgba(147, 197, 253, 0.08);
+      }
+
+      .notice strong {
+        color: var(--text);
+      }
+
+      .product-card {
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 14px;
+        margin-bottom: 10px;
+        background: rgba(255, 255, 255, 0.02);
+        transition: border-color 0.2s;
+      }
+
+      .product-card:last-child {
+        margin-bottom: 0;
+      }
+
+      .product-card:hover {
+        border-color: var(--link);
+      }
+
+      .product-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 6px;
+      }
+
+      .product-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        flex-shrink: 0;
+      }
+
+      .product-name {
+        font-weight: 600;
+        font-size: 15px;
+      }
+
+      .product-tagline {
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .product-desc {
+        font-size: 13px;
+        color: var(--muted);
+        margin-bottom: 8px;
+      }
+
+      .product-tags {
+        display: flex;
+        gap: 4px;
+        flex-wrap: wrap;
+        margin-bottom: 8px;
+      }
+
+      .product-tags span {
+        font-size: 10px;
+        padding: 2px 8px;
+        border-radius: 20px;
+        border: 1px solid var(--border);
+        color: var(--muted);
+      }
+
+      .product-link {
+        font-size: 12px;
+        font-weight: 500;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="card">
+        <header>
+          <div>
+            <h1>Jay Alexander Moore</h1>
+            <p class="tagline">Computational biology • Neurodegeneration • Agentic AI</p>
+            <ul class="links links-top">
+              <li><a href="mailto:j.moore.1@imperial.ac.uk">j.moore.1@imperial.ac.uk</a></li>
+              <li><a href="https://www.linkedin.com/in/jay-a-moore/">LinkedIn</a></li>
+              <li>
+                <a href="https://scholar.google.com/citations?user=VYzvXrQAAAAJ&amp;hl=en"
+                  >Google Scholar</a
+                >
+              </li>
+            </ul>
+          </div>
+          <a href="https://jaydata.bio/" aria-label="Open jaydata.bio">
+            <img
+              class="qr"
+              src="assets/qr-jaydata-bio.svg"
+              alt="QR code linking to https://jaydata.bio/"
+            />
+          </a>
+        </header>
+
+        <section class="notice" aria-label="Announcement">
+          Join the <a href="https://luma.com/clawbio" target="_blank" rel="noopener noreferrer">ClawBio calendar</a>
+          and the <a href="https://luma.com/future_of_bio" target="_blank" rel="noopener noreferrer">Future of Biology salons</a>
+          for future events.
+        </section>
+
+        <section>
+          <h2>Interests</h2>
+          <p>
+            Interdisciplinary researcher studying data and genomics in human health. My best experiences have
+            had these in common:
+          </p>
+          <ul>
+            <li>Hands on work with the latest technology</li>
+            <li>Working with engaged and excited people</li>
+            <li>Learning about the complex biology that drives our lives</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Positions</h2>
+          <ol class="timeline">
+            <li>
+              <span class="when">Apr 2026–present</span>
+              <span class="what">UKDRI • Imperial College London</span>
+              <span class="role"
+                >PhD Student, Clinical Medicine Research (Brain Sciences) @
+                <a href="https://www.neurogenomics.co.uk/">Neurogenomics Lab</a></span
+              >
+            </li>
+            <li>
+              <span class="when">Oct 2025–present</span>
+              <span class="what">UKDRI • Imperial College London</span>
+              <span class="role"
+                >Research Assistant @ <a href="https://www.neurogenomics.co.uk/">Neurogenomics Lab</a></span
+              >
+            </li>
+            <li>
+              <span class="when">2025</span>
+              <span class="what">University College London</span>
+              <span class="role">MSc, Personalised Medicine and Novel Therapies (Distinction)</span>
+            </li>
+            <li>
+              <span class="when">Oct 2022–Mar 2025</span>
+              <span class="what">Curileum Discovery Ltd</span>
+              <span class="role">Biomedical Scientist • Drug discovery startup</span>
+            </li>
+            <li>
+              <span class="when">Jul 2018–Jul 2022</span>
+              <span class="what">Foundation Medicine Inc.</span>
+              <span class="role">Research Associate / Senior Research Associate / Scientist I</span>
+              <span class="role">$5.3B acquisition by Roche</span>
+            </li>
+          </ol>
+        </section>
+
+        <section>
+          <h2>Select Publications</h2>
+          <div class="scrollbox" role="region" aria-label="Publications and patents">
+            <ul class="pub">
+              <li>
+                <a
+                  href="https://doi.org/10.64898/2026.05.13.724902"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >Decades of Parkinson's disease neuropathology yield a sparse and underpowered map of
+                  neuronal vulnerability: a systematic review and meta-analysis</a
+                >
+                <div class="pub-meta">
+                  2026 • bioRxiv • Preprint
+                </div>
+              </li>
+              <li>
+                <a
+                  href="https://doi.org/10.1200/PO.23.00093"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >Pan-cancer analysis of copy-number features identifies recurrent signatures and a homologous
+                  recombination deficiency biomarker to predict poly (ADP-ribose) polymerase inhibitor
+                  response</a
+                >
+                <div class="pub-meta">
+                  2023 • JCO Precision Oncology • First author publication
+                </div>
+              </li>
+              <li>
+                <a
+                  href="https://doi.org/10.1093/oncolo/oyad046"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >A novel HRD signature is predictive of FOLFIRINOX benefit in metastatic pancreatic cancer</a
+                >
+                <div class="pub-meta">
+                  2023 • The Oncologist
+                </div>
+              </li>
+              <li>
+                <a
+                  href="https://doi.org/10.1016/S2589-7500%2823%2900096-2"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >Comprehensive genomic profiling and treatment patterns across ancestries in advanced prostate
+                  cancer: a large-scale retrospective analysis</a
+                >
+                <div class="pub-meta">
+                  2023 • The Lancet Digital Health
+                </div>
+              </li>
+              <li>
+                <a
+                  href="https://doi.org/10.1158/2159-8290.CD-22-0620"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >Integrative analysis of a large real-world cohort of small cell lung cancer identifies distinct
+                  genetic subtypes and insights into histologic transformation</a
+                >
+                <div class="pub-meta">
+                  2023 • Cancer Discovery
+                </div>
+              </li>
+              <li>
+                <a
+                  href="https://doi.org/10.1093/jnci/djac075"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >The molecular landscape of pancreatobiliary cancers for novel targeted therapies from real-world
+                  genomic profiling</a
+                >
+                <div class="pub-meta">
+                  2022 • Journal of the National Cancer Institute
+                </div>
+              </li>
+              <li>
+                <a
+                  href="https://doi.org/10.1158/2159-8290.CD-20-0948"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >Somatic HLA class I loss is a widespread mechanism of immune evasion which refines the use of
+                  tumor mutational burden as a biomarker of checkpoint inhibitor response</a
+                >
+                <div class="pub-meta">
+                  2021 • Cancer Discovery
+                </div>
+              </li>
+              <li>
+                <a
+                  href="https://doi.org/10.2217/fon-2021-0547"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >Prediction and characterization of diffuse large B-cell lymphoma cell-of-origin subtypes using
+                  targeted sequencing</a
+                >
+                <div class="pub-meta">
+                  2021 • Future Oncology
+                </div>
+              </li>
+              <li>
+                <a
+                  href="https://scholar.google.com/scholar?q=Genomic+profiling+of+combined+hepatocellular+cholangiocarcinoma+reveals+genomics+similar+to+either+hepatocellular+carcinoma+or+cholangiocarcinoma"
+                  >Genomic profiling of combined hepatocellular cholangiocarcinoma reveals genomics similar to
+                  either hepatocellular carcinoma or cholangiocarcinoma</a
+                >
+                <div class="pub-meta">
+                  2021 • JCO Precision Oncology
+                </div>
+              </li>
+              <li>
+                <a
+                  href="https://scholar.google.com/scholar?q=The+Molecular+Landscape+of+Gastric+Cancers+for+Novel+Targeted+Therapies+from+Real-World+Genomic+Profiling"
+                  >The Molecular Landscape of Gastric Cancers for Novel Targeted Therapies from Real-World Genomic
+                  Profiling</a
+                >
+                <div class="pub-meta">
+                  2024 • Targeted Oncology
+                </div>
+              </li>
+              <li>
+                <a
+                  href="https://scholar.google.com/scholar?q=Genomic+Profiling+of+Small+Intestine+Cancers+From+a+Real-World+Data+Set+Identifies+Subgroups+With+Actionable+Alterations"
+                  >Genomic Profiling of Small Intestine Cancers From a Real-World Data Set Identifies Subgroups With
+                  Actionable Alterations</a
+                >
+                <div class="pub-meta">
+                  2024 • JCO Precision Oncology
+                </div>
+              </li>
+              <li>
+                <a
+                  href="https://scholar.google.com/scholar?q=Poor+prognosis+among+radiation-associated+bladder+cancer+is+defined+by+clinicogenomic+features"
+                  >Poor prognosis among radiation-associated bladder cancer is defined by clinicogenomic features</a
+                >
+                <div class="pub-meta">
+                  2024 • Cancer Research Communications
+                </div>
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <section>
+          <h2>Patents</h2>
+          <ul class="pub">
+            <li>
+              <a href="https://patents.google.com/?q=PCT%2FUS2023%2F075910"
+                >Methods and systems for identifying copy number signatures</a
+              >
+              <div class="pub-meta">
+                2024<br />
+                Application: PCT/US2023/075910
+              </div>
+            </li>
+            <li>
+              <a href="https://patents.google.com/patent/US20230140123A1/en"
+                >Systems and methods for classifying and treating homologous repair deficiency cancers</a
+              >
+              <div class="pub-meta">
+                2023 • Application: US20230140123A1
+              </div>
+            </li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Communities</h2>
+          <div class="product-card">
+            <div class="product-header">
+              <div class="product-icon" style="background: linear-gradient(135deg, #7c2d12, #f97316);">🦀</div>
+              <div>
+                <div class="product-name">ClawBio</div>
+                <div class="product-tagline">Open community for AI-driven biology</div>
+              </div>
+            </div>
+            <div class="product-desc">Hackathons, a talk series and a public events calendar for people building AI tooling for the life sciences. I have been an early contributor since it started.</div>
+            <div class="product-tags">
+              <span>Hackathons</span>
+              <span>AI for Biology</span>
+            </div>
+            <a class="product-link" href="https://luma.com/clawbio" target="_blank" rel="noopener noreferrer">luma.com/clawbio &rarr;</a>
+          </div>
+          <div class="product-card">
+            <div class="product-header">
+              <div class="product-icon" style="background: linear-gradient(135deg, #4c1d95, #a78bfa);">💬</div>
+              <div>
+                <div class="product-name">Future of Biology Salons</div>
+                <div class="product-tagline">Salon series in London and Oxford</div>
+              </div>
+            </div>
+            <div class="product-desc">Evening salons bringing researchers, founders and funders together on where biology goes next. I co-organise the series.</div>
+            <div class="product-tags">
+              <span>Salons</span>
+              <span>London &amp; Oxford</span>
+            </div>
+            <a class="product-link" href="https://luma.com/future_of_bio" target="_blank" rel="noopener noreferrer">luma.com/future_of_bio &rarr;</a>
+          </div>
+        </section>
+
+        <footer>
+          <span>Last updated: </span>
+          <time datetime="2026-08-07">August 7, 2026</time>
+        </footer>
+      </div>
+    </main>
+  </body>
+</html>
