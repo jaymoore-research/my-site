@@ -94,9 +94,12 @@ def export(*roots):
     branches = []
     for branch, backend, description in BRANCHES:
         mine = [t for t in turns if t["backend"] == backend]
-        screens = [t for t in mine if t["kind"] == "screen"]
+        # Turns are counted at 155, where the lanes iterate; 157 is a separate test of the best commit.
+        screens = [t for t in mine if t["kind"] == "screen" and (t["release"] or "155") == "155"]
         gates = [t for t in mine if t["kind"] == "gate-a"]
         best, _ = first(roots, f"state/{backend}/155.best.json")
+        b157, _ = first(roots, f"state/{backend}/157.best.json")
+        if backend == "snplocs": b157, _ = first(roots, "state/snplocs/157.screen.json")
         entry, _ = first(roots, f"state/{backend}/entry.json")
         if gates:
             stage = "Gate A " + (gates[-1]["verdict"] or "")
@@ -116,6 +119,8 @@ def export(*roots):
             bestColdSeconds=round(median(best["cold_s"]), 3) if best else (baseline or {}).get("cold_s") if backend == "snplocs" else None,
             bestColdGB=round(median(best["cold_gb"]), 3) if best else (baseline or {}).get("cold_gb") if backend == "snplocs" else None,
             gateA=gates[-1]["verdict"] if gates else None,
+            cold157Seconds=round(median(b157["cold_s"]), 3) if b157 else None,
+            cold157GB=round(median(b157["cold_gb"]), 3) if b157 else None,
         ))
     generated = datetime.now(timezone.utc).isoformat(timespec="seconds")
     return dict(generated=generated, release="155", input="1M random rs ids, GRCh38, one core",

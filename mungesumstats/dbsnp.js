@@ -130,6 +130,7 @@
       td.style.background = GREENS[Math.round((1 - t) * (GREENS.length - 1))];
     }
     const secs = data.branches.map(br => br.bestColdSeconds), gbs = data.branches.map(br => br.bestColdGB);
+    const secs157 = data.branches.map(br => br.cold157Seconds), gbs157 = data.branches.map(br => br.cold157GB);
     const body = root.querySelector("[data-dbsnp-branches] tbody");
     for (const br of [...data.branches].sort(byTime)) {
       const row = document.createElement("tr");
@@ -141,13 +142,15 @@
       shade(cell(row, br.bestColdSeconds, "num"), br.bestColdSeconds, secs);
       shade(cell(row, br.bestColdGB, "num"), br.bestColdGB, gbs);
       cell(row, br.gateA, br.gateA ? "verdict-" + br.gateA : "");
+      shade(cell(row, br.cold157Seconds, "num"), br.cold157Seconds, secs157);
+      shade(cell(row, br.cold157GB, "num"), br.cold157GB, gbs157);
       body.append(row);
     }
 
     const names = Object.fromEntries(data.branches.map(br => [br.backend, br.branch]));
     const series = SERIES.map(([backend, colour, shape, dash]) => ({
       backend, colour, shape, dash, branch: names[backend] || backend,
-      turns: data.turns.filter(t => t.backend === backend && t.kind === "screen"),
+      turns: data.turns.filter(t => t.backend === backend && t.kind === "screen" && (t.release || "155") === "155"),
     }));
     const legend = root.querySelector("[data-dbsnp-legend]");
     for (const s of series) {
