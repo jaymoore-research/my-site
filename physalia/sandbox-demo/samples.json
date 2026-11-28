@@ -1,0 +1,8 @@
+[
+  {"sample": "C1", "group": "control", "value": 10},
+  {"sample": "C2", "group": "control", "value": null},
+  {"sample": "C3", "group": "control", "value": 14},
+  {"sample": "T1", "group": "treated", "value": 0},
+  {"sample": "T2", "group": "treated", "value": 18},
+  {"sample": "T3", "group": "treated", "value": 24}
+]

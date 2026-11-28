@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Agentic AI for Life Sciences · Physalia · 3–4 December 2026</title>
+<style>
+  :root {
+    --ink: #0b0f1a;
+    --muted: #525866;
+    --paper: #f8f7f4;
+    --card: #ffffff;
+    --accent: #2563eb;
+    --accent-soft: #e0e7ff;
+    --line: rgba(11, 15, 26, 0.12);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, "Helvetica Neue", sans-serif;
+    color: var(--ink);
+    background: var(--paper);
+    line-height: 1.55;
+  }
+  .wrap { max-width: 920px; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
+  .meta {
+    font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+    font-size: 0.78rem;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+  h1 { font-size: clamp(2rem, 4vw, 2.8rem); letter-spacing: -0.03em; margin: 0.35rem 0 0.5rem; line-height: 1.1; }
+  h2 { font-size: 1.35rem; letter-spacing: -0.02em; margin: 2.2rem 0 0.75rem; }
+  p { color: #1f2430; }
+  .sub { color: var(--muted); font-size: 1.05rem; margin-bottom: 1.4rem; }
+  .actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin: 1.25rem 0 2rem; }
+  .btn {
+    display: inline-block;
+    padding: 0.65rem 1.15rem;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 0.92rem;
+    text-decoration: none;
+    border: 1px solid var(--line);
+    background: var(--card);
+    color: var(--ink);
+  }
+  .btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .btn:hover { opacity: 0.92; }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 1.15rem 1.3rem;
+    margin-bottom: 1rem;
+  }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 0.9rem; }
+  table { width: 100%; border-collapse: collapse; background: var(--card); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; font-size: 0.92rem; }
+  th, td { padding: 0.7rem 0.85rem; text-align: left; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); background: #f3f5fa; }
+  tr:last-child td { border-bottom: none; }
+  td:first-child { font-family: "JetBrains Mono", ui-monospace, monospace; color: var(--accent); font-weight: 700; white-space: nowrap; }
+  code { font-family: "JetBrains Mono", ui-monospace, monospace; background: rgba(11,15,26,0.06); padding: 0.1em 0.35em; border-radius: 4px; font-size: 0.88em; }
+  a { color: var(--accent); }
+  ul, ol { padding-left: 1.25rem; }
+  li { margin-bottom: 0.35rem; }
+  footer { margin-top: 3rem; font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--line); padding-top: 1.2rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="meta">Physalia Courses · Online · 3–4 December 2026 · 3:00–6:00 PM CET</div>
+  <h1>Agentic AI for Life Sciences</h1>
+  <p class="sub">From one agent to verified research systems · Jay Moore (Imperial College London / UK Dementia Research Institute)</p>
+
+  <div class="actions">
+    <a class="btn primary" href="./slides.html">Open Presentation Slides →</a>
+    <a class="btn" href="https://neurogenomics.github.io/agentic-life-sciences-tutorial/workshops/agentic-ai-for-life-sciences-physalia-3-4-december-2026/">Full Course Notes</a>
+    <a class="btn" href="https://www.physalia-courses.org/courses-workshops/agentic-ai/">Physalia Listing</a>
+  </div>
+
+  <h2>Before the course</h2>
+  <div class="card">
+    <ol>
+      <li>Install <strong>Claude Code</strong> (course default — <a href="https://docs.anthropic.com/en/docs/claude-code">docs</a>). If you already use OpenCode or GitHub Copilot, you can keep it.</li>
+      <li>Send your agent one prompt and confirm that it replies.</li>
+      <li>Install <strong>Python 3</strong>.</li>
+      <li>Download the Day 1 sandbox files into an empty folder:
+        <a href="./sandbox-demo/samples.json" download><code>samples.json</code></a> ·
+        <a href="./sandbox-demo/analyse.py" download><code>analyse.py</code></a> ·
+        <a href="./sandbox-demo/check.py" download><code>check.py</code></a>
+      </li>
+      <li>Download the Day 2 PubMed audit list:
+        <a href="./pubmed-demo/references.txt" download><code>references.txt</code></a>
+      </li>
+    </ol>
+  </div>
+
+  <h2>Day 1 — How one agent works (and how it fails) · Thu 3 Dec</h2>
+  <table>
+    <thead><tr><th>Time (CET)</th><th>Part</th><th>Material</th></tr></thead>
+    <tbody>
+      <tr><td>3:00–3:50</td><td><strong>1. Introduction to agentic AI</strong></td><td>Opening poll · agent–provider–model stack · chatbots vs agents · failure modes &amp; privacy · Topaz et al. (<em>Lancet</em> 2026) · Harness-Bench</td></tr>
+      <tr><td>3:50–4:00</td><td><em>Break</em></td><td></td></tr>
+      <tr><td>4:00–4:50</td><td><strong>2. Context, cost &amp; skills</strong></td><td>Prompt structure · plan mode · context rot &amp; Nov 2026 pricing · skills &amp; Corpas et al. (2026) · Journal Club Slides demo</td></tr>
+      <tr><td>4:50–5:00</td><td><em>Break</em></td><td></td></tr>
+      <tr><td>5:00–6:00</td><td><strong>3. Acting, failing &amp; verifying</strong></td><td>Penguins <code>Plan</code> → <code>Build</code> demo · <strong>Exercise 1 (20 min):</strong> Sandbox: Act, Fail, Check · <strong>Debrief (15 min)</strong></td></tr>
+    </tbody>
+  </table>
+
+  <h2>Day 2 — From one agent to a research system · Fri 4 Dec</h2>
+  <table>
+    <thead><tr><th>Time (CET)</th><th>Part</th><th>Material</th></tr></thead>
+    <tbody>
+      <tr><td>3:00–3:50</td><td><strong>4. Tools, MCP &amp; data portals</strong></td><td>RAG &amp; MCP · PubMed connection · clinical/human data privacy · Single Cell Portal website demo &amp; GitHub publish</td></tr>
+      <tr><td>3:50–4:00</td><td><em>Break</em></td><td></td></tr>
+      <tr><td>4:00–4:50</td><td><strong>5. Loops, subagents &amp; swarms</strong></td><td><code>Stop</code> hooks (figure-review gate), adversarial subagents &amp; swarms · <strong>Exercise 2 (25 min):</strong> PubMed reference audit · <strong>Debrief (10 min)</strong></td></tr>
+      <tr><td>4:50–5:00</td><td><em>Break</em></td><td></td></tr>
+      <tr><td>5:00–6:00</td><td><strong>6. Workflows, governance &amp; Second Brain</strong></td><td><code>CLAUDE.md</code> / <code>AGENTS.md</code> · Second Brain live demo · lab AI use policy · closing poll &amp; Q&amp;A</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Key reading</h2>
+  <div class="grid">
+    <div class="card">
+      <strong>Topaz et al. (<em>Lancet</em> 2026)</strong>
+      <p>Audit of 2.5M PMC Open Access papers (97.1M references): 4,046 fabricated citations in 2,810 articles (&gt;12× rise since 2023; 98.4% without publisher action). <a href="https://doi.org/10.1016/S0140-6736(26)00603-3">DOI</a></p>
+    </div>
+    <div class="card">
+      <strong>Harness-Bench v1 (2026)</strong>
+      <p>Compares agent harnesses across models on realistic workflows — separating completed work, process quality, and resource use. <a href="https://arxiv.org/html/2605.27922v1">Table 2</a></p>
+    </div>
+  </div>
+
+  <footer>
+    Hosted at <a href="https://jaydata.bio/physalia/">jaydata.bio/physalia</a> · Source tutorials at <a href="https://github.com/neurogenomics/agentic-life-sciences-tutorial">neurogenomics/agentic-life-sciences-tutorial</a>
+  </footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Agentic AI for Life Sciences · Physalia · 3–4 December 2026</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css" id="theme">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/monokai.css">
+<style>
+  :root {
+    --ink: #0b0f1a;
+    --paper: #f6f5f1;
+    --accent: #2563eb;
+    --accent-soft: #e0e7ff;
+    --muted: #525866;
+    --line: rgba(11, 15, 26, 0.12);
+    --warn: #b45309;
+    --ok: #15803d;
+  }
+  .reveal { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, "Helvetica Neue", sans-serif; color: var(--ink); }
+  .reveal .slides { text-align: left; }
+  .reveal h1, .reveal h2, .reveal h3, .reveal h4 { color: var(--ink); font-weight: 800; letter-spacing: -0.025em; text-transform: none; margin-bottom: 0.35em; }
+  .reveal h1 { font-size: 2.05em; line-height: 1.05; }
+  .reveal h2 { font-size: 1.35em; line-height: 1.15; }
+  .reveal h3 { font-size: 0.95em; }
+  .reveal em { font-style: normal; color: var(--accent); font-weight: 700; }
+  .reveal strong { color: var(--ink); font-weight: 700; }
+  .reveal p, .reveal li { font-size: 0.62em; line-height: 1.48; color: #1f2430; }
+  .reveal ul, .reveal ol { margin-left: 1.1em; }
+  .reveal li { margin-bottom: 0.3em; }
+  .reveal code { font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace; background: rgba(11,15,26,0.06); padding: 0.08em 0.35em; border-radius: 4px; font-size: 0.82em; color: var(--ink); }
+  .reveal pre { box-shadow: 0 10px 28px -14px rgba(11,15,26,0.3); border-radius: 10px; font-size: 0.44em; margin: 0.5em 0; }
+  .reveal pre code { padding: 0.9em 1.15em; background: #1e1e2e; color: #f8f8f2; }
+  .reveal .slide-background-content {
+    background-image:
+      radial-gradient(60% 50% at 0% 0%, rgba(37, 99, 235, 0.08), transparent 60%),
+      radial-gradient(55% 50% at 100% 100%, rgba(126, 160, 255, 0.10), transparent 60%),
+      linear-gradient(180deg, #f8f7f4 0%, #f1f3fa 100%);
+  }
+
+  .meta { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 0.44em; color: var(--accent); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 0.5em; display: block; font-weight: 700; }
+  .title-slide { text-align: center !important; }
+  .title-slide h1 { font-size: 2.35em; margin-bottom: 0.25em; }
+  .title-slide .subtitle { font-size: 0.78em; color: var(--muted); }
+  .title-slide .date { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 0.55em; color: var(--accent); letter-spacing: 0.16em; text-transform: uppercase; margin-top: 1.2em; }
+
+  .divider-slide { text-align: left !important; }
+  .divider-slide h1 { font-size: 1.9em; margin-top: 0.15em; }
+  .divider-slide p { font-size: 0.72em; color: var(--muted); max-width: 78%; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1em; align-items: start; }
+  .three-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.8em; align-items: stretch; }
+  .four-col { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.7em; align-items: stretch; }
+
+  .card { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 0.75em 0.9em; box-shadow: 0 4px 14px -8px rgba(11,15,26,0.14); }
+  .card h4 { margin: 0 0 0.25em; font-size: 0.68em; color: var(--ink); }
+  .card p, .card li { margin: 0; font-size: 0.54em; color: var(--muted); line-height: 1.42; }
+  .card.accent { border-top: 3px solid var(--accent); }
+  .card.warn { border-top: 3px solid var(--warn); }
+  .card.ok { border-top: 3px solid var(--ok); }
+
+  .stat-num { font-size: 1.9em; font-weight: 800; color: var(--accent); line-height: 1.05; display: block; }
+  .stat-label { font-size: 0.48em; color: var(--muted); display: block; margin-top: 0.2em; line-height: 1.35; }
+
+  .phase-table { width: 100%; border-collapse: collapse; font-size: 0.48em; background: #fff; border-radius: 10px; overflow: hidden; border: 1px solid var(--line); }
+  .phase-table th, .phase-table td { border-bottom: 1px solid var(--line); padding: 0.55em 0.75em; text-align: left; vertical-align: top; }
+  .phase-table th { font-size: 0.82em; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); background: #f8f9fc; }
+  .phase-table tr:last-child td { border-bottom: none; }
+  .phase-table td:first-child { font-family: "JetBrains Mono", ui-monospace, monospace; color: var(--accent); font-weight: 700; white-space: nowrap; }
+
+  .quote { border-left: 4px solid var(--accent); padding: 0.45em 0.9em; margin: 0.7em 0; background: #fff; border-radius: 0 10px 10px 0; font-size: 0.58em; color: #1f2430; }
+  .quote-attr { display: block; margin-top: 0.35em; font-size: 0.85em; color: var(--accent); font-weight: 700; }
+
+  .img-frame { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 0.4em; box-shadow: 0 6px 20px -12px rgba(11,15,26,0.18); text-align: center; }
+  .img-frame img { max-height: 360px; max-width: 100%; margin: 0; border-radius: 6px; }
+  .img-frame.tall img { max-height: 410px; }
+
+  .badge { display: inline-block; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 0.46em; padding: 0.2em 0.55em; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin-right: 0.4em; }
+  .badge.demo { background: #dcfce7; color: #166534; }
+  .badge.exercise { background: #fef3c7; color: #92400e; }
+
+  .wx-mark { position: fixed; bottom: 0.9em; right: 1.2em; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 0.45em; color: #8b92a5; letter-spacing: 0.05em; z-index: 10; }
+</style>
+</head>
+<body>
+
+<div class="wx-mark">Physalia · Agentic AI for Life Sciences · 3–4 Dec 2026</div>
+
+<div class="reveal">
+  <div class="slides">
+
+    <!-- 1. TITLE -->
+    <section class="title-slide">
+      <span class="meta">Physalia Courses · Online · Claude Code</span>
+      <h1>Agentic AI for<br><em>Life Sciences</em></h1>
+      <p class="subtitle">From one agent to verified research systems</p>
+      <p class="subtitle" style="font-size:0.58em;margin-top:0.8em;">Jay Moore · Imperial College London / UK Dementia Research Institute</p>
+      <div class="date">3–4 December 2026 · 3:00–6:00 PM CET</div>
+    </section>
+
+    <!-- 2. OPENING POLL -->
+    <section>
+      <span class="meta">Opening Poll · Anonymous · 1–5 Scale</span>
+      <h2>Two questions before we start</h2>
+      <div class="two-col" style="margin-top:0.9em;">
+        <div class="card accent">
+          <h4>1. Upside</h4>
+          <p style="font-size:0.65em;color:var(--ink);margin-top:0.4em;">How much could AI <em>help</em> you do your work over the next 12 months?</p>
+        </div>
+        <div class="card warn">
+          <h4>2. Risk</h4>
+          <p style="font-size:0.65em;color:var(--ink);margin-top:0.4em;">How much <em>risk</em> could AI create for you in your work over the next 12 months?</p>
+        </div>
+      </div>
+      <p style="margin-top:1em;color:var(--muted);">We keep the two answers separate and repeat the same poll at the end of Day 2. There is no preferred answer.</p>
+    </section>
+
+    <!-- 3. ROADMAP -->
+    <section>
+      <span class="meta">Course Structure · 3 × 50 min + 10 min breaks</span>
+      <h2>Two days, one arc</h2>
+      <div class="two-col" style="margin-top:0.6em;">
+        <div class="card accent">
+          <h4>Day 1 · How one agent works (and fails)</h4>
+          <ul style="margin-top:0.4em;">
+            <li><strong>3:00</strong> Stack, failure modes, <em>Lancet</em> 2026 audit</li>
+            <li><strong>4:00</strong> Context, pricing &amp; skills (<em>Corpas 2026</em>) + Slide demo</li>
+            <li><strong>5:00</strong> Penguins demo + <span class="badge exercise">Exercise 1</span> Sandbox: Act, Fail, Check</li>
+          </ul>
+        </div>
+        <div class="card ok">
+          <h4>Day 2 · From one agent to a research system</h4>
+          <ul style="margin-top:0.4em;">
+            <li><strong>3:00</strong> RAG, MCP, governance + Single Cell Portal website demo</li>
+            <li><strong>4:00</strong> Loops (<code>Stop</code> hooks), adversarial agents + <span class="badge exercise">Exercise 2</span> PubMed audit</li>
+            <li><strong>5:00</strong> Rule files, Second Brain demo &amp; lab AI policy</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. DAY 1 PART 1 DIVIDER -->
+    <section class="divider-slide">
+      <span class="meta">Day 1 · Part 1 · 3:00–3:50 CET</span>
+      <h1>Introduction to<br><em>Agentic AI</em></h1>
+      <p>What separates a coding agent from a chatbot, how the stack works, and why verification is the central problem.</p>
+    </section>
+
+    <!-- 5. CHATBOTS VS AGENTS -->
+    <section>
+      <span class="meta">Mental Model</span>
+      <h2>Chatbots answer. Agents act in a loop.</h2>
+      <div class="img-frame" style="margin-top:0.5em;">
+        <img src="assets/images/chatbot-vs-agent.png" alt="Chatbot vs Agent">
+      </div>
+      <p style="margin-top:0.6em;">An agent is a model in a loop: <strong>propose tool → harness executes → read result → decide next step</strong>.</p>
+    </section>
+
+    <!-- 6. THREE LAYER STACK -->
+    <section>
+      <span class="meta">Architecture</span>
+      <h2>Three layers: Agent → Provider → Model</h2>
+      <div class="img-frame" style="margin-top:0.4em;">
+        <img src="assets/images/agent-provider-model.png" alt="Agent Provider Model stack">
+      </div>
+      <div class="three-col" style="margin-top:0.6em;">
+        <div class="card"><h4>Harness / Agent</h4><p>Claude Code, OpenCode, Copilot. Manages tools, context, hooks, permissions.</p></div>
+        <div class="card"><h4>Provider</h4><p>Anthropic, OpenRouter, GitHub. Controls billing, zero-data-retention, privacy.</p></div>
+        <div class="card"><h4>Model</h4><p>Claude Sonnet 5.5, Opus 5.5, GPT-6.2 Sol, GLM 5.2. Generates text &amp; tool calls.</p></div>
+      </div>
+    </section>
+
+    <!-- 7. COURSE PAPER: TOPAZ ET AL -->
+    <section>
+      <span class="meta">Course Paper · Topaz et al., Lancet 2026</span>
+      <h2>Fabricated citations across 2.5M biomedical papers</h2>
+      <div class="four-col" style="margin-top:0.6em;">
+        <div class="card accent"><span class="stat-num">2.5M</span><span class="stat-label">PMC Open Access papers scanned (2023–Feb 2026)</span></div>
+        <div class="card accent"><span class="stat-num">4,046</span><span class="stat-label">Fabricated citations found in 2,810 articles</span></div>
+        <div class="card warn"><span class="stat-num">&gt;12×</span><span class="stat-label">Increase since 2023 (sharpest from mid-2024)</span></div>
+        <div class="card warn"><span class="stat-num">98.4%</span><span class="stat-label">Affected articles with no publisher action</span></div>
+      </div>
+      <div class="card" style="margin-top:0.7em;">
+        <h4>Discussion questions</h4>
+        <ul>
+          <li>How would you check <strong>one</strong> reference? How would you check <strong>two hundred</strong>?</li>
+          <li>What does a missing PubMed record prove — and what does it <em>not</em> prove?</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 8. HARNESS-BENCH & FAILURE MODES -->
+    <section>
+      <span class="meta">Failure Modes · Harness-Bench (2026)</span>
+      <h2>Why plausible output is the hardest failure mode</h2>
+      <div class="quote">
+        "An agent's silence about a decision is not the absence of one."
+        <span class="quote-attr">— Workflow principle (biomarker &amp; analysis audits)</span>
+      </div>
+      <div class="three-col" style="margin-top:0.6em;">
+        <div class="card"><h4>1. Completed work</h4><p>Did the file get written and does it pass an independent check?</p></div>
+        <div class="card"><h4>2. Process quality</h4><p>Did it retrieve primary sources, or produce a fluent summary of an unread paper?</p></div>
+        <div class="card"><h4>3. Resource use</h4><p>How many tokens, turns, and retries did it burn getting there?</p></div>
+      </div>
+    </section>
+
+    <!-- 9. DAY 1 PART 2 DIVIDER -->
+    <section class="divider-slide">
+      <span class="meta">Day 1 · Part 2 · 4:00–4:50 CET</span>
+      <h1>Context Engineering,<br><em>Cost &amp; Skills</em></h1>
+      <p>What fills the context window, why long sessions rot, and the measured impact of writing a <code>SKILL.md</code>.</p>
+    </section>
+
+    <!-- 10. CONTEXT WINDOW -->
+    <section>
+      <span class="meta">Context Engineering</span>
+      <h2>Every turn re-sends the whole window</h2>
+      <div class="img-frame" style="margin-top:0.4em;">
+        <img src="assets/images/context-breakdown.png" alt="Context window breakdown">
+      </div>
+      <p style="margin-top:0.5em;">Past ~70%, <strong>context rot</strong> sets in. Use <code>/context</code> to inspect, <code>/compact</code> mid-task (~97% reduction), and <code>/clear</code> between tasks.</p>
+    </section>
+
+    <!-- 11. TOKEN ECONOMICS -->
+    <section>
+      <span class="meta">Token Economics · November 2026</span>
+      <h2>Context management is a billing issue</h2>
+      <div class="img-frame" style="margin-top:0.4em;">
+        <img src="assets/images/context-cost-per-message.png" alt="Cost per message vs context size">
+      </div>
+      <p style="margin-top:0.5em;">50 messages × 150k input tokens: <strong>$15.00</strong> on Claude Sonnet 5.5 · <strong>$60.00</strong> on Fable 5.2 · <strong>$0.38</strong> on DeepSeek V4.1 Flash.</p>
+    </section>
+
+    <!-- 12. SKILLS BENCHMARK (CORPAS 2026) -->
+    <section>
+      <span class="meta">Skills · Measured Evidence (Corpas et al., 2026)</span>
+      <h2>A <code>SKILL.md</code> beats upgrading the model</h2>
+      <div class="two-col" style="margin-top:0.5em;">
+        <div>
+          <div class="card accent" style="margin-bottom:0.6em;">
+            <span class="stat-num">62.8% → 91.0%</span>
+            <span class="stat-label">Weakest of 9 models across 44,550 pharmacogenomic questions once given a skill — beating the strongest free-prompted model (90.7%). Spread shrank from 28.0 to 8.5 points.</span>
+          </div>
+          <p>Skills live in <code>.claude/skills/&lt;name&gt;/SKILL.md</code> — plain Markdown loaded only when relevant, committed to Git with your code.</p>
+        </div>
+        <div class="img-frame">
+          <img src="assets/images/skills-comparison.png" alt="With vs without skill">
+        </div>
+      </div>
+    </section>
+
+    <!-- 13. LIVE DEMO 1: JOURNAL CLUB SLIDES -->
+    <section>
+      <span class="meta"><span class="badge demo">Live Demo 1</span> Skills in Action</span>
+      <h2>Journal Club Slides: raw prompt vs <code>/pptx</code> skill</h2>
+      <div class="two-col" style="margin-top:0.6em;">
+        <div class="card">
+          <h4>Without a skill</h4>
+          <ul>
+            <li>15 back-and-forth messages</li>
+            <li>3 failed API / layout retries</li>
+            <li>~12,000 tokens, funky formatting</li>
+          </ul>
+        </div>
+        <div class="card ok">
+          <h4>With <code>SKILL.md</code></h4>
+          <ul>
+            <li>2 clarifying questions</li>
+            <li>0 failed calls</li>
+            <li>~6,000 tokens, consistent layout</li>
+          </ul>
+        </div>
+      </div>
+      <p style="margin-top:0.7em;"><strong>Takeaway:</strong> Write down your lab's figure standards, analysis conventions, and slide rules once — stop re-explaining them in every prompt.</p>
+    </section>
+
+    <!-- 14. DAY 1 PART 3 DIVIDER -->
+    <section class="divider-slide">
+      <span class="meta">Day 1 · Part 3 · 5:00–6:00 CET</span>
+      <h1>Acting, Failing<br><em>&amp; Verifying</em></h1>
+      <p>Live demo of <code>Plan</code> → <code>Build</code> on Palmer Penguins, then our Day 1 hands-on exercise and debrief.</p>
+    </section>
+
+    <!-- 15. LIVE DEMO 2: PENGUINS -->
+    <section>
+      <span class="meta"><span class="badge demo">Live Demo 2</span> Plan → Build</span>
+      <h2>Palmer Penguins: steer before it writes code</h2>
+      <pre><code class="language-text">Make publication-ready scatter plots comparing bill length and flipper length
+across penguin species in penguins.csv, and export summary statistics.</code></pre>
+      <div class="three-col" style="margin-top:0.6em;">
+        <div class="card"><h4>1. Plan mode</h4><p>Agent inspects <code>penguins.csv</code> and asks clarifying questions before touching disk.</p></div>
+        <div class="card"><h4>2. Build mode</h4><p>Writes and runs the script, fixes errors, outputs figures + table.</p></div>
+        <div class="card"><h4>3. Check</h4><p>Inspect sample counts (<code>NA</code> rows) and verify numbers against the CSV.</p></div>
+      </div>
+    </section>
+
+    <!-- 16. HANDS-ON EXERCISE 1: SANDBOX -->
+    <section>
+      <span class="meta"><span class="badge exercise">Exercise 1 · 20 min + 15 min Debrief</span> Day 1 Hands-On</span>
+      <h2>Sandbox: Act, Fail, Check</h2>
+      <div class="two-col" style="margin-top:0.5em;">
+        <div class="card">
+          <h4>Setup (3 files in an empty folder)</h4>
+          <ul>
+            <li><code>samples.json</code> — includes one <code>null</code> (failed well) <em>and</em> one genuine <code>0</code></li>
+            <li><code>analyse.py</code> — silently counts <code>null</code> as <code>0</code></li>
+            <li><code>check.py</code> — independent checker</li>
+          </ul>
+        </div>
+        <div class="card accent">
+          <h4>Four steps</h4>
+          <ol>
+            <li>Run <code>analyse.py</code>, <code>check.py</code>, and <code>shasum check.py</code></li>
+            <li><strong>2a:</strong> Vague prompt (no checker) — does it catch the bug?</li>
+            <li><strong>2b:</strong> Repair against <code>check.py</code> (watch the <code>0</code> trap!)</li>
+            <li>Re-run <code>shasum check.py</code> to confirm no tampering</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- 17. DAY 2 PART 4 DIVIDER -->
+    <section class="divider-slide">
+      <span class="meta">Day 2 · Part 4 · 3:00–3:50 CET</span>
+      <h1>Tools, MCP &amp;<br><em>Interactive Data Portals</em></h1>
+      <p>Connecting agents to external databases safely, and building shareable web tools from real single-cell data.</p>
+    </section>
+
+    <!-- 18. RAG, MCP & GOVERNANCE -->
+    <section>
+      <span class="meta">External Tools · MCP</span>
+      <h2>MCP connects agents to real systems — controls are on you</h2>
+      <div class="quote">
+        "The controls are bolted on, and nothing stops you if you skip them."
+        <span class="quote-attr">— Read-only MCP server design (audit logging, allowlists, no raw patient PII)</span>
+      </div>
+      <div class="three-col" style="margin-top:0.6em;">
+        <div class="card"><h4>RAG vs MCP</h4><p>RAG retrieves static text chunks; MCP exposes live, typed tools (PubMed, GitHub, internal DBs).</p></div>
+        <div class="card"><h4>Fixed overhead</h4><p>Every registered MCP tool consumes context tokens on every turn — only enable what you need.</p></div>
+        <div class="card warn"><h4>Data boundary</h4><p>Keep clinical/unpublished data off free or training-enabled endpoints; log every query.</p></div>
+      </div>
+    </section>
+
+    <!-- 19. LIVE DEMO 3: SINGLE CELL PORTAL -->
+    <section>
+      <span class="meta"><span class="badge demo">Live Demo 3 · Website Demo</span> Interactive Research Tool</span>
+      <h2>Single Cell Portal from a 416 MB <code>.h5ad</code></h2>
+      <div class="two-col" style="margin-top:0.5em;">
+        <div>
+          <ul>
+            <li><strong>Dataset:</strong> Allen Institute Adult Human Brain Atlas — midbrain snRNA-seq (59,505 cells × 58,232 genes, 11 cell types)</li>
+            <li><strong>Prompt (Plan mode):</strong> <code>Build an interactive viewer for my single-cell RNA data</code></li>
+            <li><strong>Publish:</strong> Push to GitHub via <code>gh</code> CLI for lab-wide access</li>
+          </ul>
+        </div>
+        <div class="img-frame">
+          <img src="assets/images/single_cell_viewer.png" alt="Single Cell Viewer">
+        </div>
+      </div>
+    </section>
+
+    <!-- 20. DAY 2 PART 5 DIVIDER -->
+    <section class="divider-slide">
+      <span class="meta">Day 2 · Part 5 · 4:00–4:50 CET</span>
+      <h1>Loops, Subagents<br><em>&amp; Swarms</em></h1>
+      <p>Moving from one conversation to verified multi-agent workflows — and knowing what each pattern costs.</p>
+    </section>
+
+    <!-- 21. LOOPS, ADVERSARIAL SUBAGENTS, SWARMS -->
+    <section>
+      <span class="meta">Multi-Agent Patterns · Claude Code</span>
+      <h2>Three ways to scale one agent</h2>
+      <div class="three-col" style="margin-top:0.5em;">
+        <div class="card accent">
+          <h4>1. Loops (<code>Stop</code> hooks)</h4>
+          <p>Repeat until an external check passes, with a hard round limit. Example: <code>figure-gate.py</code> blocks exit until a fresh reviewer inspects the rendered PNG (max 4 rounds).</p>
+        </div>
+        <div class="card ok">
+          <h4>2. Adversarial Subagents</h4>
+          <p>Separate context window + read-only <code>tools: Read, Grep, Glob</code>. E.g. <code>adversarial-statistician</code>, <code>reproducibility-auditor</code>. <em>An agent that agrees with you is not doing the job.</em></p>
+        </div>
+        <div class="card warn">
+          <h4>3. Swarms</h4>
+          <p>Parallel workers on independent slices. Three rules: <strong>cost multiplies</strong>, <strong>never share output files</strong>, and <strong>verify the merged results</strong>.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 22. HANDS-ON EXERCISE 2: PUBMED AUDIT -->
+    <section>
+      <span class="meta"><span class="badge exercise">Exercise 2 · 25 min + 10 min Debrief</span> Day 2 Hands-On</span>
+      <h2>Audit a reference list against PubMed</h2>
+      <p>Closing the loop on Topaz et al. (<em>Lancet</em> 2026) using our 15-entry <code>references.txt</code> (real papers, 1 arXiv preprint, 1 fabricated 2025 citation).</p>
+      <table class="phase-table" style="margin-top:0.5em;">
+        <thead><tr><th>Step</th><th>Pattern</th><th>What to watch</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>One agent, no loop</td><td>Baseline time and <code>/context</code> growth</td></tr>
+          <tr><td>2</td><td>Subagents (groups of 5)</td><td>Each writes its own <code>results_&lt;group&gt;.tsv</code>; compare main context</td></tr>
+          <tr><td>3</td><td>3-round retry loop</td><td>Re-query <code>not found</code> / <code>ambiguous</code> by author+year &amp; title; never guess a PMID</td></tr>
+          <tr><td>4</td><td>Manual verification</td><td>Open 3 "found" PMIDs yourself — did any match the wrong paper?</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 23. DAY 2 PART 6 DIVIDER -->
+    <section class="divider-slide">
+      <span class="meta">Day 2 · Part 6 · 5:00–6:00 CET</span>
+      <h1>Research Workflows,<br><em>Governance &amp; Second Brain</em></h1>
+      <p>Standing rules, a personal research wiki, and a practical AI use policy for your lab.</p>
+    </section>
+
+    <!-- 24. RULE FILES & SECOND BRAIN DEMO -->
+    <section>
+      <span class="meta"><span class="badge demo">Live Demo 4</span> Standing Rules &amp; Research Wiki</span>
+      <h2><code>CLAUDE.md</code> + Karpathy-style Second Brain</h2>
+      <div class="two-col" style="margin-top:0.5em;">
+        <div>
+          <ul>
+            <li><strong>Rule files:</strong> <code>CLAUDE.md</code> / <code>AGENTS.md</code> in project root — standing instructions loaded every session.</li>
+            <li><strong>Second Brain:</strong> Drop PDFs into <code>raw/</code> → Claude compiles linked <code>wiki/</code> notes → view graph in Obsidian.</li>
+            <li><strong>Worked example:</strong> Akbari et al. &amp; Barton et al. (2026) ancient-DNA papers linked by shared authors, methods &amp; concepts.</li>
+          </ul>
+        </div>
+        <div class="img-frame">
+          <img src="assets/images/second-brain-obsidian-graph.png" alt="Obsidian Second Brain graph">
+        </div>
+      </div>
+    </section>
+
+    <!-- 25. LAB AI POLICY & CLOSING POLL -->
+    <section>
+      <span class="meta">Governance &amp; Closing Poll</span>
+      <h2>Four rules for a lab AI use policy</h2>
+      <div class="two-col" style="margin-top:0.5em;">
+        <div class="card">
+          <h4>Practical baseline</h4>
+          <ol>
+            <li><strong>Data boundary:</strong> No patient or unpublished data on free/training tiers.</li>
+            <li><strong>Independent checks:</strong> Every number, figure, and citation verified outside the generating turn.</li>
+            <li><strong>Shared conventions:</strong> Commit <code>CLAUDE.md</code>, <code>.claude/skills/</code>, and <code>.claude/agents/</code> to Git.</li>
+            <li><strong>Transparency:</strong> Record which models, skills, and checks were used.</li>
+          </ol>
+        </div>
+        <div class="card accent">
+          <h4>Closing Poll (1–5)</h4>
+          <p style="margin-top:0.4em;color:var(--ink);">1. How much could AI <em>help</em> your work over the next 12 months?</p>
+          <p style="margin-top:0.4em;color:var(--ink);">2. How much <em>risk</em> could AI create for your work over the next 12 months?</p>
+          <p style="margin-top:0.6em;"><strong>Q&amp;A</strong> · All tutorials &amp; stretch guides stay live on the course site.</p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    slideNumber: 'c/t',
+    transition: 'fade',
+    transitionSpeed: 'fast',
+    width: 1120,
+    height: 680,
+    margin: 0.06,
+    plugins: [ RevealHighlight ]
+  });
+</script>
+</body>
+</html>
