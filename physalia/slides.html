@@ -387,6 +387,26 @@ across penguin species in penguins.csv, and export summary statistics.</code></p
       </div>
     </section>
 
+    <!-- 21b. LIVE DEMOS: SUBAGENT, ORCHESTRATOR, SWARM -->
+    <section>
+      <span class="meta"><span class="badge demo">Live Demos</span> Multi-Agent Patterns in Claude Code</span>
+      <h2>Subagent → Orchestrator → Swarm</h2>
+      <div class="three-col" style="margin-top:0.5em;">
+        <div class="card accent">
+          <h4>A. Single Subagent</h4>
+          <p>Spawn 1 read-only <code>adversarial-statistician</code> on Day 1's <code>analyse.py</code> + <code>samples.json</code>. Main context stays clean; reviewer returns a 5-line verdict.</p>
+        </div>
+        <div class="card ok">
+          <h4>B. Orchestrator (1 → 3)</h4>
+          <p>Launch <code>adversarial-statistician</code>, <code>reproducibility-auditor</code>, and <code>data-governance-reviewer</code> in parallel. <em>The output is the disagreement, not the consensus.</em></p>
+        </div>
+        <div class="card warn">
+          <h4>C. Sharded Swarm</h4>
+          <p>Split <code>references.txt</code> into 3 shards (1–5, 6–10, 11–15). Each worker writes its own <code>results_shard_&lt;n&gt;.tsv</code>; final pass merges &amp; verifies.</p>
+        </div>
+      </div>
+    </section>
+
     <!-- 22. HANDS-ON EXERCISE 2: PUBMED AUDIT -->
     <section>
       <span class="meta"><span class="badge exercise">Exercise 2 · 25 min + 10 min Debrief</span> Day 2 Hands-On</span>
