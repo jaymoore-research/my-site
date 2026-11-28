@@ -153,6 +153,18 @@
       <p>What separates a coding agent from a chatbot, how the stack and privacy boundaries work, and why verification is the central problem.</p>
     </section>
 
+    <!-- 4b. LATE-2026 LANDSCAPE -->
+    <section>
+      <span class="meta">State of the Field · December 2026</span>
+      <h2>The bottleneck shifted from models to <em>verification</em></h2>
+      <div class="three-col" style="margin-top:0.6em;">
+        <div class="card accent"><h4>1M-token windows</h4><p>Frontier models (Sonnet 5.5, Opus 5.5, GPT-6.2, Gemini 4) hold whole codebases and dozens of papers at once.</p></div>
+        <div class="card ok"><h4>Harnesses matured</h4><p>Claude Code, OpenCode, Codex, and Copilot ship native subagents, <code>SKILL.md</code>, MCP, and lifecycle hooks.</p></div>
+        <div class="card warn"><h4>New bottleneck</h4><p>Models write fluent code and prose effortlessly. The hard part is now <strong>checking what they actually did</strong>.</p></div>
+      </div>
+      <aside class="notes">Set the tone for the whole 2 days: this is not a prompting tricks course — it is a workflow and verification course.</aside>
+    </section>
+
     <!-- 5. CHATBOTS VS AGENTS -->
     <section>
       <span class="meta">Mental Model</span>
@@ -218,6 +230,19 @@
       </div>
     </section>
 
+    <!-- 9b. FOUR WAYS AGENTS FAIL IN BIOLOGY -->
+    <section>
+      <span class="meta">Failure Taxonomy · Life Sciences</span>
+      <h2>Four ways agents fail on biological work</h2>
+      <div class="two-col" style="margin-top:0.5em;">
+        <div class="card err"><h4>1. Silent data corruption</h4><p>Coercing <code>null</code>/<code>NA</code> to <code>0</code>, or dropping genuine zeros with truthiness checks — exits cleanly with wrong means.</p></div>
+        <div class="card warn"><h4>2. Fabricated citations</h4><p>Plausible authors, journals, and DOIs that do not exist (Topaz et al., <em>Lancet</em> 2026).</p></div>
+        <div class="card warn"><h4>3. Statistical traps</h4><p>Treating technical replicates as biological, omitting multiple-testing correction, or cherry-picking subgroups.</p></div>
+        <div class="card err"><h4>4. Reward hacking</h4><p>Editing the test or checker script to make it pass instead of fixing the underlying analysis bug.</p></div>
+      </div>
+      <aside class="notes">Tell learners they will see #1 and #4 directly in Day 1 Exercise 1, and #2 directly in Day 2 Exercise 2.</aside>
+    </section>
+
     <!-- 10. DAY 1 PART 2 DIVIDER -->
     <section class="divider-slide">
       <span class="meta">Day 1 · Part 2 · 4:00–4:50 CET</span>
@@ -259,6 +284,18 @@
         <img src="assets/images/context-breakdown.png" alt="Context window breakdown">
       </div>
       <p style="margin-top:0.5em;">Inspect with <code>/context</code> · compress mid-task with <code>/compact</code> (~97% reduction) · reset between tasks with <code>/clear</code>.</p>
+    </section>
+
+    <!-- 12b. CONTEXT VS RULE FILES VS MEMORY -->
+    <section>
+      <span class="meta">Mental Model · Persistence</span>
+      <h2>The model remembers <em>nothing</em> between sessions</h2>
+      <div class="three-col" style="margin-top:0.6em;">
+        <div class="card accent"><h4>Context window</h4><p>Everything sent on the current turn: messages, tool outputs, file reads. Gone when you run <code>/clear</code>.</p></div>
+        <div class="card ok"><h4>Rule files</h4><p><code>CLAUDE.md</code> / <code>AGENTS.md</code> in your repo root. Loaded automatically at the start of every session.</p></div>
+        <div class="card"><h4>Memory on disk</h4><p>Plain Markdown notes (<code>memory.md</code>, <code>todo.md</code>, Obsidian wiki) that the harness saves and reloads.</p></div>
+      </div>
+      <aside class="notes">Clear up the #1 beginner misconception: if it isn't in a file on disk or in the current context window, the model does not know it.</aside>
     </section>
 
     <!-- 13. TOKEN ECONOMICS -->
@@ -323,6 +360,19 @@ across penguin species in penguins.csv, and export summary statistics.</code></p
       </div>
     </section>
 
+    <!-- 18b. SANDBOXING & PERMISSIONS LADDER -->
+    <section>
+      <span class="meta">Safety · Isolation</span>
+      <h2>The permissions ladder: match isolation to blast radius</h2>
+      <div class="four-col" style="margin-top:0.6em;">
+        <div class="card ok"><h4>1. Read-only</h4><p><code>Read, Grep, Glob</code> only. Ideal for reviewers and literature triage.</p></div>
+        <div class="card accent"><h4>2. Empty folder</h4><p>Start the agent inside a dedicated project folder — never your home directory.</p></div>
+        <div class="card warn"><h4>3. Git branch</h4><p>Every edit is diffable and reversible with <code>git diff</code> / <code>git restore</code>.</p></div>
+        <div class="card err"><h4>4. Disposable VM</h4><p>Multipass or Docker for untrusted code or autonomous loops (no host credentials).</p></div>
+      </div>
+      <p style="margin-top:0.65em;"><strong>Never</strong> bypass permissions in a folder containing credentials, raw clinical data, or unbacked-up manuscripts.</p>
+    </section>
+
     <!-- 19. HANDS-ON EXERCISE 1: SANDBOX -->
     <section>
       <span class="meta"><span class="badge exercise">Exercise 1 · 20 min + 15 min Debrief</span> Day 1 Hands-On</span>
@@ -369,6 +419,31 @@ across penguin species in penguins.csv, and export summary statistics.</code></p
         <div class="card"><h4>Fixed overhead</h4><p>Every registered MCP tool consumes context tokens on every turn — only enable what you need.</p></div>
         <div class="card warn"><h4>Data boundary</h4><p>Keep clinical/unpublished data off free or training-enabled endpoints; log every query.</p></div>
       </div>
+    </section>
+
+    <!-- 21b. PHARMACOGENOMICS & REGULATORY BOUNDARY -->
+    <section>
+      <span class="meta">Domain Example · Regulatory Boundary</span>
+      <h2>Exploratory research tooling ≠ validated clinical software</h2>
+      <div class="two-col" style="margin-top:0.55em;">
+        <div class="card accent">
+          <h4>Where agents shine (e.g. ClawBio)</h4>
+          <ul>
+            <li>Combining genomic variants with CPIC pharmacogenomic guidelines</li>
+            <li>Drafting target dossiers, literature sweeps, and exploratory figures</li>
+            <li>Writing reproducible pipelines you rerun yourself</li>
+          </ul>
+        </div>
+        <div class="card err">
+          <h4>Where you must stop (GxP / clinical boundary)</h4>
+          <ul>
+            <li>Never treat an LLM output as a validated clinical decision or GxP record</li>
+            <li>Never upload identifiable patient VCFs to public endpoints</li>
+            <li>Always check curated source review status (ClinVar, CIViC, OncoKB)</li>
+          </ul>
+        </div>
+      </div>
+      <aside class="notes">Point learners to the Pharmacogenomics with ClawBio tutorial under After the course.</aside>
     </section>
 
     <!-- 22. LIVE DEMO 3: SINGLE CELL PORTAL -->
@@ -479,6 +554,23 @@ and multiple testing. Report file + line.</code></pre>
       </table>
     </section>
 
+    <!-- 27b. SIX LESSONS FROM REAL WORKFLOWS -->
+    <section>
+      <span class="meta">Field Notes · Six Battle-Tested Lessons</span>
+      <h2>What real life-science workflows teach you</h2>
+      <table class="phase-table" style="margin-top:0.45em;">
+        <thead><tr><th>Workflow</th><th>The lesson</th></tr></thead>
+        <tbody>
+          <tr><td>Variant → decision</td><td>Curated sources need their review status, or they mislead</td></tr>
+          <tr><td>Target dossier</td><td>Expression is the weakest evidence and the most cited</td></tr>
+          <tr><td>Biomarker brief</td><td>An agent's silence about a decision is not the absence of one</td></tr>
+          <tr><td>Paper → claim</td><td>Insist on retrieval; a fluent summary of an unread paper is the danger</td></tr>
+          <tr><td>Adversarial review</td><td>The output is the disagreement, not the consensus</td></tr>
+          <tr><td>Internal MCP</td><td>The controls are bolted on, and nothing stops you if you skip them</td></tr>
+        </tbody>
+      </table>
+    </section>
+
     <!-- 28. DAY 2 PART 6 DIVIDER -->
     <section class="divider-slide">
       <span class="meta">Day 2 · Part 6 · 5:00–6:00 CET</span>
@@ -501,6 +593,42 @@ and multiple testing. Report file + line.</code></pre>
         <div class="img-frame med">
           <img src="assets/images/second-brain-obsidian-graph.png" alt="Obsidian Second Brain graph">
         </div>
+      </div>
+    </section>
+
+    <!-- 29b. REPRODUCIBILITY & AUDIT TRAILS -->
+    <section>
+      <span class="meta">Publishing · Reproducibility</span>
+      <h2>What to commit alongside an agent-assisted manuscript</h2>
+      <div class="two-col" style="margin-top:0.55em;">
+        <div class="card ok">
+          <h4>In your Git repository</h4>
+          <ul>
+            <li>Pinned input paths, random seeds, and environment lockfiles</li>
+            <li><code>CLAUDE.md</code> + <code>.claude/skills/</code> + <code>.claude/agents/</code></li>
+            <li>Independent checker scripts (<code>check.py</code> / unit tests)</li>
+          </ul>
+        </div>
+        <div class="card accent">
+          <h4>In your Methods section</h4>
+          <ul>
+            <li>Which coding harness and model were used (e.g. Claude Code / Sonnet 5.5)</li>
+            <li>What was human-verified (statistics, figures, every citation)</li>
+            <li>Confirmation that no restricted data left approved infrastructure</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 29c. MONDAY MORNING: 30-DAY PLAN -->
+    <section>
+      <span class="meta">Adoption · What to Do on Monday</span>
+      <h2>A 30-day adoption plan for your lab</h2>
+      <div class="four-col" style="margin-top:0.6em;">
+        <div class="card accent"><h4>Week 1</h4><p>Pick one active repo. Add a 10-line <code>CLAUDE.md</code> and use <code>Plan</code> mode before coding.</p></div>
+        <div class="card ok"><h4>Week 2</h4><p>Write your first <code>SKILL.md</code> (e.g. lab figure standards or QC checklist).</p></div>
+        <div class="card warn"><h4>Week 3</h4><p>Add one read-only adversarial reviewer in <code>.claude/agents/</code>.</p></div>
+        <div class="card"><h4>Week 4</h4><p>Commit <code>.claude/</code> to Git and agree on a 1-page lab AI use policy.</p></div>
       </div>
     </section>
 
